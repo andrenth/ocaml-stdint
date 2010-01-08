@@ -1,0 +1,13 @@
+name = "uint"
+version = "0.0.0"
+description = "OCaml unsigned ints"
+package "uint32" (
+  version = "0.0.0"
+  archive(byte) = "uint32.cma"
+  archive(native) = "uint32.cmxa"
+)
+package "uint64" (
+  version = "0.0.0"
+  archive(byte) = "uint64.cma"
+  archive(native) = "uint64.cmxa"
+)
