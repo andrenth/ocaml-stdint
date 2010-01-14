@@ -110,13 +110,13 @@ uint32_xor(value v1, value v2)
 CAMLprim value
 uint32_shift_left(value v1, value v2)
 {
-    return copy_uint32(Uint32_val(v1) << Uint32_val(v2));
+    return copy_uint32(Uint32_val(v1) << Int_val(v2));
 }
 
 CAMLprim value
 uint32_shift_right(value v1, value v2)
 {
-    return copy_uint32(Uint32_val(v1) >> Uint32_val(v2));
+    return copy_uint32(Uint32_val(v1) >> Int_val(v2));
 }
 
 CAMLprim value
