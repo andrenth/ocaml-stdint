@@ -14,7 +14,7 @@ external shift_right : uint64 -> int -> uint64 = "uint64_shift_right"
 external of_int : int -> uint64 = "uint64_of_int"
 external to_int : uint64 -> int = "uint64_to_int"
 external of_float : float -> uint64 = "uint64_of_float"
-external to_float : uint64 -> float -> uint64 = "uint64_to_float"
+external to_float : uint64 -> float = "uint64_to_float"
 external bits_of_float : float -> uint64 = "uint64_bits_of_float"
 external float_of_bits : uint64 -> float = "uint64_float_of_bits"
 
