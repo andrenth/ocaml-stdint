@@ -12,7 +12,9 @@ external logxor : uint64 -> uint64 -> uint64 = "uint64_xor"
 external shift_left : uint64 -> int -> uint64 = "uint64_shift_left"
 external shift_right : uint64 -> int -> uint64 = "uint64_shift_right"
 external of_int : int -> uint64 = "uint64_of_int"
+external of_int32 : int32 -> uint64 = "uint64_of_int32"
 external to_int : uint64 -> int = "uint64_to_int"
+external to_int32 : uint64 -> int32 = "uint64_to_int32"
 external of_float : float -> uint64 = "uint64_of_float"
 external to_float : uint64 -> float = "uint64_to_float"
 external bits_of_float : float -> uint64 = "uint64_bits_of_float"
@@ -32,3 +34,5 @@ let to_string n = format "%u" n
 external of_string : string -> uint64 = "uint64_of_string"
 
 let compare (x : t) (y : t) = Pervasives.compare x y
+
+external to_int64 : uint64 -> int64 = "uint64_to_int64"

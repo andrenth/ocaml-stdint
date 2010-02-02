@@ -12,7 +12,9 @@ val logxor : uint64 -> uint64 -> uint64
 val shift_left : uint64 -> int -> uint64
 val shift_right : uint64 -> int -> uint64
 val of_int : int -> uint64
+val of_int32 : int32 -> uint64
 val to_int : uint64 -> int
+val to_int32 : uint64 -> int32
 val of_float : float -> uint64
 val to_float : uint64 -> float
 val bits_of_float : float -> uint64
@@ -29,3 +31,5 @@ val to_string : uint64 -> string
 val of_string : string -> uint64
 
 val compare : uint64 -> uint64 -> int
+
+val to_int64 : uint64 -> int64

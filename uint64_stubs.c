@@ -122,14 +122,25 @@ uint64_shift_right(value v1, value v2)
 CAMLprim value
 uint64_of_int(value v)
 {
-    long l = Long_val(v);
     return copy_uint64(Long_val(v));
+}
+
+CAMLprim value
+uint64_of_int32(value v)
+{
+    return copy_uint64((unsigned long)Int32_val(v));
 }
 
 CAMLprim value
 uint64_to_int(value v)
 {
     return Val_long(Uint64_val(v));
+}
+
+CAMLprim value
+uint64_to_int32(value v)
+{
+    return caml_copy_int32(Uint64_val(v));
 }
 
 CAMLprim value
@@ -309,4 +320,10 @@ uint64_format(value fmt, value arg)
     if (buffer != default_format_buffer)
         caml_stat_free(buffer);
     return res;
+}
+
+CAMLprim value
+uint64_to_int64(value x)
+{
+    return copy_int64(Int64_val(x));
 }
