@@ -11,3 +11,9 @@ package "uint64" (
   archive(byte) = "uint64.cma"
   archive(native) = "uint64.cmxa"
 )
+package "uint128" (
+  requires = "uint.uint64"
+  version = "0.0.0"
+  archive(byte) = "uint128.cma"
+  archive(native) = "uint128.cmxa"
+)

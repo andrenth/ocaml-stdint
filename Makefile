@@ -11,11 +11,18 @@ define PROJ_uint64
 	RESULT=uint64
 endef
 
+define PROJ_uint128
+	SOURCES=uint128.ml
+	OCAMLNCFLAGS=uint64.cmxa
+	OCAMLBCFLAGS=uint64.cma
+	RESULT=uint128
+endef
+
 ifndef SUBPROJS
-  export SUBPROJS = uint32 uint64
+  export SUBPROJS = uint32 uint64 uint128
 endif
 
-export PROJ_uint32 PROJ_uint64
+export PROJ_uint32 PROJ_uint64 PROJ_uint128
 
 all: byte-code-library native-code-library
 
