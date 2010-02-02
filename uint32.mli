@@ -29,3 +29,5 @@ val to_string : uint32 -> string
 val of_string : string -> uint32
 
 val compare : uint32 -> uint32 -> int
+
+val to_int32 : uint32 -> int32

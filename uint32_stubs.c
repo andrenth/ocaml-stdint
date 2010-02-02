@@ -312,3 +312,9 @@ uint32_format(value fmt, value arg)
         caml_stat_free(buffer);
     return res;
 }
+
+CAMLprim value
+uint32_to_int32(value x)
+{
+    return copy_int32(Int32_val(x));
+}

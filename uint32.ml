@@ -32,3 +32,5 @@ let to_string n = format "%u" n
 external of_string : string -> uint32 = "uint32_of_string"
 
 let compare (x : t) (y : t) = Pervasives.compare x y
+
+external to_int32 : uint32 -> int32 = "uint32_to_int32"
