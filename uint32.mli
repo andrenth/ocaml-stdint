@@ -14,7 +14,7 @@ val shift_right : uint32 -> int -> uint32
 val of_int : int -> uint32
 val to_int : uint32 -> int
 val of_float : float -> uint32
-val to_float : uint32 -> float -> uint32
+val to_float : uint32 -> float
 val bits_of_float : float -> uint32
 val float_of_bits : uint32 -> float
 

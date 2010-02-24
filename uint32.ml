@@ -1,36 +1,64 @@
-type uint32
+type uint32 = int32
 type t = uint32
 
-external add : uint32 -> uint32 -> uint32 = "uint32_add"
-external sub : uint32 -> uint32 -> uint32 = "uint32_sub"
-external mul : uint32 -> uint32 -> uint32 = "uint32_mul"
-external div : uint32 -> uint32 -> uint32 = "uint32_div"
-external rem : uint32 -> uint32 -> uint32 = "uint32_mod"
-external logand : uint32 -> uint32 -> uint32 = "uint32_and"
-external logor : uint32 -> uint32 -> uint32 = "uint32_or"
-external logxor : uint32 -> uint32 -> uint32 = "uint32_xor"
-external shift_left : uint32 -> int -> uint32 = "uint32_shift_left"
-external shift_right : uint32 -> int -> uint32 = "uint32_shift_right"
-external of_int : int -> uint32 = "uint32_of_int"
-external to_int : uint32 -> int = "uint32_to_int"
-external of_float : float -> uint32 = "uint32_of_float"
-external to_float : uint32 -> float -> uint32 = "uint32_to_float"
-external bits_of_float : float -> uint32 = "uint32_bits_of_float"
-external float_of_bits : uint32 -> float = "uint32_float_of_bits"
+let add = Int32.add
+let sub = Int32.sub
+let mul = Int32.mul
+let logand = Int32.logand
+let logor = Int32.logor
+let logxor = Int32.logxor
+let shift_left = Int32.shift_left
+let shift_right = Int32.shift_right
+let of_int = Int32.of_int
+let to_int = Int32.to_int
+let of_float = Int32.of_float
+let to_float = Int32.to_float
+let bits_of_float = Int32.bits_of_float
+let float_of_bits = Int32.float_of_bits
+let zero = 0l
+let one = 1l
+let succ = add one
+let pred = sub one
+let max_int = -1l
+let lognot = logxor max_int
 
-let zero = of_int 0
-let one = of_int 1
-let succ x = add x one
-let pred x = sub x one
-external max_int_fun : unit -> uint32 = "uint32_max_int"
-let max_int = max_int_fun ()
-let lognot x = logxor x max_int
+let u_ge x y =
+  if y < 0l && x >= 0l then false
+  else if x < 0l && y >= 0l then true
+  else x >= y
 
-external format : string -> uint32 -> string = "uint32_format"
-let to_string n = format "%u" n
+let divmod x y =
+  let q = ref x in
+  let r = ref 0l in
+  for i = 0 to 31 do
+    r := Int32.shift_left !r 1;
+    if (!q < 0l) then r := Int32.add !r 1l;
+    q := Int32.shift_left !q 1;
+    if u_ge !r y then begin
+      q := Int32.add !q 1l;
+      r := Int32.sub !r y
+    end
+  done;
+  !q, !r
 
-external of_string : string -> uint32 = "uint32_of_string"
+let div x y = fst (divmod x y)
+let rem x y = snd (divmod x y)
+
+module Fmt = Fmt.Make(struct
+  type t      = uint32
+  let name    = "Uint32"
+  let zero    = zero
+  let max_int = max_int
+  let of_int  = of_int
+  let to_int  = to_int
+  let add     = add
+  let mul     = mul
+  let divmod  = divmod
+end)
+
+let to_string = Fmt.to_string
+let of_string = Fmt.of_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y
 
-external to_int32 : uint32 -> int32 = "uint32_to_int32"
+let to_int32 x = x
