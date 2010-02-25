@@ -134,64 +134,17 @@ let of_float x =
 let to_float x =
   Uint64.to_float x.lo
 
-let digit_of_char c =
-  let disp =
-    if c >= '0' && c <= '9' then 48
-    else if c >= 'A' && c <= 'F' then 55
-    else if c >= 'a' && c <= 'f' then 87
-    else failwith "Uint128.of_string" in
-  int_of_char c - disp
+module Fmt = Fmt.Make(struct
+  type t      = uint128
+  let name    = "Uint128"
+  let zero    = zero
+  let max_int = max_int
+  let of_int  = of_int
+  let to_int  = to_int
+  let add     = add
+  let mul     = mul
+  let divmod  = divmod
+end)
 
-let of_string' s base =
-  let base128 = of_int base in
-  let threshold, _ = divmod max_int base128 in
-  let d = digit_of_char s.[0] in
-  if d > base then failwith "Uint128.of_string";
-  let res = ref (of_int d) in
-  for i = 1 to String.length s - 1 do
-    let c = s.[i] in
-    if c <> '_' then begin
-      let d = digit_of_char c in
-      if d > base then failwith "Uint128.of_string";
-      if threshold < !res then failwith "Uint128.of_string";
-      let d128 = of_int d in
-      res := add (mul !res base128) d128;
-      if !res < d128 then failwith "Uint128.of_string"
-    end
-  done;
-  !res
-
-let of_string s =
-  let len = String.length s in
-  match len with
-  | 0 -> invalid_arg "Uint128.of_string"
-  | 1 | 2 -> of_string' s 10
-  | _ ->
-      if s.[0] = '0' then
-        let base =
-          match s.[1] with
-          | 'b' | 'B' -> 2
-          | 'o' | 'O' -> 8
-          | 'x' | 'X' -> 16
-          | _ -> invalid_arg "Uint128.of_string" in
-        of_string' (String.sub s 2 (len - 2)) base
-      else
-        of_string' s 10
-
-let to_string x =
-  let y = ref x in
-  if !y = zero then
-    "0"
-  else begin
-    let buffer = String.make 42 'x' in
-    let conv = "0123456789abcdef" in
-    let base = of_int 10 in
-    let i = ref (String.length buffer) in
-    while !y <> zero do
-      let x', digit = divmod !y base in
-      y := x';
-      decr i;
-      buffer.[!i] <- conv.[to_int digit]
-    done;
-    String.sub buffer !i (String.length buffer - !i)
-  end
+let to_string = Fmt.to_string
+let of_string = Fmt.of_string
