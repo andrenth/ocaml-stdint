@@ -24,7 +24,7 @@ let to_int64 x = x
 let zero = 0L
 let one = 1L
 let succ = add one
-let pred = sub one
+let pred x = sub x one
 let max_int = -1L
 let lognot = logxor max_int
 
