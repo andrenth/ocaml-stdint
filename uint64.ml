@@ -1,22 +1,26 @@
 type uint64 = int64
 type t = uint64
 
-let add = Int64.add
-let sub = Int64.sub
-let mul = Int64.mul
-let logand = Int64.logand
-let logor = Int64.logor
-let logxor = Int64.logxor
-let shift_left = Int64.shift_left
-let shift_right = Int64.shift_right
-let of_int = Int64.of_int
-let to_int = Int64.to_int
-let of_int32 = Int64.of_int32
-let to_int32 = Int64.to_int32
-let of_float = Int64.of_float
-let to_float = Int64.to_float
-let bits_of_float = Int64.bits_of_float
-let float_of_bits = Int64.float_of_bits
+external add : uint64 -> uint64 -> uint64 = "%int64_add"
+external sub : uint64 -> uint64 -> uint64 = "%int64_sub"
+external mul : uint64 -> uint64 -> uint64 = "%int64_mul"
+external logand : uint64 -> uint64 -> uint64 = "%int64_and"
+external logor : uint64 -> uint64 -> uint64 = "%int64_or"
+external logxor : uint64 -> uint64 -> uint64 = "%int64_xor"
+external shift_left : uint64 -> int -> uint64 = "%int64_lsl"
+external shift_right : uint64 -> int -> uint64 = "%int64_asr"
+external of_int : int -> uint64 = "%int64_of_int"
+external to_int : uint64 -> int = "%int64_to_int"
+external of_int32 : int32 -> uint64 = "%int64_of_int32"
+external to_int32 : uint64 -> int32 = "%int64_to_int32"
+external of_float : float -> uint64 = "caml_int64_of_float"
+external to_float : uint64 -> float = "caml_int64_to_float"
+external bits_of_float : float -> uint64 = "caml_int64_bits_of_float"
+external float_of_bits : uint64 -> float = "caml_int64_float_of_bits"
+
+let of_int64 x = x
+let to_int64 x = x
+
 let zero = 0L
 let one = 1L
 let succ = add one
@@ -62,5 +66,3 @@ let to_string = Fmt.to_string
 let of_string = Fmt.of_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y
-
-let to_int64 x = x

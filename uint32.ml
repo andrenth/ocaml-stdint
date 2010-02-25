@@ -1,26 +1,30 @@
 type uint32 = int32
 type t = uint32
 
-let add = Int32.add
-let sub = Int32.sub
-let mul = Int32.mul
-let logand = Int32.logand
-let logor = Int32.logor
-let logxor = Int32.logxor
-let shift_left = Int32.shift_left
-let shift_right = Int32.shift_right
-let of_int = Int32.of_int
-let to_int = Int32.to_int
-let of_float = Int32.of_float
-let to_float = Int32.to_float
-let bits_of_float = Int32.bits_of_float
-let float_of_bits = Int32.float_of_bits
+external add : uint32 -> uint32 -> uint32 = "%int32_add"
+external sub : uint32 -> uint32 -> uint32 = "%int32_sub"
+external mul : uint32 -> uint32 -> uint32 = "%int32_mul"
+external logand : uint32 -> uint32 -> uint32 = "%int32_and"
+external logor : uint32 -> uint32 -> uint32 = "%int32_or"
+external logxor : uint32 -> uint32 -> uint32 = "%int32_xor"
+external shift_left : uint32 -> int -> uint32 = "%int32_lsl"
+external shift_right : uint32 -> int -> uint32 = "%int32_asr"
+external of_int : int -> uint32 = "%int32_of_int"
+external to_int : uint32 -> int = "%int32_to_int"
+external of_float : float -> uint32 = "caml_int32_of_float"
+external to_float : uint32 -> float = "caml_int32_to_float"
+external bits_of_float : float -> uint32 = "caml_int32_bits_of_float"
+external float_of_bits : uint32 -> float = "caml_int32_float_of_bits"
+
 let zero = 0l
 let one = 1l
 let succ = add one
 let pred = sub one
 let max_int = -1l
 let lognot = logxor max_int
+
+let of_int32 x = x
+let to_int32 x = x
 
 let u_ge x y =
   if y < 0l && x >= 0l then false
@@ -61,4 +65,4 @@ let of_string = Fmt.of_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y
 
-let to_int32 x = x
+
