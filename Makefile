@@ -7,7 +7,7 @@ define PROJ_uint32
 endef
 
 define PROJ_uint64
-	SOURCES=uint64_stubs.c uint64.mli uint64.ml
+	SOURCES=fmt.ml uint64.mli uint64.ml
 	RESULT=uint64
 endef
 
