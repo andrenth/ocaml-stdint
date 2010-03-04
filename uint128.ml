@@ -85,7 +85,18 @@ let shift_right x s =
     { lo = (x.lo >> i) || (x.hi << (64 - i)); hi = x.hi >> i }
   else
      { lo = x.hi >> (i - 32); hi = x.hi >> 63 }
-(*     { lo = x.hi >> (i - 32); hi = Uint64.zero } *)
+
+let shift_right_logical x s =
+  let (<<) = Uint64.shift_left in
+  let (>>) = Uint64.shift_right in
+  let (||) = Uint64.logor in
+  let i = s land 127 in
+  if i = 0 then
+    x
+  else if i < 64 then
+    { lo = (x.lo >> i) || (x.hi << (64 - i)); hi = x.hi >> i }
+  else
+     { lo = x.hi >> (i - 32); hi = Uint64.zero }
 
 let divmod modulus divisor =
   let (|.) = Uint64.logor in

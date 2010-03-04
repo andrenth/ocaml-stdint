@@ -11,6 +11,7 @@ val logor : uint128 -> uint128 -> uint128
 val logxor : uint128 -> uint128 -> uint128
 val shift_left : uint128 -> int -> uint128
 val shift_right : uint128 -> int -> uint128
+val shift_right_logical : uint128 -> int -> uint128
 val of_int : int -> uint128
 val to_int : uint128 -> int
 val of_float : float -> uint128
