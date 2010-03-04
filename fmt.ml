@@ -28,25 +28,15 @@ module Make (U : FmtSig) : S with type t = U.t = struct
     int_of_char c - disp
   
   let of_string' s base =
-    let fail = U.name ^ ".of_string" in
-    let base' = U.of_int base in
-    let threshold, _ = U.divmod U.max_int base' in
-    let d = digit_of_char s.[0] in
-    if d > base then failwith fail;
-    let res = ref (U.of_int d) in
-    for i = 1 to String.length s - 1 do
+    let base = U.of_int base in
+    let res = ref U.zero in
+    for i = 0 to String.length s -1 do
       let c = s.[i] in
-      if c <> '_' then begin
-        let d = digit_of_char c in
-        if d > base then failwith fail;
-        if threshold < !res then failwith fail;
-        let d' = U.of_int d in
-        res := U.add (U.mul !res base') d';
-        if !res < d' then failwith fail
-      end
+      if c <> '_' then
+        res := U.add (U.mul !res base) (U.of_int (digit_of_char c))
     done;
     !res
-  
+
   let of_string s =
     let fail = U.name ^ ".of_string" in
     let len = String.length s in
