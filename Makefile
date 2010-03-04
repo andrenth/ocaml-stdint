@@ -36,5 +36,8 @@ uninstall:
 	@ocamlfind remove uint
 	@printf "\nUninstallation successful.\n"
 
+spec: all
+	ospec spec/uint*.ml
+
 %:
 	make -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@
