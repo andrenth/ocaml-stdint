@@ -31,7 +31,7 @@ val max_int : uint32
 val min_int : uint32
 val lognot : uint32 -> uint32
 
-val to_string : uint32 -> string
 val of_string : string -> uint32
+val to_string : uint32 -> string
 
 val compare : uint32 -> uint32 -> int

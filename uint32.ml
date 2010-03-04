@@ -62,9 +62,7 @@ module Fmt = Fmt.Make(struct
   let divmod  = divmod
 end)
 
-let to_string = Fmt.to_string
 let of_string = Fmt.of_string
+let to_string = Fmt.to_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y
-
-
