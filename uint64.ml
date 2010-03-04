@@ -14,6 +14,8 @@ external of_int : int -> uint64 = "%int64_of_int"
 external to_int : uint64 -> int = "%int64_to_int"
 external of_int32 : int32 -> uint64 = "%int64_of_int32"
 external to_int32 : uint64 -> int32 = "%int64_to_int32"
+external of_nativeint : nativeint -> uint64 = "caml_int64_of_nativeint"
+external to_nativeint : uint64 -> nativeint = "caml_int64_to_nativeint"
 external of_float : float -> uint64 = "caml_int64_of_float"
 external to_float : uint64 -> float = "caml_int64_to_float"
 external bits_of_float : float -> uint64 = "caml_int64_bits_of_float"
@@ -64,7 +66,7 @@ module Fmt = Fmt.Make(struct
   let divmod  = divmod
 end)
 
-let to_string = Fmt.to_string
 let of_string = Fmt.of_string
+let to_string = Fmt.to_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y

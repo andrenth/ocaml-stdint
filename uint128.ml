@@ -140,6 +140,24 @@ let of_int x =
 let to_int x =
   Uint64.to_int x.lo
 
+let of_int32 x =
+  { hi = Uint64.zero; lo = Uint64.of_int32 x }
+
+let to_int32 x =
+  Uint64.to_int32 x.lo
+
+let of_int64 x =
+  { hi = Uint64.zero; lo = Uint64.of_int64 x }
+
+let to_int64 x =
+  Uint64.to_int64 x.lo
+
+let of_nativeint x =
+  { hi = Uint64.zero; lo = Uint64.of_nativeint x }
+
+let to_nativeint x =
+  Uint64.to_nativeint x.lo
+
 let of_float x =
   { hi = Uint64.zero; lo = Uint64.of_float x }
 

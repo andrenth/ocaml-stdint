@@ -14,6 +14,12 @@ val shift_right : uint128 -> int -> uint128
 val shift_right_logical : uint128 -> int -> uint128
 val of_int : int -> uint128
 val to_int : uint128 -> int
+val of_int32 : int32 -> uint128
+val to_int32 : uint128 -> int32
+val of_int64 : int64 -> uint128
+val to_int64 : uint128 -> int64
+val of_nativeint : nativeint -> uint128
+val to_nativeint : uint128 -> nativeint
 val of_float : float -> uint128
 val to_float : uint128 -> float
 
