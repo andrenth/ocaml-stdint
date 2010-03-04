@@ -8,6 +8,7 @@ describe "An unsigned integer" do
   done;
 
   it "should not modify strings when converted" do
+    (of_string (to_string max_int)) should = max_int;
     forall int32 x . (to_string (of_int32 x)) should = (Int32.to_string x)
   done;
 
