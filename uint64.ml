@@ -58,7 +58,6 @@ module Conv = Str_conv.Make(struct
   type t      = uint64
   let name    = "Uint64"
   let zero    = zero
-  let max_int = max_int
   let of_int  = of_int
   let to_int  = to_int
   let add     = add

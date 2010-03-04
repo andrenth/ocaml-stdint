@@ -2,7 +2,6 @@ module type UintSig = sig
   type t
   val name    : string
   val zero    : t
-  val max_int : t
   val of_int  : int -> t
   val to_int  : t -> int
   val add     : t -> t -> t
