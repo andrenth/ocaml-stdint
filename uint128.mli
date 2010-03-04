@@ -1,4 +1,4 @@
-type uint128 = { lo : Uint64.t; hi : Uint64.t }
+type uint128
 val zero : uint128
 val one : uint128
 val add : uint128 -> uint128 -> uint128
@@ -31,4 +31,3 @@ val of_string : string -> uint128
 val to_string : uint128 -> string
 type t = uint128
 val compare : t -> t -> int
-val divmod : uint128 -> uint128 -> (uint128 * uint128)
