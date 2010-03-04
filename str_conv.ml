@@ -1,4 +1,4 @@
-module type FmtSig = sig
+module type UintSig = sig
   type t
   val name    : string
   val zero    : t
@@ -16,7 +16,7 @@ module type S = sig
   val to_string : t -> string
 end
 
-module Make (U : FmtSig) : S with type t = U.t = struct
+module Make (U : UintSig) : S with type t = U.t = struct
   type t = U.t
 
   let digit_of_char c =

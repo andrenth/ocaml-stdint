@@ -54,7 +54,7 @@ let divmod x y =
 let div x y = fst (divmod x y)
 let rem x y = snd (divmod x y)
 
-module Fmt = Fmt.Make(struct
+module Conv = Str_conv.Make(struct
   type t      = uint64
   let name    = "Uint64"
   let zero    = zero
@@ -66,7 +66,7 @@ module Fmt = Fmt.Make(struct
   let divmod  = divmod
 end)
 
-let of_string = Fmt.of_string
-let to_string = Fmt.to_string
+let of_string = Conv.of_string
+let to_string = Conv.to_string
 
 let compare (x : t) (y : t) = Pervasives.compare x y

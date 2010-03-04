@@ -2,17 +2,17 @@ export OCAMLMAKEFILE = OCamlMakefile
 export LIBINSTALL_FILES=$(wildcard *.mli *.cmi *.cma *.cmx *.cmxa *.a *.so)
 
 define PROJ_uint32
-	SOURCES=fmt.ml uint32.mli uint32.ml
+	SOURCES=str_conv.ml uint32.mli uint32.ml
 	RESULT=uint32
 endef
 
 define PROJ_uint64
-	SOURCES=fmt.ml uint64.mli uint64.ml
+	SOURCES=str_conv.ml uint64.mli uint64.ml
 	RESULT=uint64
 endef
 
 define PROJ_uint128
-	SOURCES=uint128.ml
+	SOURCES=str_conv.ml uint128.ml
 	OCAMLNCFLAGS=uint64.cmxa
 	OCAMLBCFLAGS=uint64.cma
 	RESULT=uint128

@@ -164,7 +164,7 @@ let of_float x =
 let to_float x =
   Uint64.to_float x.lo
 
-module Fmt = Fmt.Make(struct
+module Conv = Str_conv.Make(struct
   type t      = uint128
   let name    = "Uint128"
   let zero    = zero
@@ -176,5 +176,5 @@ module Fmt = Fmt.Make(struct
   let divmod  = divmod
 end)
 
-let to_string = Fmt.to_string
-let of_string = Fmt.of_string
+let to_string = Conv.to_string
+let of_string = Conv.of_string
