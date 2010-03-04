@@ -57,6 +57,7 @@ let rem x y = snd (divmod x y)
 module Conv = Str_conv.Make(struct
   type t      = uint64
   let name    = "Uint64"
+  let fmt     = "UL"
   let zero    = zero
   let of_int  = of_int
   let to_int  = to_int
@@ -67,5 +68,6 @@ end)
 
 let of_string = Conv.of_string
 let to_string = Conv.to_string
+let printer = Conv.printer
 
 let compare (x : t) (y : t) = Pervasives.compare x y

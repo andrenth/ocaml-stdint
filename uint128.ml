@@ -167,6 +167,7 @@ let to_float x =
 module Conv = Str_conv.Make(struct
   type t      = uint128
   let name    = "Uint128"
+  let fmt     = "ULL"
   let zero    = zero
   let of_int  = of_int
   let to_int  = to_int
@@ -177,3 +178,4 @@ end)
 
 let to_string = Conv.to_string
 let of_string = Conv.of_string
+let printer = Conv.printer

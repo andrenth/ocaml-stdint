@@ -31,3 +31,4 @@ val of_string : string -> uint128
 val to_string : uint128 -> string
 type t = uint128
 val compare : t -> t -> int
+val printer : Format.formatter -> uint128 -> unit

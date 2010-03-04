@@ -1,6 +1,7 @@
 module type UintSig = sig
   type t
   val name    : string
+  val fmt     : string
   val zero    : t
   val of_int  : int -> t
   val to_int  : t -> int
@@ -13,6 +14,7 @@ module type S = sig
   type t
   val of_string : string -> t
   val to_string : t -> string
+  val printer : Format.formatter -> t -> unit
 end
 
 module Make (U : UintSig) : S with type t = U.t = struct
@@ -71,4 +73,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
       done;
       String.sub buffer !i (String.length buffer - !i)
     end
+
+  let printer fmt x =
+    Format.fprintf fmt "@[%s@]" (to_string x ^ U.fmt)
 end

@@ -29,3 +29,4 @@ external bits_of_float : float -> uint32 = "caml_int32_bits_of_float"
 external float_of_bits : uint32 -> float = "caml_int32_float_of_bits"
 type t = uint32
 val compare : t -> t -> int
+val printer : Format.formatter -> uint32 -> unit

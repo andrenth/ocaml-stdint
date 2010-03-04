@@ -33,3 +33,4 @@ external bits_of_float : float -> uint64 = "caml_int64_bits_of_float"
 external float_of_bits : uint64 -> float = "caml_int64_float_of_bits"
 type t = uint64
 val compare : t -> t -> int
+val printer : Format.formatter -> uint64 -> unit
