@@ -21,6 +21,7 @@ let one = 1l
 let succ = add one
 let pred = sub one
 let max_int = -1l
+let min_int = 0l
 let lognot = logxor max_int
 
 let of_int32 x = x

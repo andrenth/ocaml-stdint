@@ -29,6 +29,7 @@ val one : uint64
 val succ : uint64 -> uint64
 val pred : uint64 -> uint64
 val max_int : uint64
+val min_int : uint64
 val lognot : uint64 -> uint64
 
 val to_string : uint64 -> string

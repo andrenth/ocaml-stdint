@@ -21,6 +21,7 @@ val one : uint128
 val succ : uint128 -> uint128
 val pred : uint128 -> uint128
 val max_int : uint128
+val min_int : uint128
 val lognot : uint128 -> uint128
 
 val of_string : string -> uint128

@@ -26,6 +26,7 @@ let one = 1L
 let succ = add one
 let pred x = sub x one
 let max_int = -1L
+let min_int = 0L
 let lognot = logxor max_int
 
 let u_ge x y =

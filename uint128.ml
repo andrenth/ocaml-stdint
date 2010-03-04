@@ -4,6 +4,7 @@ type t = uint128
 let zero = { lo = Uint64.zero; hi = Uint64.zero }
 let one = { lo = Uint64.one; hi = Uint64.zero }
 let max_int = { lo = Uint64.max_int; hi = Uint64.max_int }
+let min_int = { lo = Uint64.min_int; hi = Uint64.min_int }
 let compare x y =
   if x.hi > y.hi then 1
   else if x.hi < y.hi then -1
