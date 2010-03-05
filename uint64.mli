@@ -31,5 +31,5 @@ val to_string : uint64 -> string
 external bits_of_float : float -> uint64 = "uint64_bits_of_float"
 external float_of_bits : uint64 -> float = "uint64_float_of_bits"
 type t = uint64
-external compare : t -> t -> int = "uint64_compare"
+val compare : t -> t -> int
 val printer : Format.formatter -> uint64 -> unit

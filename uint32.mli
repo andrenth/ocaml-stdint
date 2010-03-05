@@ -27,5 +27,5 @@ val to_string : uint32 -> string
 external bits_of_float : float -> uint32 = "uint32_bits_of_float"
 external float_of_bits : uint32 -> float = "uint32_float_of_bits"
 type t = uint32
-external compare : t -> t -> int = "uint32_compare"
+val compare : t -> t -> int
 val printer : Format.formatter -> uint32 -> unit

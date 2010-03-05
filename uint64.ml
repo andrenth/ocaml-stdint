@@ -49,4 +49,7 @@ let of_string = Conv.of_string
 let to_string = Conv.to_string
 let printer = Conv.printer
 
-external compare : t -> t -> int = "uint64_compare"
+external init_custom_ops : unit -> unit = "uint64_init_custom_ops"
+let () = init_custom_ops ()
+
+let compare = Pervasives.compare

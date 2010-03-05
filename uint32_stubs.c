@@ -37,7 +37,7 @@ uint32_deserialize(void *dst)
 }
 
 struct custom_operations uint32_ops = {
-    "_u32",
+    "uint.uint32",
     custom_finalize_default,
     uint32_cmp,
     uint32_hash,
@@ -180,5 +180,8 @@ uint32_max_int(void)
 }
 
 CAMLprim value
+uint32_init_custom_ops(void)
 {
+    caml_register_custom_operations(&uint32_ops);
+    return Val_unit;
 }
