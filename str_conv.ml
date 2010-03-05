@@ -27,7 +27,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
       else if c >= 'a' && c <= 'f' then 87
       else failwith (U.name ^ ".of_string") in
     int_of_char c - disp
-  
+
   let of_string' s base =
     let base = U.of_int base in
     let res = ref U.zero in
@@ -55,7 +55,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
           of_string' (String.sub s 2 (len - 2)) base
         else
           of_string' s 10
-  
+
   let to_string x =
     let y = ref x in
     if !y = U.zero then
