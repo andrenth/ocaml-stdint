@@ -1,4 +1,4 @@
-type uint128 = { lo : Uint64.t; hi : Uint64.t }
+type uint128 = { hi : Uint64.t; lo : Uint64.t }
 type t = uint128
 
 let zero = { lo = Uint64.zero; hi = Uint64.zero }
@@ -6,11 +6,9 @@ let one = { lo = Uint64.one; hi = Uint64.zero }
 let max_int = { lo = Uint64.max_int; hi = Uint64.max_int }
 let min_int = { lo = Uint64.min_int; hi = Uint64.min_int }
 let compare x y =
-  if x.hi > y.hi then 1
-  else if x.hi < y.hi then -1
-  else if x.lo > y.lo then 1
-  else if x.lo < y.lo then -1
-  else 0
+  let cmp = Uint64.compare x.hi y.hi in
+  if cmp <> 0 then cmp
+  else Uint64.compare x.lo y.lo
 
 let add x y =
   let l = Uint64.add x.lo y.lo in

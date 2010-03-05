@@ -66,4 +66,7 @@ let of_string = Conv.of_string
 let to_string = Conv.to_string
 let printer = Conv.printer
 
-let compare (x : t) (y : t) = Pervasives.compare x y
+let compare (x : t) (y : t) =
+  if y < 0l && x >= 0l then -1
+  else if x < 0l && y >= 0l then 1
+  else Pervasives.compare x y

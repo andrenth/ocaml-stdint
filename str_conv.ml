@@ -31,7 +31,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
   let of_string' s base =
     let base = U.of_int base in
     let res = ref U.zero in
-    for i = 0 to String.length s -1 do
+    for i = 0 to String.length s - 1 do
       let c = s.[i] in
       if c <> '_' then
         res := U.add (U.mul !res base) (U.of_int (digit_of_char c))
@@ -61,7 +61,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
     if !y = U.zero then
       "0"
     else begin
-      let buffer = String.make 42 'x' in
+      let buffer = String.create 42 in
       let conv = "0123456789abcdef" in
       let base = U.of_int 10 in
       let i = ref (String.length buffer) in
