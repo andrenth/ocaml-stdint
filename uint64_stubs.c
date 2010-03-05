@@ -6,13 +6,13 @@
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
 
-#define Uint64_val(v) (*((uint64_t *)Data_custom_val(v)))
+#define Uint64_val(v) (*((uint64 *)Data_custom_val(v)))
 
 static int
 uint64_cmp(value v1, value v2)
 {
-    uint64_t i1 = Uint64_val(v1);
-    uint64_t i2 = Uint64_val(v2);
+    uint64 i1 = Uint64_val(v1);
+    uint64 i2 = Uint64_val(v2);
     return (i1 > i2) - (i1 < i2);
 }
 
@@ -32,7 +32,7 @@ uint64_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
 static uintnat
 uint64_deserialize(void *dst)
 {
-    *((uint64_t *) dst) = caml_deserialize_uint_8();
+    *((uint64 *) dst) = caml_deserialize_uint_8();
     return 8;
 }
 
@@ -46,7 +46,7 @@ struct custom_operations uint64_ops = {
 };
 
 CAMLprim value
-copy_uint64(uint64_t i)
+copy_uint64(uint64 i)
 {
     value res = caml_alloc_custom(&uint64_ops, 8, 0, 1);
     Uint64_val(res) = i;
@@ -83,7 +83,7 @@ uint64_div(value v1, value v2)
 CAMLprim value
 uint64_mod(value v1, value v2)
 {
-    uint64_t divisor = Uint64_val(v2);
+    uint64 divisor = Uint64_val(v2);
     if (divisor == 0)
         caml_raise_zero_divide();
     return copy_uint64(Uint64_val(v1) % divisor);
@@ -182,7 +182,7 @@ uint64_to_float(value v)
 CAMLprim value
 uint64_bits_of_float(value vd)
 {
-    union { float d; uint64_t i; } u;
+    union { float d; uint64 i; } u;
     u.d = Double_val(vd);
     return copy_uint64(u.i);
 }
@@ -190,7 +190,7 @@ uint64_bits_of_float(value vd)
 CAMLprim value
 uint64_float_of_bits(value vi)
 {
-    union { float d; uint64_t i; } u;
+    union { float d; uint64 i; } u;
     u.i = Uint64_val(vi);
     return caml_copy_double(u.d);
 }
