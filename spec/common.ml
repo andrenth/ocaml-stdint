@@ -41,11 +41,6 @@ describe "An unsigned integer" do
       (to_int (shift_right (of_int x) y)) should = (x asr y)
   done;
 
-  it "should perform logical right-shifts correctly" do
-    forall int x . forall (int_in_range 0 31) y .
-      (to_int (shift_right_logical (of_int x) y)) should = (x lsr y)
-  done;
-
   it "should perform float conversions correctly" do
     forall float x .
       (to_float (of_float x)) should = (float_of_int (int_of_float x))
