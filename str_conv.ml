@@ -14,7 +14,13 @@ module type S = sig
   type t
   val of_string : string -> t
   val to_string : t -> string
+  val to_string2 : t -> string
+  val to_string8 : t -> string
+  val to_string16 : t -> string
   val printer : Format.formatter -> t -> unit
+  val printer2 : Format.formatter -> t -> unit
+  val printer8 : Format.formatter -> t -> unit
+  val printer16 : Format.formatter -> t -> unit
 end
 
 module Make (U : UintSig) : S with type t = U.t = struct
@@ -56,14 +62,14 @@ module Make (U : UintSig) : S with type t = U.t = struct
         else
           of_string' s 10
 
-  let to_string x =
+  let to_string_base base prefix x =
     let y = ref x in
     if !y = U.zero then
       "0"
     else begin
       let buffer = String.create 42 in
       let conv = "0123456789abcdef" in
-      let base = U.of_int 10 in
+      let base = U.of_int base in
       let i = ref (String.length buffer) in
       while !y <> U.zero do
         let x', digit = U.divmod !y base in
@@ -71,9 +77,19 @@ module Make (U : UintSig) : S with type t = U.t = struct
         decr i;
         buffer.[!i] <- conv.[U.to_int digit]
       done;
-      String.sub buffer !i (String.length buffer - !i)
+      prefix ^ String.sub buffer !i (String.length buffer - !i)
     end
 
-  let printer fmt x =
-    Format.fprintf fmt "@[%s@]" (to_string x ^ U.fmt)
+  let to_string = to_string_base 10 ""
+  let to_string2 = to_string_base 2 "0b"
+  let to_string8 = to_string_base 8 "0o"
+  let to_string16 = to_string_base 16 "0x"
+
+  let print_with f fmt x =
+    Format.fprintf fmt "@[%s@]" (f x ^ U.fmt)
+
+  let printer = print_with to_string
+  let printer2 = print_with to_string2
+  let printer8 = print_with to_string8
+  let printer16 = print_with to_string16
 end

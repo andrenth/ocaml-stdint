@@ -175,5 +175,11 @@ module Conv = Str_conv.Make(struct
 end)
 
 let to_string = Conv.to_string
+let to_string2 = Conv.to_string2
+let to_string8 = Conv.to_string8
+let to_string16 = Conv.to_string16
 let of_string = Conv.of_string
 let printer = Conv.printer
+let printer2 = Conv.printer2
+let printer8 = Conv.printer8
+let printer16 = Conv.printer16

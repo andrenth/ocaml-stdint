@@ -29,6 +29,12 @@ val of_nativeint : nativeint -> uint128
 val to_nativeint : uint128 -> nativeint
 val of_string : string -> uint128
 val to_string : uint128 -> string
+val to_string2 : uint128 -> string
+val to_string8 : uint128 -> string
+val to_string16 : uint128 -> string
 type t = uint128
 val compare : t -> t -> int
 val printer : Format.formatter -> uint128 -> unit
+val printer2 : Format.formatter -> uint128 -> unit
+val printer8 : Format.formatter -> uint128 -> unit
+val printer16 : Format.formatter -> uint128 -> unit
