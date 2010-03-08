@@ -31,7 +31,7 @@ describe "An unsigned integer" do
     forall int x . (to_int (lognot (of_int x))) should = (lnot x)
   done;
 
-  it "shoult perform left-shifts correctly" do
+  it "should perform left-shifts correctly" do
     forall int x . forall (int_in_range 0 31) y .
       (to_int (shift_left (of_int x) y)) should = (x lsl y)
   done;
