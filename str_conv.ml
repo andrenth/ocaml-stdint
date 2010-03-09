@@ -3,6 +3,7 @@ module type UintSig = sig
   val name    : string
   val fmt     : string
   val zero    : t
+  val max_int : t
   val of_int  : int -> t
   val to_int  : t -> int
   val add     : t -> t -> t
@@ -37,10 +38,15 @@ module Make (U : UintSig) : S with type t = U.t = struct
   let of_string' s base =
     let base = U.of_int base in
     let res = ref U.zero in
+    let thresh = fst (U.divmod U.max_int base) in
     for i = 0 to String.length s - 1 do
       let c = s.[i] in
-      if c <> '_' then
-        res := U.add (U.mul !res base) (U.of_int (digit_of_char c))
+      if !res > thresh then failwith (U.name ^ ".of_string");
+      if c <> '_' then begin
+        let d = U.of_int (digit_of_char c) in
+        res := U.add (U.mul !res base) d;
+        if !res < d then failwith (U.name ^ ".of_string");
+      end
     done;
     !res
 

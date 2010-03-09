@@ -167,6 +167,7 @@ module Conv = Str_conv.Make(struct
   let name    = "Uint128"
   let fmt     = "ULL"
   let zero    = zero
+  let max_int = max_int
   let of_int  = of_int
   let to_int  = to_int
   let add     = add
