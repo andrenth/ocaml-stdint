@@ -51,7 +51,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
     | 0 -> invalid_arg fail
     | 1 | 2 -> of_string' s 10
     | _ ->
-        if s.[0] = '0' then
+        if s.[0] = '0' && (s.[1] < '0' || s.[1] > '9') then
           let base =
             match s.[1] with
             | 'b' | 'B' -> 2
