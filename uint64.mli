@@ -28,14 +28,14 @@ external of_int64 : int64 -> uint64 = "uint64_of_int64"
 external to_int64 : uint64 -> int64 = "uint64_to_int64"
 val of_string : string -> uint64
 val to_string : uint64 -> string
-val to_string2 : uint64 -> string
-val to_string8 : uint64 -> string
-val to_string16 : uint64 -> string
+val to_string_bin : uint64 -> string
+val to_string_oct : uint64 -> string
+val to_string_hex : uint64 -> string
 external bits_of_float : float -> uint64 = "uint64_bits_of_float"
 external float_of_bits : uint64 -> float = "uint64_float_of_bits"
 type t = uint64
 val compare : t -> t -> int
 val printer : Format.formatter -> uint64 -> unit
-val printer2 : Format.formatter -> uint64 -> unit
-val printer8 : Format.formatter -> uint64 -> unit
-val printer16 : Format.formatter -> uint64 -> unit
+val printer_bin : Format.formatter -> uint64 -> unit
+val printer_oct : Format.formatter -> uint64 -> unit
+val printer_hex : Format.formatter -> uint64 -> unit

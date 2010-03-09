@@ -14,13 +14,13 @@ module type S = sig
   type t
   val of_string : string -> t
   val to_string : t -> string
-  val to_string2 : t -> string
-  val to_string8 : t -> string
-  val to_string16 : t -> string
+  val to_string_bin : t -> string
+  val to_string_oct : t -> string
+  val to_string_hex : t -> string
   val printer : Format.formatter -> t -> unit
-  val printer2 : Format.formatter -> t -> unit
-  val printer8 : Format.formatter -> t -> unit
-  val printer16 : Format.formatter -> t -> unit
+  val printer_bin : Format.formatter -> t -> unit
+  val printer_oct : Format.formatter -> t -> unit
+  val printer_hex : Format.formatter -> t -> unit
 end
 
 module Make (U : UintSig) : S with type t = U.t = struct
@@ -81,15 +81,15 @@ module Make (U : UintSig) : S with type t = U.t = struct
     end
 
   let to_string = to_string_base 10 ""
-  let to_string2 = to_string_base 2 "0b"
-  let to_string8 = to_string_base 8 "0o"
-  let to_string16 = to_string_base 16 "0x"
+  let to_string_bin = to_string_base 2 "0b"
+  let to_string_oct = to_string_base 8 "0o"
+  let to_string_hex = to_string_base 16 "0x"
 
   let print_with f fmt x =
     Format.fprintf fmt "@[%s@]" (f x ^ U.fmt)
 
   let printer = print_with to_string
-  let printer2 = print_with to_string2
-  let printer8 = print_with to_string8
-  let printer16 = print_with to_string16
+  let printer_bin = print_with to_string_bin
+  let printer_oct = print_with to_string_oct
+  let printer_hex = print_with to_string_hex
 end

@@ -24,14 +24,14 @@ val of_int32 : int32 -> uint32
 val to_int32 : uint32 -> int32
 val of_string : string -> uint32
 val to_string : uint32 -> string
-val to_string2 : uint32 -> string
-val to_string8 : uint32 -> string
-val to_string16 : uint32 -> string
+val to_string_bin : uint32 -> string
+val to_string_oct : uint32 -> string
+val to_string_hex : uint32 -> string
 external bits_of_float : float -> uint32 = "uint32_bits_of_float"
 external float_of_bits : uint32 -> float = "uint32_float_of_bits"
 type t = uint32
 val compare : t -> t -> int
 val printer : Format.formatter -> uint32 -> unit
-val printer2 : Format.formatter -> uint32 -> unit
-val printer8 : Format.formatter -> uint32 -> unit
-val printer16 : Format.formatter -> uint32 -> unit
+val printer_bin : Format.formatter -> uint32 -> unit
+val printer_oct : Format.formatter -> uint32 -> unit
+val printer_hex : Format.formatter -> uint32 -> unit
