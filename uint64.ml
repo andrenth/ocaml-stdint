@@ -39,6 +39,7 @@ module Conv = Str_conv.Make(struct
   let fmt     = "UL"
   let zero    = zero
   let max_int = max_int
+  let bits    = 64
   let of_int  = of_int
   let to_int  = to_int
   let add     = add

@@ -4,6 +4,7 @@ module type UintSig = sig
   val fmt     : string
   val zero    : t
   val max_int : t
+  val bits    : int
   val of_int  : int -> t
   val to_int  : t -> int
   val add     : t -> t -> t
@@ -73,7 +74,7 @@ module Make (U : UintSig) : S with type t = U.t = struct
     if !y = U.zero then
       "0"
     else begin
-      let buffer = String.create 42 in
+      let buffer = String.create U.bits in
       let conv = "0123456789abcdef" in
       let base = U.of_int base in
       let i = ref (String.length buffer) in
