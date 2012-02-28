@@ -1,0 +1,9 @@
+.gitignore
+_build/
+_tags
+lib/*.mllib
+lib/*.clib
+lib/*.odocl
+myocamlbuild.ml
+setup.*
+*.native
