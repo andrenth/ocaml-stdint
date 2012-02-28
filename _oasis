@@ -1,0 +1,40 @@
+OASISFormat: 0.2
+Name:        uint
+Version:     0.1
+Synopsis:    Unsigned ints for OCaml
+Authors:     Andre Nathan, Jeff Shaw
+LicenseFile: LICENSE
+License:     BSD3
+
+Library uint
+  Path:        lib
+  BuildTools:  ocamlbuild
+
+Library uint32
+  Path:            lib
+  BuildTools:      ocamlbuild
+  FindlibName:     uint32
+  FindlibParent:   uint
+  CompiledObject:  best
+  Modules:         Uint32
+  InternalModules: Str_conv
+  CSources:        uint32_stubs.c
+
+Library uint64
+  Path:            lib
+  BuildTools:      ocamlbuild
+  FindlibName:     uint64
+  FindlibParent:   uint
+  CompiledObject:  best
+  Modules:         Uint64
+  InternalModules: Str_conv
+  CSources:        uint64_stubs.c
+
+Library uint128
+  Path:            lib
+  BuildTools:      ocamlbuild
+  FindlibName:     uint128
+  FindlibParent:   uint
+  CompiledObject:  best
+  Modules:         Uint128
+  InternalModules: Str_conv

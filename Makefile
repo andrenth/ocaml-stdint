@@ -1,43 +1,15 @@
-export OCAMLMAKEFILE = OCamlMakefile
-export LIBINSTALL_FILES=$(wildcard *.mli *.cmi *.cma *.cmx *.cmxa *.a *.so)
+all:
+	@#ocaml setup.ml -build -classic-display
+	ocaml setup.ml -build
 
-define PROJ_uint32
-	SOURCES=str_conv.ml uint32_stubs.c uint32.mli uint32.ml
-	RESULT=uint32
-endef
+configure:
+	oasis setup && ocaml setup.ml -configure
 
-define PROJ_uint64
-	SOURCES=str_conv.ml uint64_stubs.c uint64.mli uint64.ml
-	RESULT=uint64
-endef
+install:
+	ocaml setup.ml -install
 
-define PROJ_uint128
-	SOURCES=str_conv.ml uint128.ml
-	OCAMLNCFLAGS=uint64.cmxa
-	OCAMLBCFLAGS=uint64.cma
-	RESULT=uint128
-endef
+clean:
+	ocaml setup.ml -clean
 
-ifndef SUBPROJS
-  export SUBPROJS = uint32 uint64 uint128
-endif
-
-export PROJ_uint32 PROJ_uint64 PROJ_uint128
-
-all: byte-code-library native-code-library
-
-install: all
-	@printf "\nInstalling library with ocamlfind\n"
-	@ocamlfind install uint META $(LIBINSTALL_FILES)
-	@printf "\nInstallation successful.\n"
-
-uninstall:
-	@printf "\nUninstalling library with ocamlfind\n"
-	@ocamlfind remove uint
-	@printf "\nUninstallation successful.\n"
-
-spec: all
-	ospec spec/uint*.ml
-
-%:
-	make -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@
+doc:
+	ocaml setup.ml -doc

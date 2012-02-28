@@ -1,19 +1,19 @@
 name = "uint"
-version = "0.0.0"
+version = "0.1.0"
 description = "OCaml unsigned ints"
 package "uint32" (
-  version = "0.0.0"
+  version = "0.1.0"
   archive(byte) = "uint32.cma"
   archive(native) = "uint32.cmxa"
 )
 package "uint64" (
-  version = "0.0.0"
+  version = "0.1.0"
   archive(byte) = "uint64.cma"
   archive(native) = "uint64.cmxa"
 )
 package "uint128" (
   requires = "uint.uint64"
-  version = "0.0.0"
+  version = "0.1.0"
   archive(byte) = "uint128.cma"
   archive(native) = "uint128.cmxa"
 )
