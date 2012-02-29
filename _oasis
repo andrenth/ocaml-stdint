@@ -38,3 +38,10 @@ Library uint128
   CompiledObject:  best
   Modules:         Uint128
   InternalModules: Str_conv
+
+Test spec
+  TestTools:        ospec
+  WorkingDirectory: _build/lib
+  PreCommand:       cp -r ../../spec .
+  Command:          ospec spec/uint*.ml
+  PostCommand:      rm -rf spec
