@@ -1,8 +1,11 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 
+#include <caml/alloc.h>
 #include <caml/custom.h>
+#include <caml/fail.h>
+#include <caml/intext.h>
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
 
