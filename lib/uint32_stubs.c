@@ -172,7 +172,7 @@ CAMLprim value
 uint32_to_int32(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (caml_copy_int32(Uint32_val(v)));
+    CAMLreturn (caml_copy_int32((int32)Uint32_val(v)));
 }
 
 CAMLprim value

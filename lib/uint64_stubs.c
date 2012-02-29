@@ -186,7 +186,7 @@ CAMLprim value
 uint64_to_int64(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (caml_copy_int64(Uint64_val(v)));
+    CAMLreturn (caml_copy_int64((int64)Uint64_val(v)));
 }
 
 CAMLprim value
