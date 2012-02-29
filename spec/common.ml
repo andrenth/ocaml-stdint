@@ -28,12 +28,12 @@ describe "An unsigned integer" do
   done;
 
   it "should perform logical not correctly" do
-    forall int x . (to_int (lognot (of_int x))) should = (lnot x)
+    forall int32 x . (to_int32 (lognot (of_int32 x))) should = (Int32.lognot x)
   done;
 
   it "should perform left-shifts correctly" do
-    forall int x . forall (int_in_range 0 31) y .
-      (to_int (shift_left (of_int x) y)) should = (x lsl y)
+    forall int32 x . forall (int_in_range 0 31) y .
+      (to_int32 (shift_left (of_int32 x) y)) should = (Int32.shift_left x y)
   done;
 
   it "shoult perform right-shifts correctly" do
