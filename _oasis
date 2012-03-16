@@ -9,35 +9,36 @@ License:     MIT
 Library uint
   Path:        lib
   BuildTools:  ocamlbuild
+  Modules:     Uint
 
 Library uint32
   Path:            lib
   BuildTools:      ocamlbuild
+  BuildDepends:    uint
   FindlibName:     uint32
   FindlibParent:   uint
   CompiledObject:  best
   Modules:         Uint32
-  InternalModules: Str_conv
   CSources:        uint32_stubs.c
 
 Library uint64
   Path:            lib
   BuildTools:      ocamlbuild
+  BuildDepends:    uint
   FindlibName:     uint64
   FindlibParent:   uint
   CompiledObject:  best
   Modules:         Uint64
-  InternalModules: Str_conv
   CSources:        uint64_stubs.c
 
 Library uint128
   Path:            lib
   BuildTools:      ocamlbuild
+  BuildDepends:    uint
   FindlibName:     uint128
   FindlibParent:   uint
   CompiledObject:  best
   Modules:         Uint128
-  InternalModules: Str_conv
 
 Test spec
   TestTools:        ospec

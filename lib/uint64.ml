@@ -33,7 +33,7 @@ let max_int = max_int_fun ()
 let min_int = zero
 let lognot = logxor max_int
 
-module Conv = Str_conv.Make(struct
+module Conv = Uint.Str_conv.Make(struct
   type t      = uint64
   let name    = "Uint64"
   let fmt     = "UL"

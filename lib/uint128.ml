@@ -162,7 +162,7 @@ let of_float x =
 let to_float x =
   Uint64.to_float x.lo
 
-module Conv = Str_conv.Make(struct
+module Conv = Uint.Str_conv.Make(struct
   type t      = uint128
   let name    = "Uint128"
   let fmt     = "ULL"
