@@ -1,15 +1,16 @@
 OASISFormat: 0.2
 Name:        uint
-Version:     1.0.1
+Version:     1.0.2
 Synopsis:    Unsigned ints for OCaml
 Authors:     Andre Nathan, Jeff Shaw
 LicenseFile: LICENSE
 License:     MIT
 
 Library uint
-  Path:        lib
-  BuildTools:  ocamlbuild
-  Modules:     Uint
+  Path:            lib
+  BuildTools:      ocamlbuild
+  CompiledObject:  best
+  Modules:         Uint
 
 Library uint32
   Path:            lib
