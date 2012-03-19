@@ -1,0 +1,13 @@
+# OASIS_START
+# DO NOT EDIT (digest: 06dd31ccb98006db63f5bd1b10f72e95)
+# Library uint
+# Library uint64
+<lib/uint64.{cma,cmxa}>: use_libuint64
+"lib/uint64_stubs.c": use_uint
+# Library uint128
+# Library uint32
+"lib": include
+<lib/uint32.{cma,cmxa}>: use_libuint32
+<lib/*.ml{,i}>: use_uint
+"lib/uint32_stubs.c": use_uint
+# OASIS_STOP
