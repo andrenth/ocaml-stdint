@@ -47,3 +47,11 @@ Test spec
   PreCommand:       cp -r ../../spec .
   Command:          ospec spec/uint*.ml
   PostCommand:      rm -rf spec
+
+Document uint
+  Title:                Uint documentation
+  Type:                 ocamlbuild (0.2)
+  BuildTools:           ocamlbuild
+  BuildTools+:          ocamldoc
+  XOCamlbuildPath:      lib
+  XOCamlbuildLibraries: uint
