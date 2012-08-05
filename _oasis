@@ -1,6 +1,6 @@
-OASISFormat: 0.2
+OASISFormat: 0.3
 Name:        uint
-Version:     1.0.2
+Version:     1.0.3
 Synopsis:    Unsigned ints for OCaml
 Authors:     Andre Nathan, Jeff Shaw
 LicenseFile: LICENSE
