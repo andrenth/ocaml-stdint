@@ -50,7 +50,7 @@ Test spec
 
 Document uint
   Title:                Uint documentation
-  Type:                 ocamlbuild (0.2)
+  Type:                 ocamlbuild (0.3)
   BuildTools:           ocamlbuild
   BuildTools+:          ocamldoc
   XOCamlbuildPath:      lib
