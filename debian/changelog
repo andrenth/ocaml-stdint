@@ -1,3 +1,9 @@
+ocaml-uint (1.0.3-0digirati1) precise; urgency=low
+
+  * Rebuild for 1.0.3
+
+ -- Andre Nathan <andre@digirati.com.br>  Wed, 27 Aug 2012 11:25:53 -0300
+
 ocaml-uint (1.0.2-0digirati1) precise; urgency=low
 
   * First build
