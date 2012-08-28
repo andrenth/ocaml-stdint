@@ -2,4 +2,5 @@
 @OCamlStdlibDir@/uint/*.ml*
 @OCamlStdlibDir@/uint/*.a
 OPT: @OCamlStdlibDir@/uint/*.cmxa
+DYN: @OCamlStdlibDir@/uint/*.cmxs
 usr/share/doc/libuint-ocaml-dev
