@@ -9,7 +9,7 @@
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
 
-#define Uint32_val(v) (*((uint32 *)Data_custom_val(v)))
+#include "ocaml_uint32.h"
 
 static int
 uint32_cmp(value v1, value v2)
