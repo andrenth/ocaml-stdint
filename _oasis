@@ -20,7 +20,7 @@ Library uint32
   FindlibParent:   uint
   CompiledObject:  best
   Modules:         Uint32
-  CSources:        uint32_stubs.c
+  CSources:        uint32_stubs.c, ocaml_uint32.h
 
 Library uint64
   Path:            lib
@@ -30,7 +30,7 @@ Library uint64
   FindlibParent:   uint
   CompiledObject:  best
   Modules:         Uint64
-  CSources:        uint64_stubs.c
+  CSources:        uint64_stubs.c, ocaml_uint64.h
 
 Library uint128
   Path:            lib
