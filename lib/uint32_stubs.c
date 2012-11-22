@@ -9,7 +9,7 @@
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
 
-#include "ocaml_uint32.h"
+#include "uint32.h"
 
 static int
 uint32_cmp(value v1, value v2)

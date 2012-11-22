@@ -1,7 +1,7 @@
 (* OASIS_START *)
-(* DO NOT EDIT (digest: 8d3b75e611429bd4a178b5481c59b045) *)
+(* DO NOT EDIT (digest: 5399c6fb548c0e19bd03abda93e6c1b7) *)
 module OASISGettext = struct
-# 21 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/oasis/OASISGettext.ml"
+# 21 "/home/andre/src/oasis-0.3.0/src/oasis/OASISGettext.ml"
 
   let ns_ str =
     str
@@ -24,7 +24,7 @@ module OASISGettext = struct
 end
 
 module OASISExpr = struct
-# 21 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/oasis/OASISExpr.ml"
+# 21 "/home/andre/src/oasis-0.3.0/src/oasis/OASISExpr.ml"
 
 
 
@@ -116,7 +116,7 @@ end
 
 # 117 "myocamlbuild.ml"
 module BaseEnvLight = struct
-# 21 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/base/BaseEnvLight.ml"
+# 21 "/home/andre/src/oasis-0.3.0/src/base/BaseEnvLight.ml"
 
   module MapString = Map.Make(String)
 
@@ -214,7 +214,7 @@ end
 
 # 215 "myocamlbuild.ml"
 module MyOCamlbuildFindlib = struct
-# 21 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/plugins/ocamlbuild/MyOCamlbuildFindlib.ml"
+# 21 "/home/andre/src/oasis-0.3.0/src/plugins/ocamlbuild/MyOCamlbuildFindlib.ml"
 
   (** OCamlbuild extension, copied from 
     * http://brion.inria.fr/gallium/index.php/Using_ocamlfind_with_ocamlbuild
@@ -323,7 +323,7 @@ module MyOCamlbuildFindlib = struct
 end
 
 module MyOCamlbuildBase = struct
-# 21 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/plugins/ocamlbuild/MyOCamlbuildBase.ml"
+# 21 "/home/andre/src/oasis-0.3.0/src/plugins/ocamlbuild/MyOCamlbuildBase.ml"
 
   (** Base functions for writing myocamlbuild.ml
       @author Sylvain Le Gall
@@ -339,7 +339,7 @@ module MyOCamlbuildBase = struct
   type name = string 
   type tag = string 
 
-# 56 "/home/gereedy/.opam/system/build/oasis.0.3.0/src/plugins/ocamlbuild/MyOCamlbuildBase.ml"
+# 56 "/home/andre/src/oasis-0.3.0/src/plugins/ocamlbuild/MyOCamlbuildBase.ml"
 
   type t =
       {
@@ -486,8 +486,8 @@ let package_default =
        ];
      lib_c =
        [
-          ("uint32", "lib", ["lib/ocaml_uint32.h"]);
-          ("uint64", "lib", ["lib/ocaml_uint64.h"])
+          ("uint32", "lib", ["lib/uint32.h"]);
+          ("uint64", "lib", ["lib/uint64.h"])
        ];
      flags = [];
      includes = [];
