@@ -1,25 +1,26 @@
-type uint32
+type t
+type uint32 = t
 val zero : uint32
 val one : uint32
-external add : uint32 -> uint32 -> uint32 = "uint32_add"
-external sub : uint32 -> uint32 -> uint32 = "uint32_sub"
-external mul : uint32 -> uint32 -> uint32 = "uint32_mul"
-external div : uint32 -> uint32 -> uint32 = "uint32_div"
-external rem : uint32 -> uint32 -> uint32 = "uint32_mod"
+val add : uint32 -> uint32 -> uint32
+val sub : uint32 -> uint32 -> uint32
+val mul : uint32 -> uint32 -> uint32
+val div : uint32 -> uint32 -> uint32
+val rem : uint32 -> uint32 -> uint32
 val succ : uint32 -> uint32
 val pred : uint32 -> uint32
 val max_int : uint32
 val min_int : uint32
-external logand : uint32 -> uint32 -> uint32 = "uint32_and"
-external logor : uint32 -> uint32 -> uint32 = "uint32_or"
-external logxor : uint32 -> uint32 -> uint32 = "uint32_xor"
+val logand : uint32 -> uint32 -> uint32
+val logor : uint32 -> uint32 -> uint32
+val logxor : uint32 -> uint32 -> uint32
 val lognot : uint32 -> uint32
-external shift_left : uint32 -> int -> uint32 = "uint32_shift_left"
-external shift_right : uint32 -> int -> uint32 = "uint32_shift_right"
-external of_int : int -> uint32 = "uint32_of_int"
-external to_int : uint32 -> int = "uint32_to_int"
-external of_float : float -> uint32 = "uint32_of_float"
-external to_float : uint32 -> float = "uint32_to_float"
+val shift_left : uint32 -> int -> uint32
+val shift_right : uint32 -> int -> uint32
+val of_int : int -> uint32
+val to_int : uint32 -> int
+val of_float : float -> uint32
+val to_float : uint32 -> float
 val of_int32 : int32 -> uint32
 val to_int32 : uint32 -> int32
 val of_string : string -> uint32
@@ -27,9 +28,8 @@ val to_string : uint32 -> string
 val to_string_bin : uint32 -> string
 val to_string_oct : uint32 -> string
 val to_string_hex : uint32 -> string
-external bits_of_float : float -> uint32 = "uint32_bits_of_float"
-external float_of_bits : uint32 -> float = "uint32_float_of_bits"
-type t = uint32
+val bits_of_float : float -> uint32
+val float_of_bits : uint32 -> float
 val compare : t -> t -> int
 val printer : Format.formatter -> uint32 -> unit
 val printer_bin : Format.formatter -> uint32 -> unit

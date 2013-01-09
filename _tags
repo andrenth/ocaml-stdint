@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: feb24c181b178d6b6aca763813a7fe3a)
+# DO NOT EDIT (digest: a596da88232072e3c7520d5503ebcc50)
 # Ignore VCS directories, you can use the same kind of rule outside 
 # OASIS_START/STOP if you want to exclude directories that contains 
 # useless stuff for the build process
@@ -15,15 +15,5 @@
 "_darcs": not_hygienic
 # Library uint
 "lib/uint.cmxs": use_uint
-# Library uint32
-"lib/uint32.cmxs": use_uint32
-<lib/uint32.{cma,cmxa}>: use_libuint32_stubs
-"lib/uint32_stubs.c": use_uint
-# Library uint64
-"lib/uint64.cmxs": use_uint64
-<lib/uint64.{cma,cmxa}>: use_libuint64_stubs
-"lib/uint64_stubs.c": use_uint
-# Library uint128
-"lib/uint128.cmxs": use_uint128
-<lib/*.ml{,i}>: use_uint
+<lib/uint.{cma,cmxa}>: use_libuint_stubs
 # OASIS_STOP

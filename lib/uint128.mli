@@ -1,4 +1,5 @@
-type uint128
+type t
+type uint128 = t
 val zero : uint128
 val one : uint128
 val add : uint128 -> uint128 -> uint128
@@ -32,7 +33,6 @@ val to_string : uint128 -> string
 val to_string_bin : uint128 -> string
 val to_string_oct : uint128 -> string
 val to_string_hex : uint128 -> string
-type t = uint128
 val compare : t -> t -> int
 val printer : Format.formatter -> uint128 -> unit
 val printer_bin : Format.formatter -> uint128 -> unit
