@@ -14,8 +14,8 @@
 static int
 uint64_cmp(value v1, value v2)
 {
-    uint64 i1 = Uint64_val(v1);
-    uint64 i2 = Uint64_val(v2);
+    uint64_t i1 = Uint64_val(v1);
+    uint64_t i2 = Uint64_val(v2);
     return (i1 > i2) - (i1 < i2);
 }
 
@@ -35,7 +35,7 @@ uint64_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
 static uintnat
 uint64_deserialize(void *dst)
 {
-    *((uint64 *) dst) = caml_deserialize_uint_8();
+    *((uint64_t *) dst) = caml_deserialize_uint_8();
     return 8;
 }
 
@@ -49,7 +49,7 @@ struct custom_operations uint64_ops = {
 };
 
 CAMLprim value
-copy_uint64(uint64 i)
+copy_uint64(uint64_t i)
 {
     CAMLparam0();
     value res = caml_alloc_custom(&uint64_ops, 8, 0, 1);
@@ -82,7 +82,7 @@ CAMLprim value
 uint64_div(value v1, value v2)
 {
     CAMLparam2(v1, v2);
-    uint64 divisor = Uint64_val(v2);
+    uint64_t divisor = Uint64_val(v2);
     if (divisor == 0)
         caml_raise_zero_divide();
     CAMLreturn (copy_uint64(Uint64_val(v1) / divisor));
@@ -92,7 +92,7 @@ CAMLprim value
 uint64_mod(value v1, value v2)
 {
     CAMLparam2(v1, v2);
-    uint64 divisor = Uint64_val(v2);
+    uint64_t divisor = Uint64_val(v2);
     if (divisor == 0)
         caml_raise_zero_divide();
     CAMLreturn (copy_uint64(Uint64_val(v1) % divisor));
@@ -207,7 +207,7 @@ CAMLprim value
 uint64_bits_of_float(value v)
 {
     CAMLparam1(v);
-    union { double d; uint64 i; uint32 h[2]; } u;
+    union { double d; uint64_t i; uint32 h[2]; } u;
     u.d = Double_val(v);
     CAMLreturn (copy_uint64(u.i));
 }
@@ -216,7 +216,7 @@ CAMLprim value
 uint64_float_of_bits(value v)
 {
     CAMLparam1(v);
-    union { double d; uint64 i; uint32 h[2]; } u;
+    union { double d; uint64_t i; uint32 h[2]; } u;
     u.i = Uint64_val(v);
     CAMLreturn (caml_copy_double(u.d));
 }
