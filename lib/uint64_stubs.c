@@ -207,7 +207,7 @@ CAMLprim value
 uint64_bits_of_float(value v)
 {
     CAMLparam1(v);
-    union { double d; uint64_t i; uint32 h[2]; } u;
+    union { double d; uint64_t i; uint32_t h[2]; } u;
     u.d = Double_val(v);
     CAMLreturn (copy_uint64(u.i));
 }
@@ -216,7 +216,7 @@ CAMLprim value
 uint64_float_of_bits(value v)
 {
     CAMLparam1(v);
-    union { double d; uint64_t i; uint32 h[2]; } u;
+    union { double d; uint64_t i; uint32_t h[2]; } u;
     u.i = Uint64_val(v);
     CAMLreturn (caml_copy_double(u.d));
 }
