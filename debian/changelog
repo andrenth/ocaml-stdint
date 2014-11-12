@@ -1,3 +1,9 @@
+ocaml-uint (1.1.5-0digirati1) trusty; urgency=low
+
+  * Version 1.1.5
+
+ -- Andre Nathan <andre@digirati.com.br>  Wed, 12 Nov 2014 12:50:31 -0200
+
 ocaml-uint (1.1.4-0digirati1) trusty; urgency=low
 
   * Version 1.1.4
