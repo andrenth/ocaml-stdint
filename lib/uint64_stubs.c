@@ -151,7 +151,7 @@ CAMLprim value
 uint64_of_int32(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (copy_uint64((uint32)Int32_val(v)));
+    CAMLreturn (copy_uint64((uint32_t)Int32_val(v)));
 }
 
 CAMLprim value
@@ -165,7 +165,7 @@ CAMLprim value
 uint64_of_nativeint(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (copy_uint64((uint32)Nativeint_val(v)));
+    CAMLreturn (copy_uint64((uint32_t)Nativeint_val(v)));
 }
 
 CAMLprim value
@@ -179,21 +179,21 @@ CAMLprim value
 uint64_of_int64(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (copy_uint64((uint64)Int64_val(v)));
+    CAMLreturn (copy_uint64((uint64_t)Int64_val(v)));
 }
 
 CAMLprim value
 uint64_to_int64(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (caml_copy_int64((int64)Uint64_val(v)));
+    CAMLreturn (caml_copy_int64((int64_t)Uint64_val(v)));
 }
 
 CAMLprim value
 uint64_of_float(value v)
 {
     CAMLparam1(v);
-    CAMLreturn (copy_uint64((uint64)Double_val(v)));
+    CAMLreturn (copy_uint64((uint64_t)Double_val(v)));
 }
 
 CAMLprim value
