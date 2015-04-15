@@ -11,11 +11,15 @@ Library uint
   BuildTools:      ocamlbuild
   CompiledObject:  best
   Modules:         Uint,
+                   Uint8,
+                   Uint16,
                    Uint32,
                    Uint64,
                    Uint128
-  CSources:        uint32_stubs.c, uint32.h, uint64_stubs.c, uint64.h
-  DataFiles:       uint32.h ($prefix/include/ocaml_uint),
+  CSources:        uint8_stubs.c, uint8.h, uint16_stubs.c, uint16.h, uint32_stubs.c, uint32.h, uint64_stubs.c, uint64.h
+  DataFiles:       uint8.h ($prefix/include/ocaml_uint),
+                   uint16.h ($prefix/include/ocaml_uint),
+                   uint32.h ($prefix/include/ocaml_uint),
                    uint64.h ($prefix/include/ocaml_uint)
 
 Test spec

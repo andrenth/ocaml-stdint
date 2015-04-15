@@ -4,6 +4,14 @@ description = "OCaml unsigned ints"
 archive(byte) = "uint.cma"
 archive(native) = "uint.cmxa"
 
+package "uint8" (
+  requires = "uint"
+  version = "1.1.5"
+)
+package "uint16" (
+  requires = "uint"
+  version = "1.1.5"
+)
 package "uint32" (
   requires = "uint"
   version = "1.1.5"
