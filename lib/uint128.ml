@@ -70,7 +70,7 @@ let shift_left x s =
   else if i < 64 then
     { lo = x.lo << i; hi = (x.hi << i) || (x.lo >> (64 - i)) }
   else
-    { lo = Uint64.zero; hi = x.lo << (i - 32) }
+    { lo = Uint64.zero; hi = x.lo << (i - 64) }
 
 let shift_right x s =
   let (<<) = Uint64.shift_left in
@@ -82,7 +82,7 @@ let shift_right x s =
   else if i < 64 then
     { lo = (x.lo >> i) || (x.hi << (64 - i)); hi = x.hi >> i }
   else
-     { lo = x.hi >> (i - 32); hi = x.hi >> 63 }
+    { lo = x.hi >> (i - 64); hi = x.hi >> 63 }
 
 let shift_right_logical x s =
   let (<<) = Uint64.shift_left in
@@ -94,7 +94,7 @@ let shift_right_logical x s =
   else if i < 64 then
     { lo = (x.lo >> i) || (x.hi << (64 - i)); hi = x.hi >> i }
   else
-     { lo = x.hi >> (i - 32); hi = Uint64.zero }
+    { lo = x.hi >> (i - 64); hi = Uint64.zero }
 
 let divmod modulus divisor =
   let (|.) = Uint64.logor in
