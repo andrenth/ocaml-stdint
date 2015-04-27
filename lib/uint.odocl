@@ -1,6 +1,8 @@
 # OASIS_START
-# DO NOT EDIT (digest: 578871a1aac7abbcb082eec9bd189423)
+# DO NOT EDIT (digest: d0ad542322c5abf21bf73c2d4b8ce95f)
 Uint
+Uint8
+Uint16
 Uint32
 Uint64
 Uint128

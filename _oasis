@@ -1,6 +1,6 @@
 OASISFormat: 0.3
 Name:        uint
-Version:     1.1.5
+Version:     1.2.0
 Synopsis:    Unsigned ints for OCaml
 Authors:     Andre Nathan, Jeff Shaw
 LicenseFile: LICENSE
@@ -16,7 +16,10 @@ Library uint
                    Uint32,
                    Uint64,
                    Uint128
-  CSources:        uint8_stubs.c, uint8.h, uint16_stubs.c, uint16.h, uint32_stubs.c, uint32.h, uint64_stubs.c, uint64.h
+  CSources:        uint8_stubs.c, uint8.h,
+                   uint16_stubs.c, uint16.h,
+                   uint32_stubs.c, uint32.h,
+                   uint64_stubs.c, uint64.h
   DataFiles:       uint8.h ($prefix/include/ocaml_uint),
                    uint16.h ($prefix/include/ocaml_uint),
                    uint32.h ($prefix/include/ocaml_uint),
