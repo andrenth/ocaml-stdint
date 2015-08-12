@@ -168,10 +168,12 @@ module Conv = Uint.Str_conv.Make(struct
   let fmt     = "ULL"
   let zero    = zero
   let max_int = max_int
+  let min_int = min_int
   let bits    = 128
   let of_int  = of_int
   let to_int  = to_int
   let add     = add
+  let sub     = sub
   let mul     = mul
   let divmod  = divmod
 end)
