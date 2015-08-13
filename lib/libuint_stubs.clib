@@ -1,7 +1,9 @@
 # OASIS_START
-# DO NOT EDIT (digest: f3c73291c6c4e6de998cb8b5a52f9afc)
+# DO NOT EDIT (digest: 01aa2e1e3c870428683d71ec053f7d54)
 uint8_stubs.o
 uint16_stubs.o
 uint32_stubs.o
 uint64_stubs.o
+int8_stubs.o
+int16_stubs.o
 # OASIS_STOP
