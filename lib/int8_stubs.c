@@ -14,38 +14,38 @@
 static int
 int8_cmp(value v1, value v2)
 {
-    int8_t i1 = Int8_val(v1);
-    int8_t i2 = Int8_val(v2);
-    return (i1 > i2) - (i1 < i2);
+  int8_t i1 = Int8_val(v1);
+  int8_t i2 = Int8_val(v2);
+  return (i1 > i2) - (i1 < i2);
 }
 
 static intnat
 int8_hash(value v)
 {
-    return Int8_val(v);
+  return Int8_val(v);
 }
 
 static void
 int8_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
 {
-    caml_serialize_int_1(Int8_val(v));
-    *wsize_32 = *wsize_64 = 1;
+  caml_serialize_int_1(Int8_val(v));
+  *wsize_32 = *wsize_64 = 1;
 }
 
 static uintnat
 int8_deserialize(void *dst)
 {
-    *((int8_t *) dst) = caml_deserialize_sint_1();
-    return 1;
+  *((int8_t *) dst) = caml_deserialize_sint_1();
+  return 1;
 }
 
 struct custom_operations int8_ops = {
-    "uint.int8",
-    custom_finalize_default,
-    int8_cmp,
-    int8_hash,
-    int8_serialize,
-    int8_deserialize
+  "uint.int8",
+  custom_finalize_default,
+  int8_cmp,
+  int8_hash,
+  int8_serialize,
+  int8_deserialize
 };
 
 CAMLprim value
@@ -138,48 +138,6 @@ int8_abs(value v)
 {
     CAMLparam1(v);
     CAMLreturn (copy_int8(abs(Int8_val(v))));
-}
-
-CAMLprim value
-int8_of_int(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_int8(Long_val(v)));
-}
-
-CAMLprim value
-int8_to_int(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (Val_long(Int8_val(v)));
-}
-
-CAMLprim value
-int8_of_float(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_int8((int8_t)Double_val(v)));
-}
-
-CAMLprim value
-int8_to_float(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (caml_copy_double((double)Int8_val(v)));
-}
-
-CAMLprim value
-int8_of_int32(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_int8((int8_t)Int32_val(v)));
-}
-
-CAMLprim value
-int8_to_int32(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (caml_copy_int32((int32_t)Int8_val(v)));
 }
 
 CAMLprim value
