@@ -1,5 +1,5 @@
-#ifndef OCAML_UINT16_H
-#define OCAML_UINT16_H
+#ifndef OCAML_UINT8_H
+#define OCAML_UINT8_H
 
 #define Uint8_val(v) (*((uint8_t *)Data_custom_val(v)))
 

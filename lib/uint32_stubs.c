@@ -134,48 +134,6 @@ uint32_shift_right(value v1, value v2)
 }
 
 CAMLprim value
-uint32_of_int(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_uint32(Long_val(v)));
-}
-
-CAMLprim value
-uint32_to_int(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (Val_long(Uint32_val(v)));
-}
-
-CAMLprim value
-uint32_of_float(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_uint32((uint32_t)Double_val(v)));
-}
-
-CAMLprim value
-uint32_to_float(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (caml_copy_double((double)Uint32_val(v)));
-}
-
-CAMLprim value
-uint32_of_int32(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (copy_uint32((uint32_t)Int32_val(v)));
-}
-
-CAMLprim value
-uint32_to_int32(value v)
-{
-    CAMLparam1(v);
-    CAMLreturn (caml_copy_int32((int32_t)Uint32_val(v)));
-}
-
-CAMLprim value
 uint32_bits_of_float(value v)
 {
     CAMLparam1(v);

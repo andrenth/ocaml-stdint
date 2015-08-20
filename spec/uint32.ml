@@ -1,3 +1,3 @@
-#load "uint32.cma";;
-open Uint32;;
+#load "stdint.cma";;
+open Stdint.Uint32;;
 #use "spec/common.ml";;

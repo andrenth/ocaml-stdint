@@ -1,29 +1,47 @@
-OASISFormat: 0.3
-Name:        uint
-Version:     1.2.0
-Synopsis:    Unsigned ints for OCaml
-Authors:     Andre Nathan, Jeff Shaw
+OASISFormat: 0.4
+Plugins: META (0.4)
+
+Name:        stdint
+Version:     0.5
+Synopsis:    Standard integer types for OCaml
+Authors:     Andre Nathan, Jeff Shaw, Florian Pichlmeier, Markus W. Weissmann
 LicenseFile: LICENSE
 License:     MIT
 
-Library uint
+Library stdint
   Path:            lib
   BuildTools:      ocamlbuild
   CompiledObject:  best
-  Modules:         Uint,
-                   Uint8,
-                   Uint16,
-                   Uint32,
-                   Uint64,
-                   Uint128
+  Modules: Stdint
+  InternalModules: Str_conv, Bytes_conv
   CSources:        uint8_stubs.c, uint8.h,
                    uint16_stubs.c, uint16.h,
                    uint32_stubs.c, uint32.h,
-                   uint64_stubs.c, uint64.h
-  DataFiles:       uint8.h ($prefix/include/ocaml_uint),
-                   uint16.h ($prefix/include/ocaml_uint),
-                   uint32.h ($prefix/include/ocaml_uint),
-                   uint64.h ($prefix/include/ocaml_uint)
+                   uint64_stubs.c, uint64.h,
+                   uint128_stubs.c, uint128.h,
+                   int8_stubs.c, int8.h,
+                   int16_stubs.c, int16.h,
+                   int128_stubs.c, int128.h,
+                   float_conv.c, int_conv.c, nativeint_conv.c,
+                   int8_conv.c,
+                   int16_conv.c,
+                   int32_conv.c,
+                   int64_conv.c,
+                   int128_conv.c,
+                   uint128_conv.c,
+                   uint16_conv.c,
+                   uint32_conv.c,
+                   uint64_conv.c,
+                   uint8_conv.c
+
+  DataFiles:       uint8.h ($prefix/include/ocaml_stdint),
+                   uint16.h ($prefix/include/ocaml_stdint),
+                   uint32.h ($prefix/include/ocaml_stdint),
+                   uint64.h ($prefix/include/ocaml_stdint),
+                   uint128.h ($prefix/include/ocaml_stdint),
+                   int8.h ($prefix/include/ocaml_stdint),
+                   int16.h ($prefix/include/ocaml_stdint),
+                   int128.h ($prefix/include/ocaml_stdint)
 
 Test spec
   TestTools:        ospec
@@ -32,10 +50,11 @@ Test spec
   Command:          ospec spec/uint*.ml
   PostCommand:      rm -rf spec
 
-Document uint
+Document stdint
   Title:                Uint documentation
   Type:                 ocamlbuild (0.3)
   BuildTools:           ocamlbuild
   BuildTools+:          ocamldoc
   XOCamlbuildPath:      lib
-  XOCamlbuildLibraries: uint
+  XOCamlbuildLibraries: stdint
+

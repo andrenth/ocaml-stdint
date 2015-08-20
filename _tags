@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: fee499ca2fe9bfee0d8e7906e9dc42fc)
+# DO NOT EDIT (digest: 7c722757fa8337928dd640106a0a921c)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -14,7 +14,7 @@ true: annot, bin_annot
 ".git": not_hygienic
 "_darcs": -traverse
 "_darcs": not_hygienic
-# Library uint
-"lib/uint.cmxs": use_uint
-<lib/uint.{cma,cmxa}>: use_libuint_stubs
+# Library stdint
+"lib/stdint.cmxs": use_stdint
+<lib/stdint.{cma,cmxa}>: use_libstdint_stubs
 # OASIS_STOP

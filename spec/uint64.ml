@@ -1,6 +1,6 @@
-#load "uint64.cma";;
+#load "stdint.cma";;
 #load "str.cma";;
-open Uint64;;
+open Stdint.Uint64;;
 open Str;;
 #use "spec/common.ml";;
 

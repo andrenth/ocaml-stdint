@@ -1,7 +1,6 @@
-#load "uint64.cma";;
-#load "uint128.cma";;
+#load "stdint.cma";;
 #load "str.cma";;
-open Uint128;;
+open Stdint.Uint128;;
 #use "spec/common.ml";;
 
 describe "A 128-bit integer" do
