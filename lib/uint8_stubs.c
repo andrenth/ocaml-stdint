@@ -152,6 +152,13 @@ uint8_float_of_bits(value v)
 }
 
 CAMLprim value
+uint8_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_uint8(UINT8_MAX - Uint8_val(v) + 1));
+}
+
+CAMLprim value
 uint8_max_int(void)
 {
     CAMLparam0();

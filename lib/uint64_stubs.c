@@ -152,6 +152,13 @@ uint64_float_of_bits(value v)
 }
 
 CAMLprim value
+uint64_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_uint64(UINT64_MAX - Uint64_val(v) + 1));
+}
+
+CAMLprim value
 uint64_max_int(void)
 {
     CAMLparam0();

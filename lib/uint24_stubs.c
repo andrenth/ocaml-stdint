@@ -41,10 +41,20 @@ uint24_shift_right(value v1, value v2)
   CAMLreturn (copy_uint24((Uint32_val(v1) >> Int_val(v2)) & 0xFFFFFF00));
 }
 
+static const uint24_max = UINT32_MAX & 0xFFFFFF00;
+static const uint24_one = (1 << 8);
+
 CAMLprim value
 uint24_max_int(void)
 {
   CAMLparam0();
-  CAMLreturn (copy_uint24(UINT32_MAX & 0xFFFFFF00));
+  CAMLreturn (copy_uint24(uint24_max));
+}
+
+CAMLprim value
+uint24_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_uint32(uint24_max - Uint32_val(v) + uint24_one));
 }
 

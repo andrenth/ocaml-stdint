@@ -43,10 +43,20 @@ uint48_shift_right(value v1, value v2)
   CAMLreturn (copy_uint48((Uint64_val(v1) >> Int_val(v2)) & mask));
 }
 
+static const uint64_t uint48_max = UINT64_MAX & mask;
+static const uint64_t uint48_one = (1 << 16);
+
 CAMLprim value
 uint48_max_int(void)
 {
   CAMLparam0();
-  CAMLreturn (copy_uint48(UINT64_MAX & mask));
+  CAMLreturn (copy_uint48(uint48_max));
+}
+
+CAMLprim value
+uint48_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_uint64(uint48_max - Uint64_val(v) + uint48_one));
 }
 

@@ -141,6 +141,13 @@ int8_abs(value v)
 }
 
 CAMLprim value
+int8_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_int8(-1 * (Int8_val(v))));
+}
+
+CAMLprim value
 int8_bits_of_float(value v)
 {
     CAMLparam1(v);

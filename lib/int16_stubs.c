@@ -173,6 +173,13 @@ int16_abs(value v)
 }
 
 CAMLprim value
+int16_neg(value v)
+{
+    CAMLparam1(v);
+    CAMLreturn (copy_int16(-1 * (Int16_val(v))));
+}
+
+CAMLprim value
 int16_init_custom_ops(void)
 {
     CAMLparam0();

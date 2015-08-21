@@ -32,6 +32,7 @@ module type Int = sig
   val succ : t -> t
   val pred : t -> t
   val abs : t -> t
+  val neg : t -> t
   val logand : t -> t -> t
   val logor : t -> t -> t
   val logxor : t -> t -> t
@@ -124,6 +125,7 @@ module Int8 = struct
     external shift_right : int8 -> int -> int8 = "int8_shift_right"
     external shift_right_logical : int8 -> int -> int8 = "uint8_shift_right"
     external abs : int8 -> int8 = "int8_abs"
+    external neg : int8 -> int8 = "int8_neg"
 
     external of_int       :       int ->      int8 = "int8_of_int"
     external of_nativeint : nativeint ->      int8 = "int8_of_nativeint"
@@ -218,6 +220,7 @@ module Int16 = struct
     external shift_right : int16 -> int -> int16 = "int16_shift_right"
     external shift_right_logical : int16 -> int -> int16 = "uint16_shift_right"
     external abs : int16 -> int16 = "int16_abs"
+    external neg : int16 -> int16 = "int16_neg"
 
     external of_int       :       int ->     int16 = "int16_of_int"
     external of_nativeint : nativeint ->     int16 = "int16_of_nativeint"
@@ -753,6 +756,7 @@ module Int128 = struct
     external shift_right : int128 -> int -> int128 = "int128_shift_right"
     external shift_right_logical : int128 -> int -> int128 = "uint128_shift_right"
     external abs : int128 -> int128 = "int128_abs"
+    external neg : int128 -> int128 = "int128_neg"
 
     external of_int       :       int ->    int128 = "int128_of_int"
     external of_nativeint : nativeint ->    int128 = "int128_of_nativeint"
@@ -843,6 +847,7 @@ module Uint8 = struct
     external shift_right : uint8 -> int -> uint8 = "uint8_shift_right"
     let shift_right_logical = shift_right
     external abs : uint8 -> uint8 = "%identity"
+    external neg : uint8 -> uint8 = "uint8_neg"
 
     external of_int       :       int ->     uint8 = "uint8_of_int"
     external of_nativeint : nativeint ->     uint8 = "uint8_of_nativeint"
@@ -932,6 +937,7 @@ module Uint16 = struct
     external shift_right : uint16 -> int -> uint16 = "uint16_shift_right"
     let shift_right_logical = shift_right
     external abs : uint16 -> uint16 = "%identity"
+    external neg : uint16 -> uint16 = "uint16_neg"
 
     external of_int       :       int ->    uint16 = "uint16_of_int"
     external of_nativeint : nativeint ->    uint16 = "uint16_of_nativeint"
@@ -1021,6 +1027,7 @@ module Uint32 = struct
     external shift_right : uint32 -> int -> uint32 = "uint32_shift_right"
     let shift_right_logical = shift_right
     external abs : uint32 -> uint32 = "%identity"
+    external neg : uint32 -> uint32 = "uint32_neg"
 
     external of_int       :       int ->    uint32 = "uint32_of_int"
     external of_nativeint : nativeint ->    uint32 = "uint32_of_nativeint"
@@ -1108,6 +1115,7 @@ module Uint24 = struct
     external logxor : uint24 -> uint24 -> uint24 = "uint24_xor"
     external shift_right : uint24 -> int -> uint24 = "uint24_shift_right"
     let shift_right_logical = shift_right
+    external neg : uint24 -> uint24 = "uint24_neg"
 
     external of_int       :       int ->    uint24 = "uint24_of_int"
     external of_nativeint : nativeint ->    uint24 = "uint24_of_nativeint"
@@ -1188,6 +1196,7 @@ module Uint64 = struct
     external shift_right : uint64 -> int -> uint64 = "uint64_shift_right"
     let shift_right_logical = shift_right
     external abs : uint64 -> uint64 = "%identity"
+    external neg : uint64 -> uint64 = "uint64_neg"
 
     external of_int       :       int ->    uint64 = "uint64_of_int"
     external of_nativeint : nativeint ->    uint64 = "uint64_of_nativeint"
@@ -1275,6 +1284,7 @@ module Uint40 = struct
     external logxor : uint40 -> uint40 -> uint40 = "uint40_xor"
     external shift_right : uint40 -> int -> uint40 = "uint40_shift_right"
     let shift_right_logical = shift_right
+    external neg : uint40 -> uint40 = "uint40_neg"
 
     external of_int       :       int ->    uint40 = "uint40_of_int"
     external of_nativeint : nativeint ->    uint40 = "uint40_of_nativeint"
@@ -1353,6 +1363,7 @@ module Uint48 = struct
     external logxor : uint48 -> uint48 -> uint48 = "uint48_xor"
     external shift_right : uint48 -> int -> uint48 = "uint48_shift_right"
     let shift_right_logical = shift_right
+    external neg : uint48 -> uint48 = "uint48_neg"
 
     external of_int       :       int ->    uint48 = "uint48_of_int"
     external of_nativeint : nativeint ->    uint48 = "uint48_of_nativeint"
@@ -1431,6 +1442,7 @@ module Uint56 = struct
     external logxor : uint56 -> uint56 -> uint56 = "uint56_xor"
     external shift_right : uint56 -> int -> uint56 = "uint56_shift_right"
     let shift_right_logical = shift_right
+    external neg : uint56 -> uint56 = "uint56_neg"
 
     external of_int       :       int ->    uint56 = "uint56_of_int"
     external of_nativeint : nativeint ->    uint56 = "uint56_of_nativeint"
@@ -1511,6 +1523,7 @@ module Uint128 = struct
     external shift_right : uint128 -> int -> uint128 = "uint128_shift_right"
     let shift_right_logical = shift_right
     external abs : uint128 -> uint128 = "%identity"
+    external neg : uint128 -> uint128 = "uint128_neg"
 
     external of_int       :       int ->   uint128 = "uint128_of_int"
     external of_nativeint : nativeint ->   uint128 = "uint128_of_nativeint"
@@ -1557,7 +1570,6 @@ module Uint128 = struct
     external to_uint128   :   uint128 ->   uint128 = "%identity"
 
     external max_int_fun : unit -> uint128 = "uint128_max_int"
-    external min_int_fun : unit -> uint128 = "uint128_min_int"
 
     let zero = of_int 0
     let one = of_int 1

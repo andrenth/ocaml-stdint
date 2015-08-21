@@ -153,22 +153,28 @@ int128_float_of_bits(value v)
     CAMLreturn (caml_copy_double(u.d));
 }
 
+static const __uint128_t int128_max = (((__uint128_t) INT64_MAX) << 64) | ((__uint128_t) UINT64_MAX);
+static const __uint128_t int128_min = (((__uint128_t) UINT64_MAX) << 64) | ((__uint128_t) UINT64_MAX);
+
 CAMLprim value
 int128_max_int(void)
 {
     CAMLparam0();
-    __int128_t i = INT64_MAX;
-    i <<= 64;
-    i |= UINT64_MAX;
-    CAMLreturn (copy_int128(i));
+    CAMLreturn (copy_int128(int128_max));
 }
 
 CAMLprim value
 int128_min_int(void)
 {
     CAMLparam0();
-    __int128_t i = 1;
-    i <<= 127;
+    CAMLreturn (copy_int128(int128_min));
+}
+
+CAMLprim value
+int128_neg(value v)
+{
+    CAMLparam1(v);
+    __int128_t i = -1 * Int128_val(v);
     CAMLreturn (copy_int128(i));
 }
 

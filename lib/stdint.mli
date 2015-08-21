@@ -94,6 +94,9 @@ module type Int = sig
   val abs : t -> t
   (** Return the absolute value of its argument. *)
 
+  val neg : t -> t
+  (* Unary negation. Negation satisfies the property that [0 = x + (neg x)] for signed and unsigned types. *)
+
   val logand : t -> t -> t
   (** Bitwise logical and. *)
 
@@ -114,8 +117,8 @@ module type Int = sig
   (** [shift_right x y] shifts [x] to the right by [y] bits.
       If this is a signed integer, this is an arithmetic shift:
       the sign bit of [x] is replicated and inserted in the vacated bits.
-      The result is unspecified if [y < 0] or [y >= 64].
-      For an unsigned integer, this is identical to [shift_right_logical].  *)
+      The result is unspecified if [y < 0] or [y >= bits].
+      For an unsigned integer, this is identical to [shift_right_logical]. *)
 
   val shift_right_logical : t -> int -> t
   (** [shift_right_logical x y] shifts [x] to the right by [y] bits.
