@@ -14,7 +14,9 @@
 #include "int128.h"
 #include "uint8.h"
 #include "uint16.h"
+#include "uint24.h"
 #include "uint32.h"
+#include "uint56.h"
 #include "uint64.h"
 #include "uint128.h"
 
@@ -68,10 +70,24 @@ int_of_uint16(value v)
 }
 
 CAMLprim value
+int_of_uint24(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (Val_int((int)Uint24_val(v)));
+}
+
+CAMLprim value
 int_of_uint32(value v)
 {
   CAMLparam1(v);
   CAMLreturn (Val_int((int)Uint32_val(v)));
+}
+
+CAMLprim value
+int_of_uint56(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (Val_int((int)Uint56_val(v)));
 }
 
 CAMLprim value

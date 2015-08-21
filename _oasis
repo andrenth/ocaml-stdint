@@ -16,7 +16,9 @@ Library stdint
   InternalModules: Str_conv, Bytes_conv
   CSources:        uint8_stubs.c, uint8.h,
                    uint16_stubs.c, uint16.h,
+                   uint24_stubs.c, uint24.h,
                    uint32_stubs.c, uint32.h,
+                   uint56_stubs.c, uint56.h,
                    uint64_stubs.c, uint64.h,
                    uint128_stubs.c, uint128.h,
                    int8_stubs.c, int8.h,
@@ -30,13 +32,17 @@ Library stdint
                    int128_conv.c,
                    uint128_conv.c,
                    uint16_conv.c,
+                   uint24_conv.c,
                    uint32_conv.c,
+                   uint56_conv.c,
                    uint64_conv.c,
                    uint8_conv.c
 
   DataFiles:       uint8.h ($prefix/include/ocaml_stdint),
                    uint16.h ($prefix/include/ocaml_stdint),
+                   uint24.h ($prefix/include/ocaml_stdint),
                    uint32.h ($prefix/include/ocaml_stdint),
+                   uint56.h ($prefix/include/ocaml_stdint),
                    uint64.h ($prefix/include/ocaml_stdint),
                    uint128.h ($prefix/include/ocaml_stdint),
                    int8.h ($prefix/include/ocaml_stdint),

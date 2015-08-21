@@ -1,35 +1,11 @@
-name = "uint"
-version = "1.1.5"
-description = "OCaml unsigned ints"
-archive(byte) = "uint.cma"
-archive(native) = "uint.cmxa"
-
-package "uint8" (
-  requires = "uint"
-  version = "1.1.5"
-)
-package "uint16" (
-  requires = "uint"
-  version = "1.1.5"
-)
-package "uint32" (
-  requires = "uint"
-  version = "1.1.5"
-)
-package "uint64" (
-  requires = "uint"
-  version = "1.1.5"
-)
-package "uint128" (
-  requires = "uint uint.uint64"
-  version = "1.1.5"
-)
-package "int8" (
-  requires = "uint"
-  version = "1.1.5"
-)
-package "int16" (
-  requires = "uint"
-  version = "1.1.5"
-)
+# OASIS_START
+# DO NOT EDIT (digest: cfe5213997aaa982508214a45a0a73d4)
+version = "0.5"
+description = "Standard integer types for OCaml"
+archive(byte) = "stdint.cma"
+archive(byte, plugin) = "stdint.cma"
+archive(native) = "stdint.cmxa"
+archive(native, plugin) = "stdint.cmxs"
+exists_if = "stdint.cma"
+# OASIS_STOP
 

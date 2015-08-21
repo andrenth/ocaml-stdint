@@ -15,7 +15,13 @@ type uint8
 type uint16
 (** Unsigned 16-bit integer *)
 
+type uint24
+(** Unsigned 24-bit integer *)
+
 type uint32
+(** Unsigned 32-bit integer *)
+
+type uint56
 (** Unsigned 32-bit integer *)
 
 type uint64
@@ -159,11 +165,23 @@ module type Int = sig
   val to_uint16 : t -> uint16
   (** Convert an integer of type [t] to an integer of type [uint16]. *)
 
+  val of_uint24 : uint24 -> t
+  (** Convert an integer of type [uint24] to an integer of type [t]. *)
+
+  val to_uint24 : t -> uint24
+  (** Convert an integer of type [t] to an integer of type [uint24]. *)
+
   val of_uint32 : uint32 -> t
   (** Convert an integer of type [uint32] to an integer of type [t]. *)
 
   val to_uint32 : t -> uint32
   (** Convert an integer of type [t] to an integer of type [uint32]. *)
+
+  val of_uint56 : uint56 -> t
+  (** Convert an integer of type [uint56] to an integer of type [t]. *)
+
+  val to_uint56 : t -> uint56
+  (** Convert an integer of type [t] to an integer of type [uint56]. *)
 
   val of_uint64 : uint64 -> t
   (** Convert an integer of type [uint64] to an integer of type [t]. *)
@@ -241,7 +259,9 @@ module Int64 : Int with type t = int64
 module Int128 : Int with type t = int128
 module Uint8 : Int with type t = uint8
 module Uint16 : Int with type t = uint16
+module Uint24 : Int with type t = uint24
 module Uint32 : Int with type t = uint32
+module Uint56 : Int with type t = uint56
 module Uint64 : Int with type t = uint64
 module Uint128 : Int with type t = uint128
 
