@@ -30,6 +30,13 @@ int48_div(value v1, value v2)
 }
 
 CAMLprim value
+int48_shift_right(value v1, value v2)
+{
+  CAMLparam2(v1, v2);
+  CAMLreturn (copy_int48((Int64_val(v1) >> Int_val(v2)) & mask));
+}
+
+CAMLprim value
 int48_max_int(void)
 {
   CAMLparam0();
