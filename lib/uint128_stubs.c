@@ -180,15 +180,6 @@ uint128_min_int(void)
 }
 
 CAMLprim value
-uint128_abs(value v)
-{
-    CAMLparam1(v);
-    __uint128_t i = Uint128_val(v);
-    i = i < 0 ? (-i) : i;
-    CAMLreturn (copy_uint128(i));
-}
-
-CAMLprim value
 uint128_init_custom_ops(void)
 {
     CAMLparam0();

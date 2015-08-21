@@ -10,6 +10,8 @@
 
 #include "uint56.h"
 
+static const uint64_t mask = 0xFFFFFFFFFFFFFF00ULL;
+
 CAMLprim value
 uint56_mul(value v1, value v2)
 {
@@ -31,20 +33,20 @@ CAMLprim value
 uint56_xor(value v1, value v2)
 {
   CAMLparam2(v1, v2);
-  CAMLreturn (copy_uint56((Uint64_val(v1) ^ Uint64_val(v2)) & 0xFFFFFFFFFFFFFF00));
+  CAMLreturn (copy_uint56((Uint64_val(v1) ^ Uint64_val(v2)) & mask));
 }
 
 CAMLprim value
 uint56_shift_right(value v1, value v2)
 {
   CAMLparam2(v1, v2);
-  CAMLreturn (copy_uint56((Uint64_val(v1) >> Int_val(v2)) & 0xFFFFFFFFFFFFFF00));
+  CAMLreturn (copy_uint56((Uint64_val(v1) >> Int_val(v2)) & mask));
 }
 
 CAMLprim value
 uint56_max_int(void)
 {
   CAMLparam0();
-  CAMLreturn (copy_uint56(UINT64_MAX & 0xFFFFFFFFFFFFFF00));
+  CAMLreturn (copy_uint56(UINT64_MAX & mask));
 }
 

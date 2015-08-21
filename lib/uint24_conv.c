@@ -11,11 +11,17 @@
 
 #include "int8.h"
 #include "int16.h"
+#include "int24.h"
+#include "int40.h"
+#include "int48.h"
+#include "int56.h"
 #include "int128.h"
 #include "uint8.h"
 #include "uint16.h"
 #include "uint24.h"
 #include "uint32.h"
+#include "uint40.h"
+#include "uint48.h"
 #include "uint56.h"
 #include "uint64.h"
 #include "uint128.h"
@@ -56,10 +62,38 @@ uint24_of_int16(value v)
 }
 
 CAMLprim value
+uint24_of_int24(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Int24_val(v)) << 8));
+}
+
+CAMLprim value
 uint24_of_int32(value v)
 {
   CAMLparam1(v);
   CAMLreturn (copy_uint32(((uint32_t)Int32_val(v)) << 8));
+}
+
+CAMLprim value
+uint24_of_int40(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Int40_val(v)) << 8));
+}
+
+CAMLprim value
+uint24_of_int48(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Int48_val(v)) << 8));
+}
+
+CAMLprim value
+uint24_of_int56(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Int56_val(v)) << 8));
 }
 
 CAMLprim value
@@ -95,6 +129,20 @@ uint24_of_uint32(value v)
 {
   CAMLparam1(v);
   CAMLreturn (copy_uint32(((uint32_t)Uint32_val(v)) << 8));
+}
+
+CAMLprim value
+uint24_of_uint40(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Uint40_val(v)) << 8));
+}
+
+CAMLprim value
+uint24_of_uint48(value v)
+{
+  CAMLparam1(v);
+  CAMLreturn (copy_uint32(((uint32_t)Uint48_val(v)) << 8));
 }
 
 CAMLprim value

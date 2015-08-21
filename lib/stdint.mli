@@ -6,6 +6,18 @@ type int8
 type int16
 (** Signed 16-bit integer *)
 
+type int24
+(** Signed 24-bit integer *)
+
+type int40
+(** Signed 40-bit integer *)
+
+type int48
+(** Signed 48-bit integer *)
+
+type int56
+(** Signed 56-bit integer *)
+
 type int128
 (** Signed 128-bit integer *)
 
@@ -21,8 +33,14 @@ type uint24
 type uint32
 (** Unsigned 32-bit integer *)
 
+type uint40
+(** Unsigned 40-bit integer *)
+
+type uint48
+(** Unsigned 48-bit integer *)
+
 type uint56
-(** Unsigned 32-bit integer *)
+(** Unsigned 56-bit integer *)
 
 type uint64
 (** Unsigned 64-bit integer *)
@@ -135,11 +153,35 @@ module type Int = sig
   val to_int16 : t -> int16
   (** Convert an integer of type [t] to an integer of type [int16]. *)
 
+  val of_int24 : int24 -> t
+  (** Convert an integer of type [int24] to an integer of type [t]. *)
+
+  val to_int24 : t -> int24
+  (** Convert an integer of type [t] to an integer of type [int24]. *)
+
   val of_int32 : int32 -> t
   (** Convert an integer of type [int32] to an integer of type [t]. *)
 
   val to_int32 : t -> int32
   (** Convert an integer of type [t] to an integer of type [int32]. *)
+
+  val of_int40 : int40 -> t
+  (** Convert an integer of type [int40] to an integer of type [t]. *)
+
+  val to_int40 : t -> int40
+  (** Convert an integer of type [t] to an integer of type [int40]. *)
+
+  val of_int48 : int48 -> t
+  (** Convert an integer of type [int48] to an integer of type [t]. *)
+
+  val to_int48 : t -> int48
+  (** Convert an integer of type [t] to an integer of type [int48]. *)
+
+  val of_int56 : int56 -> t
+  (** Convert an integer of type [int56] to an integer of type [t]. *)
+
+  val to_int56 : t -> int56
+  (** Convert an integer of type [t] to an integer of type [int56]. *)
 
   val of_int64 : int64 -> t
   (** Convert an integer of type [int64] to an integer of type [t]. *)
@@ -176,6 +218,18 @@ module type Int = sig
 
   val to_uint32 : t -> uint32
   (** Convert an integer of type [t] to an integer of type [uint32]. *)
+
+  val of_uint40 : uint40 -> t
+  (** Convert an integer of type [uint40] to an integer of type [t]. *)
+
+  val to_uint40 : t -> uint40
+  (** Convert an integer of type [t] to an integer of type [uint40]. *)
+
+  val of_uint48 : uint48 -> t
+  (** Convert an integer of type [uint48] to an integer of type [t]. *)
+
+  val to_uint48 : t -> uint48
+  (** Convert an integer of type [t] to an integer of type [uint48]. *)
 
   val of_uint56 : uint56 -> t
   (** Convert an integer of type [uint56] to an integer of type [t]. *)
@@ -254,13 +308,19 @@ end
 
 module Int8 : Int with type t = int8
 module Int16 : Int with type t = int16
+module Int24 : Int with type t = int24
 module Int32 : Int with type t = int32
+module Int40 : Int with type t = int40
+module Int48 : Int with type t = int48
+module Int56 : Int with type t = int56
 module Int64 : Int with type t = int64
 module Int128 : Int with type t = int128
 module Uint8 : Int with type t = uint8
 module Uint16 : Int with type t = uint16
 module Uint24 : Int with type t = uint24
 module Uint32 : Int with type t = uint32
+module Uint40 : Int with type t = uint40
+module Uint48 : Int with type t = uint48
 module Uint56 : Int with type t = uint56
 module Uint64 : Int with type t = uint64
 module Uint128 : Int with type t = uint128

@@ -5,13 +5,19 @@ type i =
   | F
   | I8
   | I16
+  | I24
   | I32
+  | I40
+  | I48
+  | I56
   | I64
   | I128
   | U8
   | U16
   | U24
   | U32
+  | U40
+  | U48
   | U56
   | U64
   | U128
@@ -22,13 +28,19 @@ let name = function
   | F -> "float"
   | I8 -> "int8"
   | I16 -> "int16"
+  | I24 -> "int24"
   | I32 -> "int32"
+  | I40 -> "int40"
+  | I48 -> "int48"
+  | I56 -> "int56"
   | I64 -> "int64"
   | I128 -> "int128"
   | U8 -> "uint8"
   | U16 -> "uint16"
   | U24 -> "uint24"
   | U32 -> "uint32"
+  | U40 -> "uint40"
+  | U48 -> "uint48"
   | U56 -> "uint56"
   | U64 -> "uint64"
   | U128 -> "uint128"
@@ -39,13 +51,19 @@ let ctype = function
   | F -> "double"
   | I8 -> "int8_t"
   | I16 -> "int16_t"
+  | I24 -> "int32_t"
   | I32 -> "int32_t"
+  | I40 -> "int64_t"
+  | I48 -> "int64_t"
+  | I56 -> "int64_t"
   | I64 -> "int64_t"
   | I128 -> "__int128_t"
   | U8 -> "uint8_t"
   | U16 -> "uint16_t"
   | U24 -> "uint32_t"
   | U32 -> "uint32_t"
+  | U40 -> "uint64_t"
+  | U48 -> "uint64_t"
   | U56 -> "uint64_t"
   | U64 -> "uint64_t"
   | U128 -> "__uint128_t"
@@ -56,13 +74,19 @@ let valf x = let r = match x with
   | F -> "Double"
   | I8 -> "Int8"
   | I16 -> "Int16"
+  | I24 -> "Int24"
   | I32 -> "Int32"
+  | I40 -> "Int40"
+  | I48 -> "Int48"
+  | I56 -> "Int56"
   | I64 -> "Int64"
   | I128 -> "Int128"
   | U8 -> "Uint8"
   | U16 -> "Uint16"
   | U24 -> "Uint24"
   | U32 -> "Uint32"
+  | U40 -> "Uint40"
+  | U48 -> "Uint48"
   | U56 -> "Uint56"
   | U64 -> "Uint64"
   | U128 -> "Uint128"
@@ -74,13 +98,19 @@ let copyf : i -> (('a -> 'b, unit, string) format) = function
   | F -> "caml_copy_double(%s)"
   | I8 -> "copy_int8(%s)"
   | I16 -> "copy_int16(%s)"
+  | I24 -> "copy_int32((%s) << 8)"
   | I32 -> "copy_int32(%s)"
+  | I40 -> "copy_int64((%s) << 24)"
+  | I48 -> "copy_int64((%s) << 16)"
+  | I56 -> "copy_int64((%s) << 8)"
   | I64 -> "copy_int64(%s)"
   | I128 -> "copy_int128(%s)"
   | U8 -> "copy_uint8(%s)"
   | U16 -> "copy_uint16(%s)"
   | U24 -> "copy_uint32((%s) << 8)"
   | U32 -> "copy_uint32(%s)"
+  | U40 -> "copy_uint64((%s) << 24)"
+  | U48 -> "copy_uint64((%s) << 16)"
   | U56 -> "copy_uint64((%s) << 8)"
   | U64 -> "copy_uint64(%s)"
   | U128 -> "copy_uint128(%s)"
@@ -93,7 +123,7 @@ let in_mltypes = function
   | N | I | F | I32 | I64 -> true
   | _ -> false
 
-let all_types = [I; N; F; I8; I16; I32; I64; I128; U8; U16; U24; U32; U56; U64; U128]
+let all_types = [I; N; F; I8; I16; I24; I32; I40; I48; I56; I64; I128; U8; U16; U24; U32; U40; U48; U56; U64; U128]
 
 let prefix =
   let includes1 =
