@@ -298,7 +298,7 @@ module type Int = sig
   val printer_oct : Format.formatter -> t -> unit
   val printer_hex : Format.formatter -> t -> unit
   (** *)
-(** {6 Endianess-specific conversion to raw bytes} *)
+(** {6 Raw bytes conversion functions} *)
 
   val of_bytes_big_endian : Bytes.t -> int -> t
   (** [of_bytes_big_endian buffer offset] creates an integer value of type [t] from the
