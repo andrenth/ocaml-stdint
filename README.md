@@ -29,6 +29,7 @@ There is a module for every integer type that implements the Int interface.
 This interface is similar to Int32 and Int64 from the base library but provides more functions and constants like
 * arithmetic and bit-wise operations
 * constants like maximum and minimum value
+* infix operators
 * conversion to and from every other integer type (including int, float and nativeint)
 * parsing from and conversion to readable strings (binary, octal, decimal, hexademical)
 * conversion to and from buffers in both big endian and little endian byte order
