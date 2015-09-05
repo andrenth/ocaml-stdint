@@ -52,6 +52,8 @@ type uint128
 module type Int = sig
 
   type t
+  (** The specific integer type *)
+(** {6 Constants} *)
 
   val zero : t
   (** The value [0] *)
@@ -67,6 +69,22 @@ module type Int = sig
 
   val bits : int
   (** The number of bits used by this integer *)
+(** {6 Infix operations } *)
+
+
+  val ( + ): t -> t -> t
+  (** Addition *)
+
+  val ( - ): t -> t -> t
+  (** Subtraction *)
+
+  val ( * ) : t -> t -> t
+  (** Multiplication *)
+
+  val ( / ) : t -> t -> t
+  (** Integer division. Raise [Division_by_zero] if the second argument is zero.
+      This division rounds the real quotient of its arguments towards zero, as specified for [(/)]. *)
+(** {6 Arithmetic operations } *)
 
   val add : t -> t -> t
   (** Addition *)
@@ -96,6 +114,7 @@ module type Int = sig
 
   val neg : t -> t
   (* Unary negation. Negation satisfies the property that [0 = x + (neg x)] for signed and unsigned types. *)
+(** {6 Bitiwse operations } *)
 
   val logand : t -> t -> t
   (** Bitwise logical and. *)
@@ -125,6 +144,7 @@ module type Int = sig
       This is a logical shift: zeroes are inserted in the vacated bits regardless
       if [x] is a signed or unsiged integer.
       The result is unspecified if [y < 0] or [y >= bits]. *)
+(** {6 Numeric conversion functions} *)
 
   val of_int : int -> t
   (** Convert the given integer (type [int]) to this integer type. *)
@@ -251,6 +271,7 @@ module type Int = sig
 
   val to_uint128 : t -> uint128
   (** Convert an integer of type [t] to an integer of type [uint128]. *)
+(** {6 String conversion functions} *)
 
   val of_string : string -> t
   (** Convert the given string to an integer of type [t].
@@ -276,6 +297,8 @@ module type Int = sig
   val printer_bin : Format.formatter -> t -> unit
   val printer_oct : Format.formatter -> t -> unit
   val printer_hex : Format.formatter -> t -> unit
+  (** *)
+(** {6 Endianess-specific conversion to raw bytes} *)
 
   val of_bytes_big_endian : Bytes.t -> int -> t
   (** [of_bytes_big_endian buffer offset] creates an integer value of type [t] from the
@@ -302,6 +325,7 @@ module type Int = sig
       starting at offset [offset]. The byte order used is little endian. If the buffer does
       not hold enough bytes, i.e. if [(Bytes.length buffer) < (offset + (bits / 8))], the
       function will raise [Invalid_argument "index out of bounds"]. *)
+(** {6 Comparison function} *)
 
   val compare : t -> t -> int
   (** The comparison function for integers of type [t], with the same specification as compare.

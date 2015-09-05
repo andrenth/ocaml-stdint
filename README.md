@@ -38,6 +38,16 @@ The functions are modeled on base of the int32 and int64 access functions provid
 
 The [API of stdint](http://stdint.forge.ocamlcore.org/doc/) can be found online at the [OCaml forge](https://forge.ocamlcore.org/).
 
+To use the integer types, we recommend to ```open Stdint``` but not the individual modules:
+```
+open Stdint
+
+let _ =
+  let a = Uint8.of_int 21 in
+  let x = Uint8.(a * (one + one)) in
+  print_endline (Uint8.to_string x)
+```
+
 The stdint library is written by Andre Nathan, Jeff Shaw, [Markus Weissmann](http://www.mweissmann.de) and Florian Pichlmeier.
 It is based on the [ocaml-uint](https://github.com/andrenth/ocaml-uint/) library.
 

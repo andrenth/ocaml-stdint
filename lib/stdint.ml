@@ -24,6 +24,11 @@ module type Int = sig
   val min_int : t
   val bits : int
 
+  val ( + ) : t -> t -> t
+  val ( - ) : t -> t -> t
+  val ( * ) : t -> t -> t
+  val ( / ) : t -> t -> t
+
   val add : t -> t -> t
   val sub : t -> t -> t
   val mul : t -> t -> t
@@ -199,6 +204,9 @@ module Int8 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int8)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int8)
 end
 
 module Int16 = struct
@@ -294,6 +302,9 @@ module Int16 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int16)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int16)
 end
 
 module Int32 = struct
@@ -354,6 +365,9 @@ module Int32 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int32)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int32)
 end
 
 module Int24 = struct
@@ -435,6 +449,9 @@ module Int24 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int24)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int24)
 end
 
 module Int64 = struct
@@ -492,6 +509,9 @@ module Int64 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int64)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int64)
 end
 
 module Int40 = struct
@@ -573,6 +593,9 @@ module Int40 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int40)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int40)
 end
 
 module Int48 = struct
@@ -654,6 +677,9 @@ module Int48 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int48)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int48)
 end
 
 module Int56 = struct
@@ -735,6 +761,9 @@ module Int56 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int56)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int56)
 end
 
 module Int128 = struct
@@ -826,6 +855,9 @@ module Int128 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := int128)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int128)
 end
 
 module Uint8 = struct
@@ -916,6 +948,9 @@ module Uint8 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint8)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint8)
 end
 
 module Uint16 = struct
@@ -1006,6 +1041,9 @@ module Uint16 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint16)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint16)
 end
 
 module Uint32 = struct
@@ -1096,6 +1134,9 @@ module Uint32 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint32)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint32)
 end
 
 module Uint24 = struct
@@ -1171,10 +1212,13 @@ module Uint24 = struct
   include Base
 
   module Conv = Str_conv.Make(Base)
-  include (Conv : module type of Conv with type t := uint32)
+  include (Conv : module type of Conv with type t := uint24)
 
   module Endian = Bytes_conv.Make(Base)
-  include (Endian : module type of Endian with type t := uint32)
+  include (Endian : module type of Endian with type t := uint24)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint24)
 end
 
 module Uint64 = struct
@@ -1265,6 +1309,9 @@ module Uint64 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint64)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint64)
 end
 
 module Uint40 = struct
@@ -1340,10 +1387,13 @@ module Uint40 = struct
   include Base
 
   module Conv = Str_conv.Make(Base)
-  include (Conv : module type of Conv with type t := uint56)
+  include (Conv : module type of Conv with type t := uint40)
 
   module Endian = Bytes_conv.Make(Base)
-  include (Endian : module type of Endian with type t := uint56)
+  include (Endian : module type of Endian with type t := uint40)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint40)
 end
 
 module Uint48 = struct
@@ -1419,10 +1469,13 @@ module Uint48 = struct
   include Base
 
   module Conv = Str_conv.Make(Base)
-  include (Conv : module type of Conv with type t := uint56)
+  include (Conv : module type of Conv with type t := uint48)
 
   module Endian = Bytes_conv.Make(Base)
-  include (Endian : module type of Endian with type t := uint56)
+  include (Endian : module type of Endian with type t := uint48)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint48)
 end
 
 module Uint56 = struct
@@ -1502,6 +1555,9 @@ module Uint56 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint56)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint56)
 end
 
 module Uint128 = struct
@@ -1592,5 +1648,8 @@ module Uint128 = struct
 
   module Endian = Bytes_conv.Make(Base)
   include (Endian : module type of Endian with type t := uint128)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint128)
 end
 

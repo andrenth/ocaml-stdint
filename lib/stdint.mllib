@@ -1,6 +1,7 @@
 # OASIS_START
-# DO NOT EDIT (digest: 47300544bd9c8f979c4db2b4cb587a3f)
+# DO NOT EDIT (digest: 1087961a77d56d213cea77f263728539)
 Stdint
 Str_conv
 Bytes_conv
+Infix
 # OASIS_STOP

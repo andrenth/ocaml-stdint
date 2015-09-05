@@ -2,7 +2,7 @@ OASISFormat: 0.4
 Plugins: META (0.4)
 
 Name:        stdint
-Version:     0.5
+Version:     0.8
 Synopsis:    Standard integer types for OCaml
 Authors:     Andre Nathan, Jeff Shaw, Florian Pichlmeier, Markus W. Weissmann
 LicenseFile: LICENSE
@@ -12,8 +12,9 @@ Library stdint
   Path:            lib
   BuildTools:      ocamlbuild
   CompiledObject:  best
-  Modules: Stdint
-  InternalModules: Str_conv, Bytes_conv
+  BuildDepends:    bytes
+  Modules:         Stdint
+  InternalModules: Str_conv, Bytes_conv, Infix
   CSources:        uint8_stubs.c, uint8.h,
                    uint16_stubs.c, uint16.h,
                    uint24_stubs.c, uint24.h,
@@ -71,8 +72,8 @@ Test spec
   PostCommand:      rm -rf spec
 
 Document stdint
-  Title:                Uint documentation
-  Type:                 ocamlbuild (0.3)
+  Title:                API reference for stdint
+  Type:                 ocamlbuild (0.4)
   BuildTools:           ocamlbuild
   BuildTools+:          ocamldoc
   XOCamlbuildPath:      lib
