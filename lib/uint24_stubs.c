@@ -41,8 +41,8 @@ uint24_shift_right(value v1, value v2)
   CAMLreturn (copy_uint24((Uint32_val(v1) >> Int_val(v2)) & 0xFFFFFF00));
 }
 
-static const uint24_max = UINT32_MAX & 0xFFFFFF00;
-static const uint24_one = (1 << 8);
+static const uint32_t uint24_max = UINT32_MAX & 0xFFFFFF00;
+static const uint32_t uint24_one = (1 << 8);
 
 CAMLprim value
 uint24_max_int(void)
