@@ -40,7 +40,7 @@ The functions are modeled on base of the int32 and int64 access functions provid
 The [API of stdint](http://stdint.forge.ocamlcore.org/doc/) can be found online at the [OCaml forge](https://forge.ocamlcore.org/).
 
 To use the integer types, we recommend to ```open Stdint``` but not the individual modules:
-```
+```ocaml
 open Stdint
 
 let _ =
