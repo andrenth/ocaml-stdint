@@ -1,8 +1,15 @@
 #ifndef OCAML_UINT128_H
 #define OCAML_UINT128_H
 
-#define Uint128_val(v) (*((__uint128_t *)Data_custom_val(v)))
+#if defined(__SIZEOF_INT128__) 
+typedef __uint128_t uint128;
+#else
+typedef struct { uint64_t high; uint64_t low; } uint128;
+#endif
 
-CAMLextern value copy_uint128(__uint128_t i);
+#define Uint128_val(v) (*((uint128 *)Data_custom_val(v)))
+
+CAMLextern value copy_uint128(uint128 i);
 
 #endif
+
