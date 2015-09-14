@@ -7,8 +7,8 @@ typedef __int128_t int128;
 typedef struct { uint64_t high; uint64_t low; } int128;
 #endif
 
-#define Int128_val(v) (*((__int128_t *)Data_custom_val(v)))
+#define Int128_val(v) (*((int128 *)Data_custom_val(v)))
 
-CAMLextern value copy_int128(__int128_t i);
+CAMLextern value copy_int128(int128 i);
 
 #endif
