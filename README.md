@@ -49,6 +49,8 @@ let _ =
   print_endline (Uint8.to_string x)
 ```
 
+The 128 bit integer types are currently only available on 64 bit platforms; the compatibility layer for 32 bit platforms is not yet fully implemented.
+
 The stdint library is written by Andre Nathan, Jeff Shaw, [Markus Weissmann](http://www.mweissmann.de) and Florian Pichlmeier.
 It is based on the [ocaml-uint](https://github.com/andrenth/ocaml-uint/) library.
 
