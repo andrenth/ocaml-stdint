@@ -8,7 +8,6 @@ It provides the following unsigned integer types:
 * uint32
 * uint40
 * uint48
-* uint48
 * uint56
 * uint64
 * uint128
@@ -19,7 +18,6 @@ and the following list of signed integer types:
 * int24
 * int32 (identical to int32 from the base library)
 * int40
-* int48
 * int48
 * int56
 * int64 (identical to int64 from the base library)
