@@ -86,7 +86,12 @@ CAMLprim value
 float_of_int128(value v)
 {
   CAMLparam1(v);
+#ifdef HAVE_INT128 
   CAMLreturn (caml_copy_double((double)Int128_val(v)));
+#else
+  caml_failwith("unimplemented");
+  CAMLreturn(Val_unit);
+#endif
 }
 
 CAMLprim value
@@ -149,6 +154,11 @@ CAMLprim value
 float_of_uint128(value v)
 {
   CAMLparam1(v);
+#ifdef HAVE_INT128 
   CAMLreturn (caml_copy_double((double)Uint128_val(v)));
+#else
+  caml_failwith("unimplemented");
+  CAMLreturn(Val_unit);
+#endif
 }
 

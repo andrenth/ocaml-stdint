@@ -86,7 +86,12 @@ CAMLprim value
 int_of_int128(value v)
 {
   CAMLparam1(v);
+#ifdef HAVE_INT128
   CAMLreturn (Val_int((int)Int128_val(v)));
+#else
+  failwith("unimplemented");
+  CAMLreturn(Val_unit);
+#endif
 }
 
 CAMLprim value
@@ -149,6 +154,11 @@ CAMLprim value
 int_of_uint128(value v)
 {
   CAMLparam1(v);
+#ifdef HAVE_UINT128
   CAMLreturn (Val_int((int)Uint128_val(v)));
+#else
+  failwith("unimplemented");
+  CAMLreturn(Val_unit);
+#endif
 }
 

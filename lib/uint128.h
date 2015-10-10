@@ -2,6 +2,7 @@
 #define OCAML_UINT128_H
 
 #if defined(__SIZEOF_INT128__) 
+#define HAVE_UINT128
 typedef __uint128_t uint128;
 #else
 typedef struct { uint64_t high; uint64_t low; } uint128;
