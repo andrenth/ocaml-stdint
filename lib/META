@@ -1,6 +1,6 @@
 # OASIS_START
-# DO NOT EDIT (digest: c554f4fa94481de49906653d23f6a56b)
-version = "0.8"
+# DO NOT EDIT (digest: 14ab74aee99d575b46e34b4a4f2db8ff)
+version = "0.3.0"
 description = "Standard integer types for OCaml"
 requires = "bytes"
 archive(byte) = "stdint.cma"
