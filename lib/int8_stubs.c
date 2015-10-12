@@ -40,7 +40,7 @@ int8_deserialize(void *dst)
 }
 
 struct custom_operations int8_ops = {
-  "uint.int8",
+  "stdint.int8",
   custom_finalize_default,
   int8_cmp,
   int8_hash,

@@ -40,7 +40,7 @@ int16_deserialize(void *dst)
 }
 
 struct custom_operations int16_ops = {
-    "uint.int16",
+    "stdint.int16",
     custom_finalize_default,
     int16_cmp,
     int16_hash,
