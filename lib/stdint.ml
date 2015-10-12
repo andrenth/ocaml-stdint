@@ -1,6 +1,8 @@
 type int8
 type int16
+type int32 = Int32.t
 type int24 = int32
+type int64 = Int64.t
 type int40 = int64
 type int48 = int64
 type int56 = int64
@@ -1579,7 +1581,6 @@ module Uint128 = struct
     external shift_right : uint128 -> int -> uint128 = "uint128_shift_right"
     let shift_right_logical = shift_right
     external abs : uint128 -> uint128 = "%identity"
-    external neg : uint128 -> uint128 = "uint128_neg"
 
     external of_int       :       int ->   uint128 = "uint128_of_int"
     external of_nativeint : nativeint ->   uint128 = "uint128_of_nativeint"
@@ -1636,6 +1637,8 @@ module Uint128 = struct
     let lognot = logxor max_int
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
+
+    let neg x = add (sub max_int x) one
 
     external init_custom_ops : unit -> unit = "uint128_init_custom_ops"
     let () = init_custom_ops ()

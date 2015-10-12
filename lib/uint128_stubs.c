@@ -104,8 +104,9 @@ uint128_sub(value v1, value v2)
   if (x.low < y.low) {
     x.high--;
   }
-  x.low = x.low - y.low;
-  x.high = x.high - y.high;
+  x.low -= y.low;
+  x.high -= y.high;
+
   CAMLreturn (copy_uint128(x));
 #endif
 }
@@ -117,8 +118,31 @@ uint128_mul(value v1, value v2)
 #ifdef HAVE_UINT128 
   CAMLreturn (copy_uint128(Uint128_val(v1) * Uint128_val(v2)));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  uint128 x, y, z;
+  uint64_t p0, p1, p2, p3;
+
+  x = Uint128_val(v1);
+  y = Uint128_val(v2);
+
+  p0 = (x.low & UINT32_MAX) * (y.low & UINT32_MAX);
+  p1 = (x.low & UINT32_MAX) * (y.low >> 32);
+  p2 = (x.low >> 32) * (y.low & UINT32_MAX);
+  p3 = (x.low >> 32) * (y.low >> 32);
+  z.low = p0;
+  z.high = p3 + (p1 >> 32) + (p2 >> 32);
+  p1 <<= 32;
+  z.low += p1;
+  if (z.low < p1 then) {
+    z.high++;
+  }
+  p2 <<= 32;
+  z.low += p2;
+  if (z.low < p2) {
+    z.high++;
+  }
+  z.high += x.low * y.high + x.high * y.low;
+
+  CAMLreturn(copy_uint128(z));
 #endif
 }
 
@@ -289,18 +313,6 @@ static const uint128 uint128_max = (((__uint128_t) UINT64_MAX) << 64) | ((__uint
 #else
 static const uint128 uint128_max = { .high = UINT64_MAX, .low = UINT64_MAX };
 #endif
-
-CAMLprim value
-uint128_neg(value v)
-{
-  CAMLparam1(v);
-#ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(uint128_max - Uint128_val(v) + 1));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
 
 CAMLprim value
 uint128_max_int(void)

@@ -21,7 +21,14 @@ int128_cmp(value v1, value v2)
   __int128_t i2 = Int128_val(v2);
   return (i1 > i2) - (i1 < i2);
 #else
-  caml_failwith("unimplemented");
+  int128 x = Int128_val(v1);
+  int128 y = Int128_val(v2);
+
+  x.high -= y.high;
+  if (0 != x.high) {
+    return x.high;
+  }
+  return x.low - y.low;
 #endif
 }
 

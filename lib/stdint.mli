@@ -9,6 +9,9 @@ type int16
 type int24
 (** Signed 24-bit integer *)
 
+type int32 = Int32.t
+(** Signed 32-bit integer *)
+
 type int40
 (** Signed 40-bit integer *)
 
@@ -17,6 +20,9 @@ type int48
 
 type int56
 (** Signed 56-bit integer *)
+
+type int64 = Int64.t
+(** Signed 64-bit integer *)
 
 type int128
 (** Signed 128-bit integer *)
