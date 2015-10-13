@@ -78,34 +78,6 @@ int16_mod(value v1, value v2)
 }
 
 CAMLprim value
-int16_and(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) & Int16_val(v2)));
-}
-
-CAMLprim value
-int16_or(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) | Int16_val(v2)));
-}
-
-CAMLprim value
-int16_xor(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) ^ Int16_val(v2)));
-}
-
-CAMLprim value
-int16_shift_left(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) << Int_val(v2)));
-}
-
-CAMLprim value
 int16_shift_right(value v1, value v2)
 {
     CAMLparam2(v1, v2);

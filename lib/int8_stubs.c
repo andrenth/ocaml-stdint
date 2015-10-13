@@ -78,34 +78,6 @@ int8_mod(value v1, value v2)
 }
 
 CAMLprim value
-int8_and(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) & Int8_val(v2)));
-}
-
-CAMLprim value
-int8_or(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) | Int8_val(v2)));
-}
-
-CAMLprim value
-int8_xor(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) ^ Int8_val(v2)));
-}
-
-CAMLprim value
-int8_shift_left(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) << Int_val(v2)));
-}
-
-CAMLprim value
 int8_shift_right(value v1, value v2)
 {
     CAMLparam2(v1, v2);

@@ -95,54 +95,6 @@ int128_mod(value v1, value v2)
 }
 
 CAMLprim value
-int128_and(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) & Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
-int128_or(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) | Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
-int128_xor(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) ^ Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
-int128_shift_left(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) << Int_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
 int128_shift_right(value v1, value v2)
 {
   CAMLparam2(v1, v2);
