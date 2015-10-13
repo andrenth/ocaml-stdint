@@ -11,13 +11,6 @@
 #include "int24.h"
 
 CAMLprim value
-int24_mul(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-  CAMLreturn (copy_int24(Int24_val(v1) * Int32_val(v2)));
-}
-
-CAMLprim value
 int24_div(value v1, value v2)
 {
   CAMLparam2(v1, v2);

@@ -58,27 +58,6 @@ copy_int8(int8_t i)
 }
 
 CAMLprim value
-int8_add(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) + Int8_val(v2)));
-}
-
-CAMLprim value
-int8_sub(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) - Int8_val(v2)));
-}
-
-CAMLprim value
-int8_mul(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int8(Int8_val(v1) * Int8_val(v2)));
-}
-
-CAMLprim value
 int8_div(value v1, value v2)
 {
     CAMLparam2(v1, v2);

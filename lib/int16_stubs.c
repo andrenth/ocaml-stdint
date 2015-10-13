@@ -58,27 +58,6 @@ copy_int16(int16_t i)
 }
 
 CAMLprim value
-int16_add(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) + Int16_val(v2)));
-}
-
-CAMLprim value
-int16_sub(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) - Int16_val(v2)));
-}
-
-CAMLprim value
-int16_mul(value v1, value v2)
-{
-    CAMLparam2(v1, v2);
-    CAMLreturn (copy_int16(Int16_val(v1) * Int16_val(v2)));
-}
-
-CAMLprim value
 int16_div(value v1, value v2)
 {
     CAMLparam2(v1, v2);

@@ -64,42 +64,6 @@ copy_int128(int128 i)
 }
 
 CAMLprim value
-int128_add(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) + Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
-int128_sub(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) - Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
-int128_mul(value v1, value v2)
-{
-  CAMLparam2(v1, v2);
-#ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) * Int128_val(v2)));
-#else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
-#endif
-}
-
-CAMLprim value
 int128_div(value v1, value v2)
 {
   CAMLparam2(v1, v2);
