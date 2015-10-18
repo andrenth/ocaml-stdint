@@ -11,7 +11,55 @@
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
 
+#include "uint128.h"
 #include "int128.h"
+
+#ifndef HAVE_INT128
+void divmod128(int128 *d, int128 *modulus, int128 *quotient, int128 *rem);
+
+static inline int32_t compare(int128 *x, int128 *y) {
+  uint64_t z = x->high - y->high;
+  if (0 != z) {
+    return z >> 32;
+  }
+  return (x->low - y->low) >> 32;
+}
+
+static inline void neg(int128 *x) {
+  uint64_t n;
+  x->high ^= UINT64_MAX;
+  x->low ^= UINT64_MAX;
+  n = x->low;
+  x->low += 1;
+  if (x->low < n) {
+    x->high++;
+  }
+}
+
+static inline void divmod(int128 *x, int128 *divisor, int128 *res, int128 *remainder) {
+  assert(0 != divisor->high);
+  assert(0 != divisor->low);
+
+  if (x->high < 0) {
+    neg(x);
+    if (divisor->high < 0) {
+      neg(divisor);
+      divmod128(x, divisor, res, remainder);
+    } else {
+      divmod128(x, divisor, res, remainder);
+      neg(res);
+    }
+  } else {
+    if (divisor->high < 0) {
+      neg(divisor);
+      divmod128(x, divisor, res, remainder);
+      neg(res);
+    } else {
+      divmod128(x, divisor, res, remainder);
+    }
+  }
+}
+#endif
 
 static int
 int128_cmp(value v1, value v2)
@@ -24,11 +72,7 @@ int128_cmp(value v1, value v2)
   int128 x = Int128_val(v1);
   int128 y = Int128_val(v2);
 
-  x.high -= y.high;
-  if (0 != x.high) {
-    return x.high;
-  }
-  return x.low - y.low;
+  return compare(&x, &y);
 #endif
 }
 
@@ -74,8 +118,17 @@ int128_div(value v1, value v2)
     caml_raise_zero_divide();
   CAMLreturn (copy_int128(Int128_val(v1) / divisor));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  int128 x, divisor, res, remainder;
+
+  x = Int128_val(v1);
+  divisor = Int128_val(v2);
+
+  if ((0 == divisor.high) && (0 == divisor.low))
+    caml_raise_zero_divide();
+
+  divmod(&x, &divisor, &res, &remainder);
+
+  CAMLreturn(copy_int128(res));
 #endif
 }
 
@@ -89,8 +142,17 @@ int128_mod(value v1, value v2)
     caml_raise_zero_divide();
   CAMLreturn (copy_int128(Int128_val(v1) % divisor));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  int128 x, divisor, res, remainder;
+
+  x = Int128_val(v1);
+  divisor = Int128_val(v2);
+
+  if ((0 == divisor.high) && (0 == divisor.low))
+    caml_raise_zero_divide();
+
+  divmod(&x, &divisor, &res, &remainder);
+
+  CAMLreturn(copy_int128(remainder));
 #endif
 }
 
@@ -101,8 +163,24 @@ int128_shift_right(value v1, value v2)
 #ifdef HAVE_INT128
   CAMLreturn (copy_int128(Int128_val(v1) >> Int_val(v2)));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  int128 x = Int128_val(v1);
+  int s = Int_val(v2);
+
+  if (0 == s) {
+    // nothing
+  } else if (s < 64) {
+    x.low = (x.high << (64 - s)) | (x.low >> s);
+    x.high = x.high >> s;
+  } else {
+    x.low = x.high >> (s - 64);
+    if (x.high < 0) {
+      x.high = UINT64_MAX;
+    } else {
+      x.high = 0;
+    }
+  }
+
+  CAMLreturn(copy_int128(x));
 #endif
 }
 
@@ -161,11 +239,12 @@ int128_neg(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  __int128_t i = -1 * Int128_val(v);
-  CAMLreturn(copy_int128(i));
+  __int128_t x = -1 * Int128_val(v);
+  CAMLreturn(copy_int128(x));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  int128 x = Int128_val(v);
+  neg(&x);
+  CAMLreturn(copy_int128(x));
 #endif
 }
 
@@ -174,12 +253,16 @@ int128_abs(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  __int128_t i = Int128_val(v);
-  i = i < 0 ? (-i) : i;
-  CAMLreturn(copy_int128(i));
+  __int128_t x = Int128_val(v);
+  x = x < 0 ? (-x) : x;
+  CAMLreturn(copy_int128(x));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  int128 x = Int128_val(v);
+  
+  if (x.high < 0)
+    neg(&x);
+
+  CAMLreturn(copy_int128(x));
 #endif
 }
 

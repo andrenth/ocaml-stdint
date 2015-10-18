@@ -20,6 +20,89 @@
 #include "uint64.h"
 #include "uint128.h"
 
+#ifndef HAVE_UINT128
+static inline int compare(uint128 *x, uint128 *y) {
+  assert(x);
+  assert(y);
+  x->high -= y->high;
+  if (0 != x->high) {
+    return x->high;
+  }
+  return x->low - y->low;
+}
+
+static inline void shift_left(uint128 *x, int s) {
+  assert(x);
+  if (0 == s) {
+    // nothing
+  } else if (s < 64) {
+    x->high = (x->high << s) | (x->low >> (64 - s));
+    x->low = x->low << s;
+  } else {
+    x->high = x->low << (s - 64);
+    x->low = 0;
+  }
+}
+
+static inline void shift_right(uint128 *x, int s) {
+  assert(x);
+  if (0 == s) {
+    // nothing
+  } else if (s < 64) {
+    x->low = (x->high << (64 - s)) | (x->low >> s);
+    x->high = x->high >> s;
+  } else {
+    x->low = x->high >> (s - 64);
+    x->high = 0;
+  }
+}
+
+static inline void sub(uint128 *x, uint128 *y) {
+  assert(x);
+  assert(y);
+  if (x->low < y->low) {
+    x->high--;
+  }
+  x->low -= y->low;
+  x->high -= y->high;
+}
+
+void divmod128(uint128 *d, uint128 *modulus, uint128 *quotient, uint128 *rem) {
+  uint128 mask;
+  int cmp;
+
+  mask = (uint128){.high = 0, .low = 1};
+
+  while (d->high >= 0) {
+    cmp = compare(d, modulus);
+    shift_left(d, 1);
+    shift_left(&mask, 1);
+    if (cmp >= 0) {
+      break;
+    }
+  }
+  rem = modulus;
+  quotient = 0;
+
+  while ((mask.low | mask.high) != 0) {
+    if (compare(rem, d) >= 0) {
+      *quotient = (uint128){.high = quotient->high | mask.high, .low = quotient->low | mask.low};
+      sub(rem, d);
+    }
+    shift_right(&mask, 1);
+    shift_right(d, 1);
+  }
+}
+
+void add(uint128 *x, uint128 *y) {
+  x->low += y->low;
+  x->high += y->high;
+  if (x->low < y->low) {
+    x->high++;
+  }
+}
+#endif
+
 static int
 uint128_cmp(value v1, value v2)
 {
@@ -31,11 +114,7 @@ uint128_cmp(value v1, value v2)
   uint128 x = Uint128_val(v1);
   uint128 y = Uint128_val(v2);
 
-  x.high -= y.high;
-  if (0 != x.high) {
-    return x.high;
-  }
-  return x.low - y.low;
+  return compare(&x, &y);
 #endif
 }
 
@@ -75,18 +154,16 @@ uint128_add(value v1, value v2)
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) + Uint128_val(v2)));
+  CAMLreturn(copy_uint128(Uint128_val(v1) + Uint128_val(v2)));
 #else
-  uint128 res, x, y;
+  uint128 x, y;
 
   x = Uint128_val(v1);
   y = Uint128_val(v2);
-  y.low = x.low + y.low;
-  y.high = x.high + y.high;
-  if (y.low < x.low) {
-    y.high++;
-  }
-  CAMLreturn (copy_uint128(res));
+
+  add(&x, &y);
+
+  CAMLreturn(copy_uint128(x));
 #endif
 }
 
@@ -101,11 +178,8 @@ uint128_sub(value v1, value v2)
 
   x = Uint128_val(v1);
   y = Uint128_val(v2);
-  if (x.low < y.low) {
-    x.high--;
-  }
-  x.low -= y.low;
-  x.high -= y.high;
+
+  sub(&x, &y);
 
   CAMLreturn (copy_uint128(x));
 #endif
@@ -132,7 +206,7 @@ uint128_mul(value v1, value v2)
   z.high = p3 + (p1 >> 32) + (p2 >> 32);
   p1 <<= 32;
   z.low += p1;
-  if (z.low < p1 then) {
+  if (z.low < p1) {
     z.high++;
   }
   p2 <<= 32;
@@ -157,8 +231,14 @@ uint128_div(value v1, value v2)
     caml_raise_zero_divide();
   CAMLreturn (copy_uint128(Uint128_val(v1) / divisor));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  uint128 d, modulus, rem, quotient;
+
+  d = Uint128_val(v1);
+  modulus = Uint128_val(v2);
+
+  divmod128(&d, &modulus, &quotient, &rem);
+
+  CAMLreturn(copy_uint128(quotient));
 #endif
 }
 
@@ -172,8 +252,14 @@ uint128_mod(value v1, value v2)
     caml_raise_zero_divide();
   CAMLreturn (copy_uint128(Uint128_val(v1) % divisor));
 #else
-  caml_failwith("unimplemented");
-  CAMLreturn(Val_unit);
+  uint128 d, modulus, rem, quotient;
+
+  d = Uint128_val(v1);
+  modulus = Uint128_val(v2);
+
+  divmod128(&d, &modulus, &quotient, &rem);
+
+  CAMLreturn(copy_uint128(rem));
 #endif
 }
 
@@ -241,15 +327,8 @@ uint128_shift_left(value v1, value v2)
   x = Uint128_val(v1);
   s = Int_val(v2);
 
-  if (0 == s) {
-    // nothing
-  } else if (s < 64) {
-    x.high = (x.high << s) | (x.low >> (64 - s));
-    x.low = x.low << s;
-  } else {
-    x.high = x.low << (s - 64);
-    x.low = 0;
-  }
+  shift_left(&x, s);
+
   CAMLreturn (copy_uint128(x));
 #endif
 }
