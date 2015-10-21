@@ -30,77 +30,77 @@ CAMLprim value
 uint24_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_nativeint(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Nativeint_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Nativeint_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_float(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Double_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Double_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int8_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int8_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int16(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int16_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int16_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int24(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int24_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int24_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int32_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int32_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int40_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int40_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int48_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int48_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int56_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int56_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_int64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Int64_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int64_val(v)) << 8));
 }
 
 CAMLprim value
@@ -108,7 +108,7 @@ uint24_of_int128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  CAMLreturn (copy_uint32(((uint32_t)Int128_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Int128_val(v)) << 8));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);
@@ -119,49 +119,49 @@ CAMLprim value
 uint24_of_uint8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint8_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint8_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint16(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint16_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint16_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint32_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint32_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint40_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint40_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint48_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint48_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint56_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint56_val(v)) << 8));
 }
 
 CAMLprim value
 uint24_of_uint64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint32(((uint32_t)Uint64_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint64_val(v)) << 8));
 }
 
 CAMLprim value
@@ -169,7 +169,7 @@ uint24_of_uint128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_UINT128
-  CAMLreturn (copy_uint32(((uint32_t)Uint128_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Uint128_val(v)) << 8));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);

@@ -1,7 +1,8 @@
 #ifndef OCAML_UINT16_H
 #define OCAML_UINT16_H
 
-#define Uint16_val(v) (*((uint16_t *)Data_custom_val(v)))
+#define Uint16_val(x) ((uint16_t)(((intnat)(x))))
+#define Val_uint16(x) (((intnat)((x) & 0xFFFF) << 1) + 1)
 
-CAMLextern value copy_uint16(uint16_t i);
 #endif
+

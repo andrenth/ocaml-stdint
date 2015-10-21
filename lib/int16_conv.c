@@ -30,70 +30,70 @@ CAMLprim value
 int16_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int_val(v)));
 }
 
 CAMLprim value
 int16_of_nativeint(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Nativeint_val(v)));
+  CAMLreturn (Val_int16((int16_t)Nativeint_val(v)));
 }
 
 CAMLprim value
 int16_of_float(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Double_val(v)));
+  CAMLreturn (Val_int16((int16_t)Double_val(v)));
 }
 
 CAMLprim value
 int16_of_int8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int8_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int8_val(v)));
 }
 
 CAMLprim value
 int16_of_int24(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int24_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int24_val(v)));
 }
 
 CAMLprim value
 int16_of_int32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int32_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int32_val(v)));
 }
 
 CAMLprim value
 int16_of_int40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int40_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int40_val(v)));
 }
 
 CAMLprim value
 int16_of_int48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int48_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int48_val(v)));
 }
 
 CAMLprim value
 int16_of_int56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int56_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int56_val(v)));
 }
 
 CAMLprim value
 int16_of_int64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Int64_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int64_val(v)));
 }
 
 CAMLprim value
@@ -101,7 +101,7 @@ int16_of_int128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  CAMLreturn (copy_int16((int16_t)Int128_val(v)));
+  CAMLreturn (Val_int16((int16_t)Int128_val(v)));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);
@@ -112,56 +112,56 @@ CAMLprim value
 int16_of_uint8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint8_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint8_val(v)));
 }
 
 CAMLprim value
 int16_of_uint16(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint16_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint16_val(v)));
 }
 
 CAMLprim value
 int16_of_uint24(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint24_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint24_val(v)));
 }
 
 CAMLprim value
 int16_of_uint32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint32_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint32_val(v)));
 }
 
 CAMLprim value
 int16_of_uint40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint40_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint40_val(v)));
 }
 
 CAMLprim value
 int16_of_uint48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint48_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint48_val(v)));
 }
 
 CAMLprim value
 int16_of_uint56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint56_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint56_val(v)));
 }
 
 CAMLprim value
 int16_of_uint64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int16((int16_t)Uint64_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint64_val(v)));
 }
 
 CAMLprim value
@@ -169,7 +169,7 @@ int16_of_uint128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_UINT128
-  CAMLreturn (copy_int16((int16_t)Uint128_val(v)));
+  CAMLreturn (Val_int16((int16_t)Uint128_val(v)));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);

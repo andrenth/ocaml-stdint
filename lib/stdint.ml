@@ -1,16 +1,16 @@
-type int8
-type int16
+type int8 = int
+type int16 = int
 type int32 = Int32.t
-type int24 = int32
+type int24 = int
 type int64 = Int64.t
 type int40 = int64
 type int48 = int64
 type int56 = int64
 type int128
-type uint8
-type uint16
+type uint8 = int
+type uint16 = int
+type uint24 = int
 type uint32
-type uint24 = uint32
 type uint64
 type uint40 = uint64
 type uint48 = uint64
@@ -120,21 +120,23 @@ module Int8 = struct
     let fmt = "l"
     let name = "Int8"
 
-    external add : int8 -> int8 -> int8 = "uint8_add"
-    external sub : int8 -> int8 -> int8 = "uint8_sub"
-    external mul : int8 -> int8 -> int8 = "uint8_mul"
-    external div : int8 -> int8 -> int8 = "int8_div"
-    external rem : int8 -> int8 -> int8 = "int8_mod"
-    external logand : int8 -> int8 -> int8 = "uint8_and"
-    external logor : int8 -> int8 -> int8 = "uint8_or"
-    external logxor : int8 -> int8 -> int8 = "uint8_xor"
-    external shift_left : int8 -> int -> int8 = "uint8_shift_left"
-    external shift_right : int8 -> int -> int8 = "int8_shift_right"
-    external shift_right_logical : int8 -> int -> int8 = "uint8_shift_right"
-    external abs : int8 -> int8 = "int8_abs"
-    external neg : int8 -> int8 = "int8_neg"
+    let of_int x = x lsl (Sys.word_size - 8 - 1)
+    let to_int x = x asr (Sys.word_size - 8 - 1)
 
-    external of_int       :       int ->      int8 = "int8_of_int"
+    let add = (+)
+    let sub = (-)
+    let mul a b = (to_int a) * b
+    let div a b = of_int (a / b)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = (a lxor b) land (of_int 0xFF)
+    let shift_left a b = a lsl b
+    let shift_right a b = (a asr b) land (of_int 0xFF)
+    let shift_right_logical a b = (a lsr b) land (of_int 0xFF)
+    let abs = abs
+    let neg x = (-1) * x
+
     external of_nativeint : nativeint ->      int8 = "int8_of_nativeint"
     external of_float     :     float ->      int8 = "int8_of_float"
     external of_int8      :      int8 ->      int8 = "%identity"
@@ -156,7 +158,6 @@ module Int8 = struct
     external of_uint64    :    uint64 ->      int8 = "int8_of_uint64"
     external of_uint128   :   uint128 ->      int8 = "int8_of_uint128"
 
-    external to_int       :      int8 ->       int = "int_of_int8"
     external to_nativeint :      int8 -> nativeint = "nativeint_of_int8"
     external to_float     :      int8 ->     float = "float_of_int8"
     external to_int8      :      int8 ->      int8 = "%identity"
@@ -180,23 +181,17 @@ module Int8 = struct
 
     external bits_of_float : float -> int8 = "int8_bits_of_float"
     external float_of_bits : int8 -> float = "int8_float_of_bits"
-    external abs : int8 -> int8 = "int8_abs"
-    external max_int_fun : unit -> int8 = "int8_max_int"
-    external min_int_fun : unit -> int8 = "int8_min_int"
 
-    let zero = of_int 0
+    let zero = 0
     let one = of_int 1
     let minus_one = of_int (-1)
     let succ = add one
     let pred x = sub x one
-    let max_int = max_int_fun ()
-    let min_int = min_int_fun ()
+    let max_int = of_int 127
+    let min_int = of_int (-128)
     let lognot = logxor minus_one
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
-
-    external init_custom_ops : unit -> unit = "int8_init_custom_ops"
-    let () = init_custom_ops ()
   end
 
   include Base
@@ -218,21 +213,23 @@ module Int16 = struct
     let fmt = "l"
     let name = "int16"
 
-    external add : int16 -> int16 -> int16 = "uint16_add"
-    external sub : int16 -> int16 -> int16 = "uint16_sub"
-    external mul : int16 -> int16 -> int16 = "uint16_mul"
-    external div : int16 -> int16 -> int16 = "int16_div"
-    external rem : int16 -> int16 -> int16 = "int16_mod"
-    external logand : int16 -> int16 -> int16 = "uint16_and"
-    external logor : int16 -> int16 -> int16 = "uint16_or"
-    external logxor : int16 -> int16 -> int16 = "uint16_xor"
-    external shift_left : int16 -> int -> int16 = "uint16_shift_left"
-    external shift_right : int16 -> int -> int16 = "int16_shift_right"
-    external shift_right_logical : int16 -> int -> int16 = "uint16_shift_right"
-    external abs : int16 -> int16 = "int16_abs"
-    external neg : int16 -> int16 = "int16_neg"
+    let of_int x = x lsl (Sys.word_size - 16 - 1)
+    let to_int x = x asr (Sys.word_size - 16 - 1)
 
-    external of_int       :       int ->     int16 = "int16_of_int"
+    let add = (+)
+    let sub = (-)
+    let mul a b = (to_int a) * b
+    let div a b = of_int (a / b)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = (a lxor b) land (of_int 0xFFFF)
+    let shift_left a b = a lsl b
+    let shift_right a b = (a asr b) land (of_int 0xFFFF)
+    let shift_right_logical a b = (a lsr b) land (of_int 0xFFFF)
+    let abs = abs
+    let neg x = ((-1) * x) land (of_int 0xFFFF)
+
     external of_nativeint : nativeint ->     int16 = "int16_of_nativeint"
     external of_float     :     float ->     int16 = "int16_of_float"
     external of_int8      :      int8 ->     int16 = "int16_of_int8"
@@ -254,7 +251,6 @@ module Int16 = struct
     external of_uint64    :    uint64 ->     int16 = "int16_of_uint64"
     external of_uint128   :   uint128 ->     int16 = "int16_of_uint128"
 
-    external to_int       :     int16 ->       int = "int_of_int16"
     external to_nativeint :     int16 -> nativeint = "nativeint_of_int16"
     external to_float     :     int16 ->     float = "float_of_int16"
     external to_int8      :     int16 ->      int8 = "int8_of_int16"
@@ -278,23 +274,18 @@ module Int16 = struct
 
     external bits_of_float : float -> int16 = "int16_bits_of_float"
     external float_of_bits : int16 -> float = "int16_float_of_bits"
-    external abs : int16 -> int16 = "int16_abs"
-    external max_int_fun : unit -> int16 = "int16_max_int"
-    external min_int_fun : unit -> int16 = "int16_min_int"
 
+    let abs = abs
     let zero = of_int 0
     let one = of_int 1
     let minus_one = of_int (-1)
     let succ = add one
     let pred x = sub x one
-    let max_int = max_int_fun ()
-    let min_int = min_int_fun ()
+    let max_int = of_int 32767
+    let min_int = of_int (-32768)
     let lognot = logxor minus_one
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
-
-    external init_custom_ops : unit -> unit = "int16_init_custom_ops"
-    let () = init_custom_ops ()
   end
 
   include Base
@@ -373,24 +364,34 @@ module Int32 = struct
 end
 
 module Int24 = struct
-  (* int24 is modeled as int32, where only the UPPER 24 bits are used;
+  (* int24 is modeled as int, where only the UPPER 24 bits are used;
      this has the advantage that most operations are identical to the int32 ones.
-     The post-condition of all int24 opertaions is, that the LOWER 8 bit are 0x00.
+     The post-condition of all int24 opertaions is, that the LOWER bits are 0x00.
      Only operations that are not identical or do not preserve the post-condition are implemented.
   *)
   module Base = struct
-    include Int32.Base
+    type t = int24
     let bits = 24
     let fmt = "Ul"
     let name = "Int24"
 
-    external mul : int24 -> int24 -> int24 = "uint24_mul"
-    external div : int24 -> int24 -> int24 = "int24_div"
-    external logxor : int24 -> int24 -> int24 = "uint24_xor"
-    external shift_right : int24 -> int -> int24 = "uint24_shift_right"
-    external shift_right_logical : int24 -> int -> int24 = "int24_shift_right"
+    let of_int x = x lsl (Sys.word_size - 24 - 1)
+    let to_int x = x asr (Sys.word_size - 24 - 1)
 
-    external of_int       :       int ->     int24 = "int24_of_int"
+    let add = (+)
+    let sub = (-)
+    let mul a b = (to_int a) * b
+    let div a b = of_int (a / b)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = (a lxor b) land (of_int 0xFFFFFF)
+    let shift_left a b = a lsl b
+    let shift_right a b = (a asr b) land (of_int 0xFFFFFF)
+    let shift_right_logical a b = (a lsr b) land (of_int 0xFFFFFF)
+    let abs = abs
+    let neg x = ((-1) * x) land (of_int 0xFFFFFF)
+
     external of_nativeint : nativeint ->     int24 = "int24_of_nativeint"
     external of_float     :     float ->     int24 = "int24_of_float"
     external of_int8      :      int8 ->     int24 = "int24_of_int8"
@@ -412,7 +413,6 @@ module Int24 = struct
     external of_uint64    :    uint64 ->     int24 = "int24_of_uint64"
     external of_uint128   :   uint128 ->     int24 = "int24_of_uint128"
 
-    external to_int       :     int24 ->       int = "int_of_int24"
     external to_nativeint :     int24 -> nativeint = "nativeint_of_int24"
     external to_float     :     int24 ->     float = "float_of_int24"
     external to_int8      :     int24 ->      int8 = "int8_of_int24"
@@ -434,12 +434,15 @@ module Int24 = struct
     external to_uint64    :     int24 ->    uint64 = "uint64_of_int24"
     external to_uint128   :     int24 ->   uint128 = "uint128_of_int24"
 
-    external max_int_fun : unit -> int24 = "int24_max_int"
-    external min_int_fun : unit -> int24 = "int24_min_int"
+    let abs = abs
+    let zero = of_int 0
     let one = of_int 1
-    let max_int = max_int_fun ()
-    let min_int = min_int_fun ()
-    let lognot = logxor max_int
+    let minus_one = of_int (-1)
+    let succ = add one
+    let pred x = sub x one
+    let max_int = of_int 8388607
+    let min_int = of_int (-8388608)
+    let lognot = logxor minus_one
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
@@ -869,21 +872,23 @@ module Uint8 = struct
     let fmt = "Ul"
     let name = "Uint8"
 
-    external add : uint8 -> uint8 -> uint8 = "uint8_add"
-    external sub : uint8 -> uint8 -> uint8 = "uint8_sub"
-    external mul : uint8 -> uint8 -> uint8 = "uint8_mul"
-    external div : uint8 -> uint8 -> uint8 = "uint8_div"
-    external rem : uint8 -> uint8 -> uint8 = "uint8_mod"
-    external logand : uint8 -> uint8 -> uint8 = "uint8_and"
-    external logor : uint8 -> uint8 -> uint8 = "uint8_or"
-    external logxor : uint8 -> uint8 -> uint8 = "uint8_xor"
-    external shift_left : uint8 -> int -> uint8 = "uint8_shift_left"
-    external shift_right : uint8 -> int -> uint8 = "uint8_shift_right"
+    let of_int = (land) 0xFF
+    external to_int : uint8 -> int = "%identity"
+
+    let add a b = of_int (a + b)
+    let sub a b = of_int (a - b)
+    let mul a b = of_int (a * b)
+    let div = (/)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = of_int (a lxor b)
+    let shift_left a b = of_int (a lsl b)
+    let shift_right = (lsr)
     let shift_right_logical = shift_right
     external abs : uint8 -> uint8 = "%identity"
-    external neg : uint8 -> uint8 = "uint8_neg"
+    let neg x = of_int ((-1) * x)
 
-    external of_int       :       int ->     uint8 = "uint8_of_int"
     external of_nativeint : nativeint ->     uint8 = "uint8_of_nativeint"
     external of_float     :     float ->     uint8 = "uint8_of_float"
     external of_int8      :      int8 ->     uint8 = "uint8_of_int8"
@@ -905,7 +910,6 @@ module Uint8 = struct
     external of_uint64    :    uint64 ->     uint8 = "uint8_of_uint64"
     external of_uint128   :   uint128 ->     uint8 = "uint8_of_uint128"
 
-    external to_int       :     uint8 ->       int = "int_of_uint8"
     external to_nativeint :     uint8 -> nativeint = "nativeint_of_uint8"
     external to_float     :     uint8 ->     float = "float_of_uint8"
     external to_int8      :     uint8 ->      int8 = "int8_of_uint8"
@@ -927,20 +931,15 @@ module Uint8 = struct
     external to_uint64    :     uint8 ->    uint64 = "uint64_of_uint8"
     external to_uint128   :     uint8 ->   uint128 = "uint128_of_uint8"
 
-    external max_int_fun : unit -> uint8 = "uint8_max_int"
-
     let zero = of_int 0
     let one = of_int 1
     let succ = add one
     let pred x = sub x one
-    let max_int = max_int_fun ()
+    let max_int = of_int 255
     let min_int = zero
     let lognot = logxor max_int
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
-
-    external init_custom_ops : unit -> unit = "uint8_init_custom_ops"
-    let () = init_custom_ops ()
   end
 
   include Base
@@ -962,21 +961,23 @@ module Uint16 = struct
     let fmt = "Ul"
     let name = "Uint16"
 
-    external add : uint16 -> uint16 -> uint16 = "uint16_add"
-    external sub : uint16 -> uint16 -> uint16 = "uint16_sub"
-    external mul : uint16 -> uint16 -> uint16 = "uint16_mul"
-    external div : uint16 -> uint16 -> uint16 = "uint16_div"
-    external rem : uint16 -> uint16 -> uint16 = "uint16_mod"
-    external logand : uint16 -> uint16 -> uint16 = "uint16_and"
-    external logor : uint16 -> uint16 -> uint16 = "uint16_or"
-    external logxor : uint16 -> uint16 -> uint16 = "uint16_xor"
-    external shift_left : uint16 -> int -> uint16 = "uint16_shift_left"
-    external shift_right : uint16 -> int -> uint16 = "uint16_shift_right"
-    let shift_right_logical = shift_right
-    external abs : uint16 -> uint16 = "%identity"
-    external neg : uint16 -> uint16 = "uint16_neg"
+    let of_int = (land) 0xFFFF
+    external to_int : uint16 -> int = "%identity"
 
-    external of_int       :       int ->    uint16 = "uint16_of_int"
+    let add a b = of_int (a + b)
+    let sub a b = of_int (a - b)
+    let mul a b = of_int (a * b)
+    let div = (/)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = of_int (a lxor b)
+    let shift_left a b = of_int (a lsl b)
+    let shift_right = (lsr)
+    let shift_right_logical = shift_right
+    external abs : uint8 -> uint8 = "%identity"
+    let neg x = of_int ((-1) * x)
+
     external of_nativeint : nativeint ->    uint16 = "uint16_of_nativeint"
     external of_float     :     float ->    uint16 = "uint16_of_float"
     external of_int8      :      int8 ->    uint16 = "uint16_of_int8"
@@ -998,7 +999,6 @@ module Uint16 = struct
     external of_uint64    :    uint64 ->    uint16 = "uint16_of_uint64"
     external of_uint128   :   uint128 ->    uint16 = "uint16_of_uint128"
 
-    external to_int       :    uint16 ->       int = "int_of_uint16"
     external to_nativeint :    uint16 -> nativeint = "nativeint_of_uint16"
     external to_float     :    uint16 ->     float = "float_of_uint16"
     external to_int8      :    uint16 ->      int8 = "int8_of_uint16"
@@ -1020,20 +1020,15 @@ module Uint16 = struct
     external to_uint64    :    uint16 ->    uint64 = "uint64_of_uint16"
     external to_uint128   :    uint16 ->   uint128 = "uint128_of_uint16"
 
-    external max_int_fun : unit -> uint16 = "uint16_max_int"
-
     let zero = of_int 0
     let one = of_int 1
     let succ = add one
     let pred x = sub x one
-    let max_int = max_int_fun ()
+    let max_int = of_int 65535
     let min_int = zero
     let lognot = logxor max_int
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)
-
-    external init_custom_ops : unit -> unit = "uint16_init_custom_ops"
-    let () = init_custom_ops ()
   end
 
   include Base
@@ -1148,19 +1143,28 @@ module Uint24 = struct
      Only operations that are not identical or do not preserve the post-condition are implemented.
   *)
   module Base = struct
-    include Uint32.Base
+    type t = uint24
     let bits = 24
     let fmt     = "Ul"
     let name    = "Uint24"
 
-    external mul : uint24 -> uint24 -> uint24 = "uint24_mul"
-    external div : uint24 -> uint24 -> uint24 = "uint24_div"
-    external logxor : uint24 -> uint24 -> uint24 = "uint24_xor"
-    external shift_right : uint24 -> int -> uint24 = "uint24_shift_right"
-    let shift_right_logical = shift_right
-    external neg : uint24 -> uint24 = "uint24_neg"
+    let of_int = (land) 0xFFFFFF
+    external to_int : uint24 -> int = "%identity"
 
-    external of_int       :       int ->    uint24 = "uint24_of_int"
+    let add a b = of_int (a + b)
+    let sub a b = of_int (a - b)
+    let mul a b = of_int (a * b)
+    let div = (/)
+    let rem = (mod)
+    let logand = (land)
+    let logor = (lor)
+    let logxor a b = of_int (a lxor b)
+    let shift_left a b = of_int (a lsl b)
+    let shift_right = (lsr)
+    let shift_right_logical = shift_right
+    external abs : uint24 -> uint24 = "%identity"
+    let neg x = of_int ((-1) * x)
+
     external of_nativeint : nativeint ->    uint24 = "uint24_of_nativeint"
     external of_float     :     float ->    uint24 = "uint24_of_float"
     external of_int8      :      int8 ->    uint24 = "uint24_of_int8"
@@ -1182,7 +1186,6 @@ module Uint24 = struct
     external of_uint64    :    uint64 ->    uint24 = "uint24_of_uint64"
     external of_uint128   :   uint128 ->    uint24 = "uint24_of_uint128"
 
-    external to_int       :    uint24 ->       int = "int_of_uint24"
     external to_nativeint :    uint24 -> nativeint = "nativeint_of_uint24"
     external to_float     :    uint24 ->     float = "float_of_uint24"
     external to_int8      :    uint24 ->      int8 = "int8_of_uint24"
@@ -1204,8 +1207,12 @@ module Uint24 = struct
     external to_uint64    :    uint24 ->    uint64 = "uint64_of_uint24"
     external to_uint128   :    uint24 ->   uint128 = "uint128_of_uint24"
 
+    let zero = of_int 0
     let one = of_int 1
-    let max_int = max_int_fun ()
+    let succ = add one
+    let pred x = sub x one
+    let max_int = of_int 16777215
+    let min_int = zero
     let lognot = logxor max_int
     let compare = Pervasives.compare
     let divmod  = (fun x y -> div x y, rem x y)

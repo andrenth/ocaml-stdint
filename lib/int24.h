@@ -1,8 +1,17 @@
 #ifndef OCAML_INT24_H
 #define OCAML_INT24_H
 
-#define Int24_val(v) ((*((int32_t *)Data_custom_val(v))) >> 8)
+#ifdef ARCH_SIXTYFOUR
 
-#define copy_int24(v) copy_int32(v)
+#define Int24_val(x) ((int32_t)(((intnat)(x)) >> 40))
+#define Val_int24(x) (((intnat)(x) << 40) + 1)
+
+#else
+
+#define Int24_val(x) ((int32_t)(((intnat)(x)) >> 8))
+#define Val_int24(x) (((intnat)(x) << 8) + 1)
 
 #endif
+
+#endif
+

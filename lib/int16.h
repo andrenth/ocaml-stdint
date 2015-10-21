@@ -1,7 +1,16 @@
 #ifndef OCAML_INT16_H
 #define OCAML_INT16_H
 
-#define Int16_val(v) (*((int16_t *)Data_custom_val(v)))
+#ifdef ARCH_SIXTYFOUR
 
-CAMLextern value copy_int16(int16_t i);
+#define Int16_val(x) ((int16_t)(((intnat)(x)) >> 48))
+#define Val_int16(x) (((intnat)(x) << 48) + 1)
+
+#else
+
+#define Int16_val(x) ((int16_t)(((intnat)(x)) >> 16))
+#define Val_int16(x) (((intnat)(x) << 16) + 1)
+
+#endif
+
 #endif

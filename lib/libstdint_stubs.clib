@@ -1,17 +1,11 @@
 # OASIS_START
-# DO NOT EDIT (digest: 8548c6eddbc1bc2c0ba529516dc7b7e5)
-uint8_stubs.o
-uint16_stubs.o
-uint24_stubs.o
+# DO NOT EDIT (digest: 7e17acd3a81a520636f41e34b72723a3)
 uint32_stubs.o
 uint40_stubs.o
 uint48_stubs.o
 uint56_stubs.o
 uint64_stubs.o
 uint128_stubs.o
-int8_stubs.o
-int16_stubs.o
-int24_stubs.o
 int40_stubs.o
 int48_stubs.o
 int56_stubs.o

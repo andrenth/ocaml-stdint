@@ -1,8 +1,16 @@
 #ifndef OCAML_INT8_H
 #define OCAML_INT8_H
 
-#define Int8_val(v) (*((int8_t *)Data_custom_val(v)))
+#ifdef ARCH_SIXTYFOUR
 
-CAMLextern value copy_int8(int8_t i);
+#define Int8_val(x) ((int8_t)(((intnat)(x)) >> 56))
+#define Val_int8(x) (((intnat)(x) << 56) + 1)
+
+#else
+
+#define Int8_val(x) ((int8_t)(((intnat)(x)) >> 24))
+#define Val_int8(x) (((intnat)(x) << 24) + 1)
+
+#endif
 
 #endif

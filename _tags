@@ -1,5 +1,5 @@
 # OASIS_START
-# DO NOT EDIT (digest: 2814be9c7ff4bed4aa4b9f9282bb883c)
+# DO NOT EDIT (digest: 7c3e44246f4cb42b5073f8a60267fa4b)
 # Ignore VCS directories, you can use the same kind of rule outside
 # OASIS_START/STOP if you want to exclude directories that contains
 # useless stuff for the build process
@@ -18,18 +18,12 @@ true: annot, bin_annot
 "lib/stdint.cmxs": use_stdint
 <lib/stdint.{cma,cmxa}>: use_libstdint_stubs
 <lib/*.ml{,i,y}>: pkg_bytes
-"lib/uint8_stubs.c": pkg_bytes
-"lib/uint16_stubs.c": pkg_bytes
-"lib/uint24_stubs.c": pkg_bytes
 "lib/uint32_stubs.c": pkg_bytes
 "lib/uint40_stubs.c": pkg_bytes
 "lib/uint48_stubs.c": pkg_bytes
 "lib/uint56_stubs.c": pkg_bytes
 "lib/uint64_stubs.c": pkg_bytes
 "lib/uint128_stubs.c": pkg_bytes
-"lib/int8_stubs.c": pkg_bytes
-"lib/int16_stubs.c": pkg_bytes
-"lib/int24_stubs.c": pkg_bytes
 "lib/int40_stubs.c": pkg_bytes
 "lib/int48_stubs.c": pkg_bytes
 "lib/int56_stubs.c": pkg_bytes
