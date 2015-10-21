@@ -113,6 +113,21 @@ module type Int = sig
   val compare : t -> t -> int
 end
 
+(*
+small integers are placed inside the 31-bit or 63-bit [int] integer;
+signed integers are left-aligned inside the [int], while unsigned integers are
+right-aligned.
+This brings several advantages:
+1. Low memory overhead as [int] is always unboxed in OCaml
+2. Speed -- as [int] is always unboxed..
+3. No external calls for most calls -- less code, less memory for code
+
+Signed integers that are left-aligned in a larger signed integer (e.g. [int8]
+in [int]) can use [add], [sub], [land], [lor], [lsl] [abs] .. from [int]
+
+Unsigned integers that are right-aligned in a larger signed integer can re-use
+[div], [rem], [land], [lor], [lsr] .. from [int]
+*)
 module Int8 = struct
   module Base = struct
     type t = int8
