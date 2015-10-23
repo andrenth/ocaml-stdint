@@ -14,7 +14,7 @@ Library stdint
   CompiledObject:  best
   BuildDepends:    bytes
   Modules:         Stdint
-  InternalModules: Str_conv, Bytes_conv, Infix
+  InternalModules: Str_conv, Bytes_conv, Infix, Int_wrapper
   CSources:        uint8.h,
                    uint16.h,
                    uint24.h,

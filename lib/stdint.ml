@@ -113,103 +113,58 @@ module type Int = sig
   val compare : t -> t -> int
 end
 
-(*
-small integers are placed inside the 31-bit or 63-bit [int] integer;
-signed integers are left-aligned inside the [int], while unsigned integers are
-right-aligned.
-This brings several advantages:
-1. Low memory overhead as [int] is always unboxed in OCaml
-2. Speed -- as [int] is always unboxed..
-3. No external calls for most calls -- less code, less memory for code
-
-Signed integers that are left-aligned in a larger signed integer (e.g. [int8]
-in [int]) can use [add], [sub], [land], [lor], [lsl] [abs] .. from [int]
-
-Unsigned integers that are right-aligned in a larger signed integer can re-use
-[div], [rem], [land], [lor], [lsr] .. from [int]
-*)
 module Int8 = struct
   module Base = struct
-    type t = int8
-    let bits = 8
-    let fmt = "l"
+    include Int_wrapper.Make_signed(struct let bits = 8 end)
+    let fmt = "hh"
     let name = "Int8"
-
-    let of_int x = x lsl (Sys.word_size - 8 - 1)
-    let to_int x = x asr (Sys.word_size - 8 - 1)
-
-    let add = (+)
-    let sub = (-)
-    let mul a b = (to_int a) * b
-    let div a b = of_int (a / b)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = (a lxor b) land (of_int 0xFF)
-    let shift_left a b = a lsl b
-    let shift_right a b = (a asr b) land (of_int 0xFF)
-    let shift_right_logical a b = (a lsr b) land (of_int 0xFF)
-    let abs = abs
-    let neg x = (-1) * x
-
-    external of_nativeint : nativeint ->      int8 = "int8_of_nativeint"
-    external of_float     :     float ->      int8 = "int8_of_float"
-    external of_int8      :      int8 ->      int8 = "%identity"
-    external of_int16     :     int16 ->      int8 = "int8_of_int16"
-    external of_int24     :     int24 ->      int8 = "int8_of_int24"
-    external of_int32     :     int32 ->      int8 = "int8_of_int32"
-    external of_int40     :     int40 ->      int8 = "int8_of_int40"
-    external of_int48     :     int48 ->      int8 = "int8_of_int48"
-    external of_int56     :     int56 ->      int8 = "int8_of_int56"
-    external of_int64     :     int64 ->      int8 = "int8_of_int64"
-    external of_int128    :    int128 ->      int8 = "int8_of_int128"
-    external of_uint8     :     uint8 ->      int8 = "int8_of_uint8"
-    external of_uint16    :    uint16 ->      int8 = "int8_of_uint16"
-    external of_uint24    :    uint24 ->      int8 = "int8_of_uint24"
-    external of_uint32    :    uint32 ->      int8 = "int8_of_uint32"
-    external of_uint40    :    uint40 ->      int8 = "int8_of_uint40"
-    external of_uint48    :    uint48 ->      int8 = "int8_of_uint48"
-    external of_uint56    :    uint56 ->      int8 = "int8_of_uint56"
-    external of_uint64    :    uint64 ->      int8 = "int8_of_uint64"
-    external of_uint128   :   uint128 ->      int8 = "int8_of_uint128"
-
-    external to_nativeint :      int8 -> nativeint = "nativeint_of_int8"
-    external to_float     :      int8 ->     float = "float_of_int8"
-    external to_int8      :      int8 ->      int8 = "%identity"
-    external to_int16     :      int8 ->     int16 = "int16_of_int8"
-    external to_int24     :      int8 ->     int24 = "int24_of_int8"
-    external to_int32     :      int8 ->     int32 = "int32_of_int8"
-    external to_int40     :      int8 ->     int40 = "int40_of_int8"
-    external to_int48     :      int8 ->     int48 = "int48_of_int8"
-    external to_int56     :      int8 ->     int56 = "int56_of_int8"
-    external to_int64     :      int8 ->     int64 = "int64_of_int8"
-    external to_int128    :      int8 ->    int128 = "int128_of_int8"
-    external to_uint8     :      int8 ->     uint8 = "uint8_of_int8"
-    external to_uint16    :      int8 ->    uint16 = "uint16_of_int8"
-    external to_uint24    :      int8 ->    uint24 = "uint24_of_int8"
-    external to_uint32    :      int8 ->    uint32 = "uint32_of_int8"
-    external to_uint40    :      int8 ->    uint40 = "uint40_of_int8"
-    external to_uint48    :      int8 ->    uint48 = "uint48_of_int8"
-    external to_uint56    :      int8 ->    uint56 = "uint56_of_int8"
-    external to_uint64    :      int8 ->    uint64 = "uint64_of_int8"
-    external to_uint128   :      int8 ->   uint128 = "uint128_of_int8"
-
-    external bits_of_float : float -> int8 = "int8_bits_of_float"
-    external float_of_bits : int8 -> float = "int8_float_of_bits"
-
-    let zero = 0
-    let one = of_int 1
-    let minus_one = of_int (-1)
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 127
-    let min_int = of_int (-128)
-    let lognot = logxor minus_one
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_nativeint : nativeint ->      int8 = "int8_of_nativeint"
+  external of_float     :     float ->      int8 = "int8_of_float"
+  external of_int8      :      int8 ->      int8 = "%identity"
+  external of_int16     :     int16 ->      int8 = "int8_of_int16"
+  external of_int24     :     int24 ->      int8 = "int8_of_int24"
+  external of_int32     :     int32 ->      int8 = "int8_of_int32"
+  external of_int40     :     int40 ->      int8 = "int8_of_int40"
+  external of_int48     :     int48 ->      int8 = "int8_of_int48"
+  external of_int56     :     int56 ->      int8 = "int8_of_int56"
+  external of_int64     :     int64 ->      int8 = "int8_of_int64"
+  external of_int128    :    int128 ->      int8 = "int8_of_int128"
+  external of_uint8     :     uint8 ->      int8 = "int8_of_uint8"
+  external of_uint16    :    uint16 ->      int8 = "int8_of_uint16"
+  external of_uint24    :    uint24 ->      int8 = "int8_of_uint24"
+  external of_uint32    :    uint32 ->      int8 = "int8_of_uint32"
+  external of_uint40    :    uint40 ->      int8 = "int8_of_uint40"
+  external of_uint48    :    uint48 ->      int8 = "int8_of_uint48"
+  external of_uint56    :    uint56 ->      int8 = "int8_of_uint56"
+  external of_uint64    :    uint64 ->      int8 = "int8_of_uint64"
+  external of_uint128   :   uint128 ->      int8 = "int8_of_uint128"
+
+  external to_nativeint :      int8 -> nativeint = "nativeint_of_int8"
+  external to_float     :      int8 ->     float = "float_of_int8"
+  external to_int8      :      int8 ->      int8 = "%identity"
+  external to_int16     :      int8 ->     int16 = "int16_of_int8"
+  external to_int24     :      int8 ->     int24 = "int24_of_int8"
+  external to_int32     :      int8 ->     int32 = "int32_of_int8"
+  external to_int40     :      int8 ->     int40 = "int40_of_int8"
+  external to_int48     :      int8 ->     int48 = "int48_of_int8"
+  external to_int56     :      int8 ->     int56 = "int56_of_int8"
+  external to_int64     :      int8 ->     int64 = "int64_of_int8"
+  external to_int128    :      int8 ->    int128 = "int128_of_int8"
+  external to_uint8     :      int8 ->     uint8 = "uint8_of_int8"
+  external to_uint16    :      int8 ->    uint16 = "uint16_of_int8"
+  external to_uint24    :      int8 ->    uint24 = "uint24_of_int8"
+  external to_uint32    :      int8 ->    uint32 = "uint32_of_int8"
+  external to_uint40    :      int8 ->    uint40 = "uint40_of_int8"
+  external to_uint48    :      int8 ->    uint48 = "uint48_of_int8"
+  external to_uint56    :      int8 ->    uint56 = "uint56_of_int8"
+  external to_uint64    :      int8 ->    uint64 = "uint64_of_int8"
+  external to_uint128   :      int8 ->   uint128 = "uint128_of_int8"
+
+  external bits_of_float : float -> int8 = "int8_bits_of_float"
+  external float_of_bits : int8 -> float = "int8_float_of_bits"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := int8)
@@ -223,87 +178,56 @@ end
 
 module Int16 = struct
   module Base = struct
-    type t = int16
-    let bits = 16
-    let fmt = "l"
+    include Int_wrapper.Make_signed(struct let bits = 16 end)
+    let fmt = "h"
     let name = "int16"
-
-    let of_int x = x lsl (Sys.word_size - 16 - 1)
-    let to_int x = x asr (Sys.word_size - 16 - 1)
-
-    let add = (+)
-    let sub = (-)
-    let mul a b = (to_int a) * b
-    let div a b = of_int (a / b)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = (a lxor b) land (of_int 0xFFFF)
-    let shift_left a b = a lsl b
-    let shift_right a b = (a asr b) land (of_int 0xFFFF)
-    let shift_right_logical a b = (a lsr b) land (of_int 0xFFFF)
-    let abs = abs
-    let neg x = ((-1) * x) land (of_int 0xFFFF)
-
-    external of_nativeint : nativeint ->     int16 = "int16_of_nativeint"
-    external of_float     :     float ->     int16 = "int16_of_float"
-    external of_int8      :      int8 ->     int16 = "int16_of_int8"
-    external of_int16     :     int16 ->     int16 = "%identity"
-    external of_int24     :     int24 ->     int16 = "int16_of_int24"
-    external of_int32     :     int32 ->     int16 = "int16_of_int32"
-    external of_int40     :     int40 ->     int16 = "int16_of_int40"
-    external of_int48     :     int48 ->     int16 = "int16_of_int48"
-    external of_int56     :     int56 ->     int16 = "int16_of_int56"
-    external of_int64     :     int64 ->     int16 = "int16_of_int64"
-    external of_int128    :    int128 ->     int16 = "int16_of_int128"
-    external of_uint8     :     uint8 ->     int16 = "int16_of_uint8"
-    external of_uint16    :    uint16 ->     int16 = "int16_of_uint16"
-    external of_uint24    :    uint24 ->     int16 = "int16_of_uint24"
-    external of_uint32    :    uint32 ->     int16 = "int16_of_uint32"
-    external of_uint40    :    uint40 ->     int16 = "int16_of_uint40"
-    external of_uint48    :    uint48 ->     int16 = "int16_of_uint48"
-    external of_uint56    :    uint56 ->     int16 = "int16_of_uint56"
-    external of_uint64    :    uint64 ->     int16 = "int16_of_uint64"
-    external of_uint128   :   uint128 ->     int16 = "int16_of_uint128"
-
-    external to_nativeint :     int16 -> nativeint = "nativeint_of_int16"
-    external to_float     :     int16 ->     float = "float_of_int16"
-    external to_int8      :     int16 ->      int8 = "int8_of_int16"
-    external to_int16     :     int16 ->     int16 = "%identity"
-    external to_int24     :     int16 ->     int24 = "int24_of_int16"
-    external to_int32     :     int16 ->     int32 = "int32_of_int16"
-    external to_int40     :     int16 ->     int40 = "int40_of_int16"
-    external to_int48     :     int16 ->     int48 = "int48_of_int16"
-    external to_int56     :     int16 ->     int56 = "int56_of_int16"
-    external to_int64     :     int16 ->     int64 = "int64_of_int16"
-    external to_int128    :     int16 ->    int128 = "int128_of_int16"
-    external to_uint8     :     int16 ->     uint8 = "uint8_of_int16"
-    external to_uint16    :     int16 ->    uint16 = "uint16_of_int16"
-    external to_uint24    :     int16 ->    uint24 = "uint24_of_int16"
-    external to_uint32    :     int16 ->    uint32 = "uint32_of_int16"
-    external to_uint40    :     int16 ->    uint40 = "uint40_of_int16"
-    external to_uint48    :     int16 ->    uint48 = "uint48_of_int16"
-    external to_uint56    :     int16 ->    uint56 = "uint56_of_int16"
-    external to_uint64    :     int16 ->    uint64 = "uint64_of_int16"
-    external to_uint128   :     int16 ->   uint128 = "uint128_of_int16"
-
-    external bits_of_float : float -> int16 = "int16_bits_of_float"
-    external float_of_bits : int16 -> float = "int16_float_of_bits"
-
-    let abs = abs
-    let zero = of_int 0
-    let one = of_int 1
-    let minus_one = of_int (-1)
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 32767
-    let min_int = of_int (-32768)
-    let lognot = logxor minus_one
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_nativeint : nativeint ->     int16 = "int16_of_nativeint"
+  external of_float     :     float ->     int16 = "int16_of_float"
+  external of_int8      :      int8 ->     int16 = "int16_of_int8"
+  external of_int16     :     int16 ->     int16 = "%identity"
+  external of_int24     :     int24 ->     int16 = "int16_of_int24"
+  external of_int32     :     int32 ->     int16 = "int16_of_int32"
+  external of_int40     :     int40 ->     int16 = "int16_of_int40"
+  external of_int48     :     int48 ->     int16 = "int16_of_int48"
+  external of_int56     :     int56 ->     int16 = "int16_of_int56"
+  external of_int64     :     int64 ->     int16 = "int16_of_int64"
+  external of_int128    :    int128 ->     int16 = "int16_of_int128"
+  external of_uint8     :     uint8 ->     int16 = "int16_of_uint8"
+  external of_uint16    :    uint16 ->     int16 = "int16_of_uint16"
+  external of_uint24    :    uint24 ->     int16 = "int16_of_uint24"
+  external of_uint32    :    uint32 ->     int16 = "int16_of_uint32"
+  external of_uint40    :    uint40 ->     int16 = "int16_of_uint40"
+  external of_uint48    :    uint48 ->     int16 = "int16_of_uint48"
+  external of_uint56    :    uint56 ->     int16 = "int16_of_uint56"
+  external of_uint64    :    uint64 ->     int16 = "int16_of_uint64"
+  external of_uint128   :   uint128 ->     int16 = "int16_of_uint128"
+
+  external to_nativeint :     int16 -> nativeint = "nativeint_of_int16"
+  external to_float     :     int16 ->     float = "float_of_int16"
+  external to_int8      :     int16 ->      int8 = "int8_of_int16"
+  external to_int16     :     int16 ->     int16 = "%identity"
+  external to_int24     :     int16 ->     int24 = "int24_of_int16"
+  external to_int32     :     int16 ->     int32 = "int32_of_int16"
+  external to_int40     :     int16 ->     int40 = "int40_of_int16"
+  external to_int48     :     int16 ->     int48 = "int48_of_int16"
+  external to_int56     :     int16 ->     int56 = "int56_of_int16"
+  external to_int64     :     int16 ->     int64 = "int64_of_int16"
+  external to_int128    :     int16 ->    int128 = "int128_of_int16"
+  external to_uint8     :     int16 ->     uint8 = "uint8_of_int16"
+  external to_uint16    :     int16 ->    uint16 = "uint16_of_int16"
+  external to_uint24    :     int16 ->    uint24 = "uint24_of_int16"
+  external to_uint32    :     int16 ->    uint32 = "uint32_of_int16"
+  external to_uint40    :     int16 ->    uint40 = "uint40_of_int16"
+  external to_uint48    :     int16 ->    uint48 = "uint48_of_int16"
+  external to_uint56    :     int16 ->    uint56 = "uint56_of_int16"
+  external to_uint64    :     int16 ->    uint64 = "uint64_of_int16"
+  external to_uint128   :     int16 ->   uint128 = "uint128_of_int16"
+
+  external bits_of_float : float -> int16 = "int16_bits_of_float"
+  external float_of_bits : int16 -> float = "int16_float_of_bits"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := int16)
@@ -315,154 +239,55 @@ module Int16 = struct
   include (Inf : module type of Inf with type t := int16)
 end
 
-module Int32 = struct
-  module Base = struct
-    include Int32
-    let bits    = 32
-    let fmt     = "l"
-    let name    = "int32"
-
-    let of_nativeint = Nativeint.to_int32
-    let to_nativeint = Nativeint.of_int32
-
-    external of_int8      :      int8 ->     int32 = "int32_of_int8"
-    external of_int16     :     int16 ->     int32 = "int32_of_int16"
-    external of_int24     :     int24 ->     int32 = "int32_of_int24"
-    external of_int32     :     int32 ->     int32 = "%identity"
-    external of_int40     :     int40 ->     int32 = "int32_of_int40"
-    external of_int48     :     int48 ->     int32 = "int32_of_int48"
-    external of_int56     :     int56 ->     int32 = "int32_of_int56"
-    external of_int64     :     int64 ->     int32 = "int32_of_int64"
-    external of_int128    :    int128 ->     int32 = "int32_of_int128"
-    external of_uint8     :     uint8 ->     int32 = "int32_of_uint8"
-    external of_uint16    :    uint16 ->     int32 = "int32_of_uint16"
-    external of_uint24    :    uint24 ->     int32 = "int32_of_uint24"
-    external of_uint32    :    uint32 ->     int32 = "int32_of_uint32"
-    external of_uint40    :    uint40 ->     int32 = "int32_of_uint40"
-    external of_uint48    :    uint48 ->     int32 = "int32_of_uint48"
-    external of_uint56    :    uint56 ->     int32 = "int32_of_uint56"
-    external of_uint64    :    uint64 ->     int32 = "int32_of_uint64"
-    external of_uint128   :   uint128 ->     int32 = "int32_of_uint128"
-
-    external to_int8      :     int32 ->      int8 = "int8_of_int32"
-    external to_int16     :     int32 ->     int16 = "int16_of_int32"
-    external to_int24     :     int32 ->     int24 = "int24_of_int32"
-    external to_int32     :     int32 ->     int32 = "%identity"
-    external to_int40     :     int32 ->     int40 = "int40_of_int32"
-    external to_int48     :     int32 ->     int48 = "int48_of_int32"
-    external to_int56     :     int32 ->     int56 = "int56_of_int32"
-    external to_int64     :     int32 ->     int64 = "int64_of_int32"
-    external to_int128    :     int32 ->    int128 = "int128_of_int32"
-    external to_uint8     :     int32 ->     uint8 = "uint8_of_int32"
-    external to_uint16    :     int32 ->    uint16 = "uint16_of_int32"
-    external to_uint24    :     int32 ->    uint24 = "uint24_of_int32"
-    external to_uint32    :     int32 ->    uint32 = "uint32_of_int32"
-    external to_uint40    :     int32 ->    uint40 = "uint40_of_int32"
-    external to_uint48    :     int32 ->    uint48 = "uint48_of_int32"
-    external to_uint56    :     int32 ->    uint56 = "uint56_of_int32"
-    external to_uint64    :     int32 ->    uint64 = "uint64_of_int32"
-    external to_uint128   :     int32 ->   uint128 = "uint128_of_int32"
-
-    let divmod  = (fun x y -> div x y, rem x y)
-  end
-
-  include Base
-
-  module Conv = Str_conv.Make(Base)
-  include (Conv : module type of Conv with type t := int32)
-
-  module Endian = Bytes_conv.Make(Base)
-  include (Endian : module type of Endian with type t := int32)
-
-  module Inf = Infix.Make(Base)
-  include (Inf : module type of Inf with type t := int32)
-end
-
 module Int24 = struct
-  (* int24 is modeled as int, where only the UPPER 24 bits are used;
-     this has the advantage that most operations are identical to the int32 ones.
-     The post-condition of all int24 opertaions is, that the LOWER bits are 0x00.
-     Only operations that are not identical or do not preserve the post-condition are implemented.
-  *)
   module Base = struct
-    type t = int24
-    let bits = 24
-    let fmt = "Ul"
+    include Int_wrapper.Make_signed(struct let bits = 24 end)
+    let fmt = "l"
     let name = "Int24"
-
-    let of_int x = x lsl (Sys.word_size - 24 - 1)
-    let to_int x = x asr (Sys.word_size - 24 - 1)
-
-    let add = (+)
-    let sub = (-)
-    let mul a b = (to_int a) * b
-    let div a b = of_int (a / b)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = (a lxor b) land (of_int 0xFFFFFF)
-    let shift_left a b = a lsl b
-    let shift_right a b = (a asr b) land (of_int 0xFFFFFF)
-    let shift_right_logical a b = (a lsr b) land (of_int 0xFFFFFF)
-    let abs = abs
-    let neg x = ((-1) * x) land (of_int 0xFFFFFF)
-
-    external of_nativeint : nativeint ->     int24 = "int24_of_nativeint"
-    external of_float     :     float ->     int24 = "int24_of_float"
-    external of_int8      :      int8 ->     int24 = "int24_of_int8"
-    external of_int16     :     int16 ->     int24 = "int24_of_int16"
-    external of_int24     :     int24 ->     int24 = "%identity"
-    external of_int32     :     int32 ->     int24 = "int24_of_int32"
-    external of_int40     :     int40 ->     int24 = "int24_of_int40"
-    external of_int48     :     int48 ->     int24 = "int24_of_int48"
-    external of_int56     :     int56 ->     int24 = "int24_of_int56"
-    external of_int64     :     int64 ->     int24 = "int24_of_int64"
-    external of_int128    :    int128 ->     int24 = "int24_of_int128"
-    external of_uint8     :     uint8 ->     int24 = "int24_of_uint8"
-    external of_uint16    :    uint16 ->     int24 = "int24_of_uint16"
-    external of_uint24    :    uint24 ->     int24 = "int24_of_uint24"
-    external of_uint32    :    uint32 ->     int24 = "int24_of_uint32"
-    external of_uint40    :    uint40 ->     int24 = "int24_of_uint40"
-    external of_uint48    :    uint48 ->     int24 = "int24_of_uint48"
-    external of_uint56    :    uint56 ->     int24 = "int24_of_uint56"
-    external of_uint64    :    uint64 ->     int24 = "int24_of_uint64"
-    external of_uint128   :   uint128 ->     int24 = "int24_of_uint128"
-
-    external to_nativeint :     int24 -> nativeint = "nativeint_of_int24"
-    external to_float     :     int24 ->     float = "float_of_int24"
-    external to_int8      :     int24 ->      int8 = "int8_of_int24"
-    external to_int16     :     int24 ->     int16 = "int16_of_int24"
-    external to_int24     :     int24 ->     int24 = "%identity"
-    external to_int32     :     int24 ->     int32 = "int32_of_int24"
-    external to_int40     :     int24 ->     int40 = "int40_of_int24"
-    external to_int48     :     int24 ->     int48 = "int48_of_int24"
-    external to_int56     :     int24 ->     int56 = "int56_of_int24"
-    external to_int64     :     int24 ->     int64 = "int64_of_int24"
-    external to_int128    :     int24 ->    int128 = "int128_of_int24"
-    external to_uint8     :     int24 ->     uint8 = "uint8_of_int24"
-    external to_uint16    :     int24 ->    uint16 = "uint16_of_int24"
-    external to_uint24    :     int24 ->    uint24 = "uint24_of_int24"
-    external to_uint32    :     int24 ->    uint32 = "uint32_of_int24"
-    external to_uint40    :     int24 ->    uint40 = "uint40_of_int24"
-    external to_uint48    :     int24 ->    uint48 = "uint48_of_int24"
-    external to_uint56    :     int24 ->    uint56 = "uint56_of_int24"
-    external to_uint64    :     int24 ->    uint64 = "uint64_of_int24"
-    external to_uint128   :     int24 ->   uint128 = "uint128_of_int24"
-
-    let abs = abs
-    let zero = of_int 0
-    let one = of_int 1
-    let minus_one = of_int (-1)
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 8388607
-    let min_int = of_int (-8388608)
-    let lognot = logxor minus_one
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_nativeint : nativeint ->     int24 = "int24_of_nativeint"
+  external of_float     :     float ->     int24 = "int24_of_float"
+  external of_int8      :      int8 ->     int24 = "int24_of_int8"
+  external of_int16     :     int16 ->     int24 = "int24_of_int16"
+  external of_int24     :     int24 ->     int24 = "%identity"
+  external of_int32     :     int32 ->     int24 = "int24_of_int32"
+  external of_int40     :     int40 ->     int24 = "int24_of_int40"
+  external of_int48     :     int48 ->     int24 = "int24_of_int48"
+  external of_int56     :     int56 ->     int24 = "int24_of_int56"
+  external of_int64     :     int64 ->     int24 = "int24_of_int64"
+  external of_int128    :    int128 ->     int24 = "int24_of_int128"
+  external of_uint8     :     uint8 ->     int24 = "int24_of_uint8"
+  external of_uint16    :    uint16 ->     int24 = "int24_of_uint16"
+  external of_uint24    :    uint24 ->     int24 = "int24_of_uint24"
+  external of_uint32    :    uint32 ->     int24 = "int24_of_uint32"
+  external of_uint40    :    uint40 ->     int24 = "int24_of_uint40"
+  external of_uint48    :    uint48 ->     int24 = "int24_of_uint48"
+  external of_uint56    :    uint56 ->     int24 = "int24_of_uint56"
+  external of_uint64    :    uint64 ->     int24 = "int24_of_uint64"
+  external of_uint128   :   uint128 ->     int24 = "int24_of_uint128"
+
+  external to_nativeint :     int24 -> nativeint = "nativeint_of_int24"
+  external to_float     :     int24 ->     float = "float_of_int24"
+  external to_int8      :     int24 ->      int8 = "int8_of_int24"
+  external to_int16     :     int24 ->     int16 = "int16_of_int24"
+  external to_int24     :     int24 ->     int24 = "%identity"
+  external to_int32     :     int24 ->     int32 = "int32_of_int24"
+  external to_int40     :     int24 ->     int40 = "int40_of_int24"
+  external to_int48     :     int24 ->     int48 = "int48_of_int24"
+  external to_int56     :     int24 ->     int56 = "int56_of_int24"
+  external to_int64     :     int24 ->     int64 = "int64_of_int24"
+  external to_int128    :     int24 ->    int128 = "int128_of_int24"
+  external to_uint8     :     int24 ->     uint8 = "uint8_of_int24"
+  external to_uint16    :     int24 ->    uint16 = "uint16_of_int24"
+  external to_uint24    :     int24 ->    uint24 = "uint24_of_int24"
+  external to_uint32    :     int24 ->    uint32 = "uint32_of_int24"
+  external to_uint40    :     int24 ->    uint40 = "uint40_of_int24"
+  external to_uint48    :     int24 ->    uint48 = "uint48_of_int24"
+  external to_uint56    :     int24 ->    uint56 = "uint56_of_int24"
+  external to_uint64    :     int24 ->    uint64 = "uint64_of_int24"
+  external to_uint128   :     int24 ->   uint128 = "uint128_of_int24"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := int24)
@@ -474,55 +299,115 @@ module Int24 = struct
   include (Inf : module type of Inf with type t := int24)
 end
 
+module Int32 = struct
+  module Base = struct
+    include Int32
+    let bits    = 32
+    let fmt     = "l"
+    let name    = "int32"
+
+    let divmod  = (fun x y -> div x y, rem x y)
+  end
+  include Base
+
+  let of_nativeint = Nativeint.to_int32
+  let to_nativeint = Nativeint.of_int32
+
+  external of_int8      :      int8 ->     int32 = "int32_of_int8"
+  external of_int16     :     int16 ->     int32 = "int32_of_int16"
+  external of_int24     :     int24 ->     int32 = "int32_of_int24"
+  external of_int32     :     int32 ->     int32 = "%identity"
+  external of_int40     :     int40 ->     int32 = "int32_of_int40"
+  external of_int48     :     int48 ->     int32 = "int32_of_int48"
+  external of_int56     :     int56 ->     int32 = "int32_of_int56"
+  external of_int64     :     int64 ->     int32 = "int32_of_int64"
+  external of_int128    :    int128 ->     int32 = "int32_of_int128"
+  external of_uint8     :     uint8 ->     int32 = "int32_of_uint8"
+  external of_uint16    :    uint16 ->     int32 = "int32_of_uint16"
+  external of_uint24    :    uint24 ->     int32 = "int32_of_uint24"
+  external of_uint32    :    uint32 ->     int32 = "int32_of_uint32"
+  external of_uint40    :    uint40 ->     int32 = "int32_of_uint40"
+  external of_uint48    :    uint48 ->     int32 = "int32_of_uint48"
+  external of_uint56    :    uint56 ->     int32 = "int32_of_uint56"
+  external of_uint64    :    uint64 ->     int32 = "int32_of_uint64"
+  external of_uint128   :   uint128 ->     int32 = "int32_of_uint128"
+
+  external to_int8      :     int32 ->      int8 = "int8_of_int32"
+  external to_int16     :     int32 ->     int16 = "int16_of_int32"
+  external to_int24     :     int32 ->     int24 = "int24_of_int32"
+  external to_int32     :     int32 ->     int32 = "%identity"
+  external to_int40     :     int32 ->     int40 = "int40_of_int32"
+  external to_int48     :     int32 ->     int48 = "int48_of_int32"
+  external to_int56     :     int32 ->     int56 = "int56_of_int32"
+  external to_int64     :     int32 ->     int64 = "int64_of_int32"
+  external to_int128    :     int32 ->    int128 = "int128_of_int32"
+  external to_uint8     :     int32 ->     uint8 = "uint8_of_int32"
+  external to_uint16    :     int32 ->    uint16 = "uint16_of_int32"
+  external to_uint24    :     int32 ->    uint24 = "uint24_of_int32"
+  external to_uint32    :     int32 ->    uint32 = "uint32_of_int32"
+  external to_uint40    :     int32 ->    uint40 = "uint40_of_int32"
+  external to_uint48    :     int32 ->    uint48 = "uint48_of_int32"
+  external to_uint56    :     int32 ->    uint56 = "uint56_of_int32"
+  external to_uint64    :     int32 ->    uint64 = "uint64_of_int32"
+  external to_uint128   :     int32 ->   uint128 = "uint128_of_int32"
+
+  module Conv = Str_conv.Make(Base)
+  include (Conv : module type of Conv with type t := int32)
+
+  module Endian = Bytes_conv.Make(Base)
+  include (Endian : module type of Endian with type t := int32)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := int32)
+end
+
 module Int64 = struct
   module Base = struct
     include Int64
     let bits = 64
-    let fmt = "l"
+    let fmt = "ll"
     let name = "int64"
-
-    external of_int8      :      int8 ->     int64 = "int64_of_int8"
-    external of_int16     :     int16 ->     int64 = "int64_of_int16"
-    external of_int24     :     int24 ->     int64 = "int64_of_int24"
-    external of_int32     :     int32 ->     int64 = "int64_of_int32"
-    external of_int40     :     int40 ->     int64 = "int64_of_int40"
-    external of_int48     :     int48 ->     int64 = "int64_of_int48"
-    external of_int56     :     int56 ->     int64 = "int64_of_int56"
-    external of_int64     :     int64 ->     int64 = "%identity"
-    external of_int128    :    int128 ->     int64 = "int64_of_int128"
-    external of_uint8     :     uint8 ->     int64 = "int64_of_uint8"
-    external of_uint16    :    uint16 ->     int64 = "int64_of_uint16"
-    external of_uint24    :    uint24 ->     int64 = "int64_of_uint24"
-    external of_uint32    :    uint32 ->     int64 = "int64_of_uint32"
-    external of_uint40    :    uint40 ->     int64 = "int64_of_uint40"
-    external of_uint48    :    uint48 ->     int64 = "int64_of_uint48"
-    external of_uint56    :    uint56 ->     int64 = "int64_of_uint56"
-    external of_uint64    :    uint64 ->     int64 = "int64_of_uint64"
-    external of_uint128   :   uint128 ->     int64 = "int64_of_uint128"
-
-    external to_int8      :     int64 ->      int8 = "int8_of_int64"
-    external to_int16     :     int64 ->     int16 = "int16_of_int64"
-    external to_int24     :     int64 ->     int24 = "int24_of_int64"
-    external to_int32     :     int64 ->     int32 = "int32_of_int64"
-    external to_int40     :     int64 ->     int40 = "int40_of_int64"
-    external to_int48     :     int64 ->     int48 = "int48_of_int64"
-    external to_int56     :     int64 ->     int56 = "int56_of_int64"
-    external to_int64     :     int64 ->     int64 = "%identity"
-    external to_int128    :     int64 ->    int128 = "int128_of_int64"
-    external to_uint8     :     int64 ->     uint8 = "uint8_of_int64"
-    external to_uint16    :     int64 ->    uint16 = "uint16_of_int64"
-    external to_uint24    :     int64 ->    uint24 = "uint24_of_int64"
-    external to_uint32    :     int64 ->    uint32 = "uint32_of_int64"
-    external to_uint40    :     int64 ->    uint40 = "uint40_of_int64"
-    external to_uint48    :     int64 ->    uint48 = "uint48_of_int64"
-    external to_uint56    :     int64 ->    uint56 = "uint56_of_int64"
-    external to_uint64    :     int64 ->    uint64 = "uint64_of_int64"
-    external to_uint128   :     int64 ->   uint128 = "uint128_of_int64"
-
     let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_int8      :      int8 ->     int64 = "int64_of_int8"
+  external of_int16     :     int16 ->     int64 = "int64_of_int16"
+  external of_int24     :     int24 ->     int64 = "int64_of_int24"
+  external of_int32     :     int32 ->     int64 = "int64_of_int32"
+  external of_int40     :     int40 ->     int64 = "int64_of_int40"
+  external of_int48     :     int48 ->     int64 = "int64_of_int48"
+  external of_int56     :     int56 ->     int64 = "int64_of_int56"
+  external of_int64     :     int64 ->     int64 = "%identity"
+  external of_int128    :    int128 ->     int64 = "int64_of_int128"
+  external of_uint8     :     uint8 ->     int64 = "int64_of_uint8"
+  external of_uint16    :    uint16 ->     int64 = "int64_of_uint16"
+  external of_uint24    :    uint24 ->     int64 = "int64_of_uint24"
+  external of_uint32    :    uint32 ->     int64 = "int64_of_uint32"
+  external of_uint40    :    uint40 ->     int64 = "int64_of_uint40"
+  external of_uint48    :    uint48 ->     int64 = "int64_of_uint48"
+  external of_uint56    :    uint56 ->     int64 = "int64_of_uint56"
+  external of_uint64    :    uint64 ->     int64 = "int64_of_uint64"
+  external of_uint128   :   uint128 ->     int64 = "int64_of_uint128"
+
+  external to_int8      :     int64 ->      int8 = "int8_of_int64"
+  external to_int16     :     int64 ->     int16 = "int16_of_int64"
+  external to_int24     :     int64 ->     int24 = "int24_of_int64"
+  external to_int32     :     int64 ->     int32 = "int32_of_int64"
+  external to_int40     :     int64 ->     int40 = "int40_of_int64"
+  external to_int48     :     int64 ->     int48 = "int48_of_int64"
+  external to_int56     :     int64 ->     int56 = "int56_of_int64"
+  external to_int64     :     int64 ->     int64 = "%identity"
+  external to_int128    :     int64 ->    int128 = "int128_of_int64"
+  external to_uint8     :     int64 ->     uint8 = "uint8_of_int64"
+  external to_uint16    :     int64 ->    uint16 = "uint16_of_int64"
+  external to_uint24    :     int64 ->    uint24 = "uint24_of_int64"
+  external to_uint32    :     int64 ->    uint32 = "uint32_of_int64"
+  external to_uint40    :     int64 ->    uint40 = "uint40_of_int64"
+  external to_uint48    :     int64 ->    uint48 = "uint48_of_int64"
+  external to_uint56    :     int64 ->    uint56 = "uint56_of_int64"
+  external to_uint64    :     int64 ->    uint64 = "uint64_of_int64"
+  external to_uint128   :     int64 ->   uint128 = "uint128_of_int64"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := int64)
@@ -543,7 +428,7 @@ module Int40 = struct
   module Base = struct
     include Int64.Base
     let bits = 40
-    let fmt = "Ul"
+    let fmt = "ll"
     let name = "Int40"
 
     external mul : int40 -> int40 -> int40 = "uint40_mul"
@@ -627,7 +512,7 @@ module Int48 = struct
   module Base = struct
     include Int64.Base
     let bits = 48
-    let fmt = "Ul"
+    let fmt = "ll"
     let name = "Int48"
 
     external mul : int48 -> int48 -> int48 = "uint48_mul"
@@ -711,7 +596,7 @@ module Int56 = struct
   module Base = struct
     include Int64.Base
     let bits = 56
-    let fmt = "Ul"
+    let fmt = "ll"
     let name = "Int56"
 
     external mul : int56 -> int56 -> int56 = "uint56_mul"
@@ -882,82 +767,53 @@ end
 
 module Uint8 = struct
   module Base = struct
-    type t = uint8
-    let bits = 8
-    let fmt = "Ul"
+    include Int_wrapper.Make_unsigned(struct let bits = 8 end)
+    let fmt = "Uhh"
     let name = "Uint8"
-
-    let of_int = (land) 0xFF
-    external to_int : uint8 -> int = "%identity"
-
-    let add a b = of_int (a + b)
-    let sub a b = of_int (a - b)
-    let mul a b = of_int (a * b)
-    let div = (/)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = of_int (a lxor b)
-    let shift_left a b = of_int (a lsl b)
-    let shift_right = (lsr)
-    let shift_right_logical = shift_right
-    external abs : uint8 -> uint8 = "%identity"
-    let neg x = of_int ((-1) * x)
-
-    external of_nativeint : nativeint ->     uint8 = "uint8_of_nativeint"
-    external of_float     :     float ->     uint8 = "uint8_of_float"
-    external of_int8      :      int8 ->     uint8 = "uint8_of_int8"
-    external of_int16     :     int16 ->     uint8 = "uint8_of_int16"
-    external of_int24     :     int24 ->     uint8 = "uint8_of_int24"
-    external of_int32     :     int32 ->     uint8 = "uint8_of_int32"
-    external of_int40     :     int40 ->     uint8 = "uint8_of_int40"
-    external of_int48     :     int48 ->     uint8 = "uint8_of_int48"
-    external of_int56     :     int56 ->     uint8 = "uint8_of_int56"
-    external of_int64     :     int64 ->     uint8 = "uint8_of_int64"
-    external of_int128    :    int128 ->     uint8 = "uint8_of_int128"
-    external of_uint8     :     uint8 ->     uint8 = "%identity"
-    external of_uint16    :    uint16 ->     uint8 = "uint8_of_uint16"
-    external of_uint24    :    uint24 ->     uint8 = "uint8_of_uint24"
-    external of_uint32    :    uint32 ->     uint8 = "uint8_of_uint32"
-    external of_uint40    :    uint40 ->     uint8 = "uint8_of_uint40"
-    external of_uint48    :    uint48 ->     uint8 = "uint8_of_uint48"
-    external of_uint56    :    uint56 ->     uint8 = "uint8_of_uint56"
-    external of_uint64    :    uint64 ->     uint8 = "uint8_of_uint64"
-    external of_uint128   :   uint128 ->     uint8 = "uint8_of_uint128"
-
-    external to_nativeint :     uint8 -> nativeint = "nativeint_of_uint8"
-    external to_float     :     uint8 ->     float = "float_of_uint8"
-    external to_int8      :     uint8 ->      int8 = "int8_of_uint8"
-    external to_int16     :     uint8 ->     int16 = "int16_of_uint8"
-    external to_int24     :     uint8 ->     int24 = "int24_of_uint8"
-    external to_int32     :     uint8 ->     int32 = "int32_of_uint8"
-    external to_int40     :     uint8 ->     int40 = "int40_of_uint8"
-    external to_int48     :     uint8 ->     int48 = "int48_of_uint8"
-    external to_int56     :     uint8 ->     int56 = "int56_of_uint8"
-    external to_int64     :     uint8 ->     int64 = "int64_of_uint8"
-    external to_int128    :     uint8 ->    int128 = "int128_of_uint8"
-    external to_uint8     :     uint8 ->     uint8 = "%identity"
-    external to_uint16    :     uint8 ->    uint16 = "uint16_of_uint8"
-    external to_uint24    :     uint8 ->    uint24 = "uint24_of_uint8"
-    external to_uint32    :     uint8 ->    uint32 = "uint32_of_uint8"
-    external to_uint40    :     uint8 ->    uint40 = "uint40_of_uint8"
-    external to_uint48    :     uint8 ->    uint48 = "uint48_of_uint8"
-    external to_uint56    :     uint8 ->    uint56 = "uint56_of_uint8"
-    external to_uint64    :     uint8 ->    uint64 = "uint64_of_uint8"
-    external to_uint128   :     uint8 ->   uint128 = "uint128_of_uint8"
-
-    let zero = of_int 0
-    let one = of_int 1
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 255
-    let min_int = zero
-    let lognot = logxor max_int
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_nativeint : nativeint ->     uint8 = "uint8_of_nativeint"
+  external of_float     :     float ->     uint8 = "uint8_of_float"
+  external of_int8      :      int8 ->     uint8 = "uint8_of_int8"
+  external of_int16     :     int16 ->     uint8 = "uint8_of_int16"
+  external of_int24     :     int24 ->     uint8 = "uint8_of_int24"
+  external of_int32     :     int32 ->     uint8 = "uint8_of_int32"
+  external of_int40     :     int40 ->     uint8 = "uint8_of_int40"
+  external of_int48     :     int48 ->     uint8 = "uint8_of_int48"
+  external of_int56     :     int56 ->     uint8 = "uint8_of_int56"
+  external of_int64     :     int64 ->     uint8 = "uint8_of_int64"
+  external of_int128    :    int128 ->     uint8 = "uint8_of_int128"
+  external of_uint8     :     uint8 ->     uint8 = "%identity"
+  external of_uint16    :    uint16 ->     uint8 = "uint8_of_uint16"
+  external of_uint24    :    uint24 ->     uint8 = "uint8_of_uint24"
+  external of_uint32    :    uint32 ->     uint8 = "uint8_of_uint32"
+  external of_uint40    :    uint40 ->     uint8 = "uint8_of_uint40"
+  external of_uint48    :    uint48 ->     uint8 = "uint8_of_uint48"
+  external of_uint56    :    uint56 ->     uint8 = "uint8_of_uint56"
+  external of_uint64    :    uint64 ->     uint8 = "uint8_of_uint64"
+  external of_uint128   :   uint128 ->     uint8 = "uint8_of_uint128"
+
+  external to_nativeint :     uint8 -> nativeint = "nativeint_of_uint8"
+  external to_float     :     uint8 ->     float = "float_of_uint8"
+  external to_int8      :     uint8 ->      int8 = "int8_of_uint8"
+  external to_int16     :     uint8 ->     int16 = "int16_of_uint8"
+  external to_int24     :     uint8 ->     int24 = "int24_of_uint8"
+  external to_int32     :     uint8 ->     int32 = "int32_of_uint8"
+  external to_int40     :     uint8 ->     int40 = "int40_of_uint8"
+  external to_int48     :     uint8 ->     int48 = "int48_of_uint8"
+  external to_int56     :     uint8 ->     int56 = "int56_of_uint8"
+  external to_int64     :     uint8 ->     int64 = "int64_of_uint8"
+  external to_int128    :     uint8 ->    int128 = "int128_of_uint8"
+  external to_uint8     :     uint8 ->     uint8 = "%identity"
+  external to_uint16    :     uint8 ->    uint16 = "uint16_of_uint8"
+  external to_uint24    :     uint8 ->    uint24 = "uint24_of_uint8"
+  external to_uint32    :     uint8 ->    uint32 = "uint32_of_uint8"
+  external to_uint40    :     uint8 ->    uint40 = "uint40_of_uint8"
+  external to_uint48    :     uint8 ->    uint48 = "uint48_of_uint8"
+  external to_uint56    :     uint8 ->    uint56 = "uint56_of_uint8"
+  external to_uint64    :     uint8 ->    uint64 = "uint64_of_uint8"
+  external to_uint128   :     uint8 ->   uint128 = "uint128_of_uint8"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := uint8)
@@ -971,82 +827,53 @@ end
 
 module Uint16 = struct
   module Base = struct
-    type t = uint16
-    let bits = 16
-    let fmt = "Ul"
+    include Int_wrapper.Make_unsigned(struct let bits = 16 end)
+    let fmt = "Uh"
     let name = "Uint16"
-
-    let of_int = (land) 0xFFFF
-    external to_int : uint16 -> int = "%identity"
-
-    let add a b = of_int (a + b)
-    let sub a b = of_int (a - b)
-    let mul a b = of_int (a * b)
-    let div = (/)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = of_int (a lxor b)
-    let shift_left a b = of_int (a lsl b)
-    let shift_right = (lsr)
-    let shift_right_logical = shift_right
-    external abs : uint8 -> uint8 = "%identity"
-    let neg x = of_int ((-1) * x)
-
-    external of_nativeint : nativeint ->    uint16 = "uint16_of_nativeint"
-    external of_float     :     float ->    uint16 = "uint16_of_float"
-    external of_int8      :      int8 ->    uint16 = "uint16_of_int8"
-    external of_int16     :     int16 ->    uint16 = "uint16_of_int16"
-    external of_int24     :     int24 ->    uint16 = "uint16_of_int24"
-    external of_int32     :     int32 ->    uint16 = "uint16_of_int32"
-    external of_int40     :     int40 ->    uint16 = "uint16_of_int40"
-    external of_int48     :     int48 ->    uint16 = "uint16_of_int48"
-    external of_int56     :     int56 ->    uint16 = "uint16_of_int56"
-    external of_int64     :     int64 ->    uint16 = "uint16_of_int64"
-    external of_int128    :    int128 ->    uint16 = "uint16_of_int128"
-    external of_uint8     :     uint8 ->    uint16 = "uint16_of_uint8"
-    external of_uint16    :    uint16 ->    uint16 = "%identity"
-    external of_uint24    :    uint24 ->    uint16 = "uint16_of_uint24"
-    external of_uint32    :    uint32 ->    uint16 = "uint16_of_uint32"
-    external of_uint40    :    uint40 ->    uint16 = "uint16_of_uint40"
-    external of_uint48    :    uint48 ->    uint16 = "uint16_of_uint48"
-    external of_uint56    :    uint56 ->    uint16 = "uint16_of_uint56"
-    external of_uint64    :    uint64 ->    uint16 = "uint16_of_uint64"
-    external of_uint128   :   uint128 ->    uint16 = "uint16_of_uint128"
-
-    external to_nativeint :    uint16 -> nativeint = "nativeint_of_uint16"
-    external to_float     :    uint16 ->     float = "float_of_uint16"
-    external to_int8      :    uint16 ->      int8 = "int8_of_uint16"
-    external to_int16     :    uint16 ->     int16 = "int16_of_uint16"
-    external to_int24     :    uint16 ->     int24 = "int24_of_uint16"
-    external to_int32     :    uint16 ->     int32 = "int32_of_uint16"
-    external to_int40     :    uint16 ->     int40 = "int40_of_uint16"
-    external to_int48     :    uint16 ->     int48 = "int48_of_uint16"
-    external to_int56     :    uint16 ->     int56 = "int56_of_uint16"
-    external to_int64     :    uint16 ->     int64 = "int64_of_uint16"
-    external to_int128    :    uint16 ->    int128 = "int128_of_uint16"
-    external to_uint8     :    uint16 ->     uint8 = "uint8_of_uint16"
-    external to_uint16    :    uint16 ->    uint16 = "%identity"
-    external to_uint24    :    uint16 ->    uint24 = "uint24_of_uint16"
-    external to_uint32    :    uint16 ->    uint32 = "uint32_of_uint16"
-    external to_uint40    :    uint16 ->    uint40 = "uint40_of_uint16"
-    external to_uint48    :    uint16 ->    uint48 = "uint48_of_uint16"
-    external to_uint56    :    uint16 ->    uint56 = "uint56_of_uint16"
-    external to_uint64    :    uint16 ->    uint64 = "uint64_of_uint16"
-    external to_uint128   :    uint16 ->   uint128 = "uint128_of_uint16"
-
-    let zero = of_int 0
-    let one = of_int 1
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 65535
-    let min_int = zero
-    let lognot = logxor max_int
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
   end
-
   include Base
+
+  external of_nativeint : nativeint ->    uint16 = "uint16_of_nativeint"
+  external of_float     :     float ->    uint16 = "uint16_of_float"
+  external of_int8      :      int8 ->    uint16 = "uint16_of_int8"
+  external of_int16     :     int16 ->    uint16 = "uint16_of_int16"
+  external of_int24     :     int24 ->    uint16 = "uint16_of_int24"
+  external of_int32     :     int32 ->    uint16 = "uint16_of_int32"
+  external of_int40     :     int40 ->    uint16 = "uint16_of_int40"
+  external of_int48     :     int48 ->    uint16 = "uint16_of_int48"
+  external of_int56     :     int56 ->    uint16 = "uint16_of_int56"
+  external of_int64     :     int64 ->    uint16 = "uint16_of_int64"
+  external of_int128    :    int128 ->    uint16 = "uint16_of_int128"
+  external of_uint8     :     uint8 ->    uint16 = "uint16_of_uint8"
+  external of_uint16    :    uint16 ->    uint16 = "%identity"
+  external of_uint24    :    uint24 ->    uint16 = "uint16_of_uint24"
+  external of_uint32    :    uint32 ->    uint16 = "uint16_of_uint32"
+  external of_uint40    :    uint40 ->    uint16 = "uint16_of_uint40"
+  external of_uint48    :    uint48 ->    uint16 = "uint16_of_uint48"
+  external of_uint56    :    uint56 ->    uint16 = "uint16_of_uint56"
+  external of_uint64    :    uint64 ->    uint16 = "uint16_of_uint64"
+  external of_uint128   :   uint128 ->    uint16 = "uint16_of_uint128"
+
+  external to_nativeint :    uint16 -> nativeint = "nativeint_of_uint16"
+  external to_float     :    uint16 ->     float = "float_of_uint16"
+  external to_int8      :    uint16 ->      int8 = "int8_of_uint16"
+  external to_int16     :    uint16 ->     int16 = "int16_of_uint16"
+  external to_int24     :    uint16 ->     int24 = "int24_of_uint16"
+  external to_int32     :    uint16 ->     int32 = "int32_of_uint16"
+  external to_int40     :    uint16 ->     int40 = "int40_of_uint16"
+  external to_int48     :    uint16 ->     int48 = "int48_of_uint16"
+  external to_int56     :    uint16 ->     int56 = "int56_of_uint16"
+  external to_int64     :    uint16 ->     int64 = "int64_of_uint16"
+  external to_int128    :    uint16 ->    int128 = "int128_of_uint16"
+  external to_uint8     :    uint16 ->     uint8 = "uint8_of_uint16"
+  external to_uint16    :    uint16 ->    uint16 = "%identity"
+  external to_uint24    :    uint16 ->    uint24 = "uint24_of_uint16"
+  external to_uint32    :    uint16 ->    uint32 = "uint32_of_uint16"
+  external to_uint40    :    uint16 ->    uint40 = "uint40_of_uint16"
+  external to_uint48    :    uint16 ->    uint48 = "uint48_of_uint16"
+  external to_uint56    :    uint16 ->    uint56 = "uint56_of_uint16"
+  external to_uint64    :    uint16 ->    uint64 = "uint64_of_uint16"
+  external to_uint128   :    uint16 ->   uint128 = "uint128_of_uint16"
 
   module Conv = Str_conv.Make(Base)
   include (Conv : module type of Conv with type t := uint16)
@@ -1056,6 +883,66 @@ module Uint16 = struct
 
   module Inf = Infix.Make(Base)
   include (Inf : module type of Inf with type t := uint16)
+end
+
+module Uint24 = struct
+  module Base = struct
+    include Int_wrapper.Make_unsigned(struct let bits = 24 end)
+    let fmt     = "Ul"
+    let name    = "Uint24"
+  end
+  include Base
+
+  external of_nativeint : nativeint ->    uint24 = "uint24_of_nativeint"
+  external of_float     :     float ->    uint24 = "uint24_of_float"
+  external of_int8      :      int8 ->    uint24 = "uint24_of_int8"
+  external of_int16     :     int16 ->    uint24 = "uint24_of_int16"
+  external of_int24     :     int24 ->    uint24 = "uint24_of_int24"
+  external of_int32     :     int32 ->    uint24 = "uint24_of_int32"
+  external of_int40     :     int40 ->    uint24 = "uint24_of_int40"
+  external of_int48     :     int48 ->    uint24 = "uint24_of_int48"
+  external of_int56     :     int56 ->    uint24 = "uint24_of_int56"
+  external of_int64     :     int64 ->    uint24 = "uint24_of_int64"
+  external of_int128    :    int128 ->    uint24 = "uint24_of_int128"
+  external of_uint8     :     uint8 ->    uint24 = "uint24_of_uint8"
+  external of_uint16    :    uint16 ->    uint24 = "uint24_of_uint16"
+  external of_uint24    :    uint24 ->    uint24 = "%identity"
+  external of_uint32    :    uint32 ->    uint24 = "uint24_of_uint32"
+  external of_uint40    :    uint40 ->    uint24 = "uint24_of_uint40"
+  external of_uint48    :    uint48 ->    uint24 = "uint24_of_uint48"
+  external of_uint56    :    uint56 ->    uint24 = "uint24_of_uint56"
+  external of_uint64    :    uint64 ->    uint24 = "uint24_of_uint64"
+  external of_uint128   :   uint128 ->    uint24 = "uint24_of_uint128"
+
+  external to_nativeint :    uint24 -> nativeint = "nativeint_of_uint24"
+  external to_float     :    uint24 ->     float = "float_of_uint24"
+  external to_int8      :    uint24 ->      int8 = "int8_of_uint24"
+  external to_int16     :    uint24 ->     int16 = "int16_of_uint24"
+  external to_int24     :    uint24 ->     int24 = "int24_of_uint24"
+  external to_int32     :    uint24 ->     int32 = "int32_of_uint24"
+  external to_int40     :    uint24 ->     int40 = "int40_of_uint24"
+  external to_int48     :    uint24 ->     int48 = "int48_of_uint24"
+  external to_int56     :    uint24 ->     int56 = "int56_of_uint24"
+  external to_int64     :    uint24 ->     int64 = "int64_of_uint24"
+  external to_int128    :    uint24 ->    int128 = "int128_of_uint24"
+  external to_uint8     :    uint24 ->     uint8 = "uint8_of_uint24"
+  external to_uint16    :    uint24 ->    uint16 = "uint16_of_uint24"
+  external to_uint24    :    uint24 ->    uint24 = "%identity"
+  external to_uint32    :    uint24 ->    uint32 = "uint32_of_uint24"
+  external to_uint40    :    uint24 ->    uint40 = "uint40_of_uint24"
+  external to_uint48    :    uint24 ->    uint48 = "uint48_of_uint24"
+  external to_uint56    :    uint24 ->    uint56 = "uint56_of_uint24"
+  external to_uint64    :    uint24 ->    uint64 = "uint64_of_uint24"
+  external to_uint128   :    uint24 ->   uint128 = "uint128_of_uint24"
+
+  module Conv = Str_conv.Make(Base)
+  include (Conv : module type of Conv with type t := uint24)
+
+  module Endian = Bytes_conv.Make(Base)
+  include (Endian : module type of Endian with type t := uint24)
+
+  module Inf = Infix.Make(Base)
+  include (Inf : module type of Inf with type t := uint24)
 end
 
 module Uint32 = struct
@@ -1149,100 +1036,6 @@ module Uint32 = struct
 
   module Inf = Infix.Make(Base)
   include (Inf : module type of Inf with type t := uint32)
-end
-
-module Uint24 = struct
-  (* uint24 is modeled as uint32, where only the UPPER 24 bits are used;
-     this has the advantage that most operations are identical to the uint32 ones.
-     The post-condition of all uint24 opertaions is, that the LOWER 8 bit are 0x00.
-     Only operations that are not identical or do not preserve the post-condition are implemented.
-  *)
-  module Base = struct
-    type t = uint24
-    let bits = 24
-    let fmt     = "Ul"
-    let name    = "Uint24"
-
-    let of_int = (land) 0xFFFFFF
-    external to_int : uint24 -> int = "%identity"
-
-    let add a b = of_int (a + b)
-    let sub a b = of_int (a - b)
-    let mul a b = of_int (a * b)
-    let div = (/)
-    let rem = (mod)
-    let logand = (land)
-    let logor = (lor)
-    let logxor a b = of_int (a lxor b)
-    let shift_left a b = of_int (a lsl b)
-    let shift_right = (lsr)
-    let shift_right_logical = shift_right
-    external abs : uint24 -> uint24 = "%identity"
-    let neg x = of_int ((-1) * x)
-
-    external of_nativeint : nativeint ->    uint24 = "uint24_of_nativeint"
-    external of_float     :     float ->    uint24 = "uint24_of_float"
-    external of_int8      :      int8 ->    uint24 = "uint24_of_int8"
-    external of_int16     :     int16 ->    uint24 = "uint24_of_int16"
-    external of_int24     :     int24 ->    uint24 = "uint24_of_int24"
-    external of_int32     :     int32 ->    uint24 = "uint24_of_int32"
-    external of_int40     :     int40 ->    uint24 = "uint24_of_int40"
-    external of_int48     :     int48 ->    uint24 = "uint24_of_int48"
-    external of_int56     :     int56 ->    uint24 = "uint24_of_int56"
-    external of_int64     :     int64 ->    uint24 = "uint24_of_int64"
-    external of_int128    :    int128 ->    uint24 = "uint24_of_int128"
-    external of_uint8     :     uint8 ->    uint24 = "uint24_of_uint8"
-    external of_uint16    :    uint16 ->    uint24 = "uint24_of_uint16"
-    external of_uint24    :    uint24 ->    uint24 = "%identity"
-    external of_uint32    :    uint32 ->    uint24 = "uint24_of_uint32"
-    external of_uint40    :    uint40 ->    uint24 = "uint24_of_uint40"
-    external of_uint48    :    uint48 ->    uint24 = "uint24_of_uint48"
-    external of_uint56    :    uint56 ->    uint24 = "uint24_of_uint56"
-    external of_uint64    :    uint64 ->    uint24 = "uint24_of_uint64"
-    external of_uint128   :   uint128 ->    uint24 = "uint24_of_uint128"
-
-    external to_nativeint :    uint24 -> nativeint = "nativeint_of_uint24"
-    external to_float     :    uint24 ->     float = "float_of_uint24"
-    external to_int8      :    uint24 ->      int8 = "int8_of_uint24"
-    external to_int16     :    uint24 ->     int16 = "int16_of_uint24"
-    external to_int24     :    uint24 ->     int24 = "int24_of_uint24"
-    external to_int32     :    uint24 ->     int32 = "int32_of_uint24"
-    external to_int40     :    uint24 ->     int40 = "int40_of_uint24"
-    external to_int48     :    uint24 ->     int48 = "int48_of_uint24"
-    external to_int56     :    uint24 ->     int56 = "int56_of_uint24"
-    external to_int64     :    uint24 ->     int64 = "int64_of_uint24"
-    external to_int128    :    uint24 ->    int128 = "int128_of_uint24"
-    external to_uint8     :    uint24 ->     uint8 = "uint8_of_uint24"
-    external to_uint16    :    uint24 ->    uint16 = "uint16_of_uint24"
-    external to_uint24    :    uint24 ->    uint24 = "%identity"
-    external to_uint32    :    uint24 ->    uint32 = "uint32_of_uint24"
-    external to_uint40    :    uint24 ->    uint40 = "uint40_of_uint24"
-    external to_uint48    :    uint24 ->    uint48 = "uint48_of_uint24"
-    external to_uint56    :    uint24 ->    uint56 = "uint56_of_uint24"
-    external to_uint64    :    uint24 ->    uint64 = "uint64_of_uint24"
-    external to_uint128   :    uint24 ->   uint128 = "uint128_of_uint24"
-
-    let zero = of_int 0
-    let one = of_int 1
-    let succ = add one
-    let pred x = sub x one
-    let max_int = of_int 16777215
-    let min_int = zero
-    let lognot = logxor max_int
-    let compare = Pervasives.compare
-    let divmod  = (fun x y -> div x y, rem x y)
-  end
-
-  include Base
-
-  module Conv = Str_conv.Make(Base)
-  include (Conv : module type of Conv with type t := uint24)
-
-  module Endian = Bytes_conv.Make(Base)
-  include (Endian : module type of Endian with type t := uint24)
-
-  module Inf = Infix.Make(Base)
-  include (Inf : module type of Inf with type t := uint24)
 end
 
 module Uint64 = struct
