@@ -176,3 +176,17 @@ int16_of_uint128(value v)
 #endif
 }
 
+CAMLprim value int16_bits_of_float(value v) {
+  CAMLparam1(v);
+  union { float d; int16_t i; } u;
+  u.d = Double_val(v);
+  CAMLreturn (Val_int16(u.i));
+}
+
+CAMLprim value int16_float_of_bits(value v) {
+  CAMLparam1(v);
+  union { float d; int16_t i; } u;
+  u.i = Int16_val(v);
+  CAMLreturn (caml_copy_double(u.d));
+}
+

@@ -178,3 +178,17 @@ int8_of_uint128(value v)
 #endif
 }
 
+CAMLprim value int8_bits_of_float(value v) {
+  CAMLparam1(v);
+  union { float d; int8_t i; } u;
+  u.d = Double_val(v);
+  CAMLreturn (Val_int8(u.i));
+}
+
+CAMLprim value int8_float_of_bits(value v) {
+  CAMLparam1(v);
+  union { float d; int8_t i; } u;
+  u.i = Int8_val(v);
+  CAMLreturn (caml_copy_double(u.d));
+}
+
