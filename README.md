@@ -34,6 +34,7 @@ This interface is similar to Int32 and Int64 from the base library but provides 
 
 The library also comes with C header files that allow easy access to the integer values in C bindings.
 The functions are modeled on base of the int32 and int64 access functions provided by the base library.
+The semantics of all operations is identical to the Int32, Int64 modules, C, C++, Java etc.: Conversion will silently truncate larger values as will other operations leading to overflowing integer values.
 
 The [API of stdint](http://stdint.forge.ocamlcore.org/doc/) can be found online at the [OCaml forge](https://forge.ocamlcore.org/).
 
