@@ -79,6 +79,7 @@ module Make (I : IntSig) : S with type t = I.t = struct
           (* shift the existing number, join the new digit *)
           let res = join (I.mul n base) d in
           (* did we just have an overflow though? *)
+          if res > thresh then fail ();
           if cmp res d then fail ();
           loop (off + 1) res
         else
