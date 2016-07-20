@@ -42,54 +42,50 @@ module Make (I : IntSig) : S with type t = I.t = struct
     let fail () = invalid_arg (I.name ^ ".of_string") in
     let len = String.length s in
     (* is this supposed to be a negative number? *)
-    let negative, offset =
-      let () = if (len = 0) then fail () else () in
+    let negative, off =
+      if len = 0 then fail ();
       if s.[0] = '-' then
         true, 1
       else
-        false, 0
-    in
+        false, 0 in
     (* does the string have a base-prefix and what base is it? *)
-    let base, offset =
-      if (len - offset) < 3 then (* no space for a prefix in there *)
-        10, offset
-      else if s.[offset] = '0' && (s.[offset + 1] < '0' || s.[offset + 1] > '9') then
+    let base, off =
+      if len - off < 3 then (* no space for a prefix in there *)
+        10, off
+      else if s.[off] = '0' && (s.[off + 1] < '0' || s.[off + 1] > '9') then
         let base =
-          begin match s.[offset + 1] with
-            | 'b' | 'B' -> 2
-            | 'o' | 'O' -> 8
-            | 'x' | 'X' -> 16
-            | _ -> fail ()
-          end
-        in
-        base, (offset + 2)
+          match s.[off + 1] with
+          | 'b' | 'B' -> 2
+          | 'o' | 'O' -> 8
+          | 'x' | 'X' -> 16
+          | _ -> fail () in
+        base, (off + 2)
       else
-        10, offset
-    in
+        10, off in
     let base = I.of_int base in
     (* operators that are different for parsing negative and positive numbers *)
     let thresh, join, cmp =
       if negative then
         (fst (I.divmod I.min_int base), I.sub, (>))
       else
-        (fst (I.divmod I.max_int base), I.add, (<))
-    in
-    let rec loop offset (n : I.t) =
-      if offset = len then n
+        (fst (I.divmod I.max_int base), I.add, (<)) in
+    let rec loop off (n : I.t) =
+      if off = len then
+        n
       else begin
-        let c = s.[offset] in
+        let c = s.[off] in
         if c <> '_' then
           let d = I.of_int (digit_of_char c) in
           (* shift the existing number, join the new digit *)
           let res = join (I.mul n base) d in
           (* did we just have an overflow though? *)
-          let () = if (cmp res d) then fail () else () in
-          loop (offset + 1) res
+          if cmp res d then fail ();
+          loop (off + 1) res
         else
-          loop (offset + 1) n
+          loop (off + 1) n
       end
     in
-    loop offset I.zero
+    loop off I.zero
 
   let to_string_base base prefix x =
     let prefixlen = String.length prefix in
@@ -98,29 +94,31 @@ module Make (I : IntSig) : S with type t = I.t = struct
     if x = I.zero then
       prefix ^ "0"
     else begin
-      let maxlen = 1 + prefixlen + I.bits in (* worst-case: 1 (signed) + length prefix + 1 char-per-bit *)
+      (* worst-case: 1 (signed) + length prefix + 1 char-per-bit *)
+      let maxlen = 1 + prefixlen + I.bits in
       let buffer = Bytes.create maxlen in
-      (* create the number starting at the end of the buffer, working towards it's start *)
-      let offset = ref (maxlen - 1) in
+      (* create the number starting at the end of the buffer, working towards
+       * its start. *)
+      let off = ref (maxlen - 1) in
       let rec loop n =
-        if n = I.zero then ()
-        else
+        if n <> I.zero then begin
           let n', digit = I.divmod n base in
           let digit = (I.to_int digit) in
-          let () = Bytes.set buffer !offset conv.[abs digit] in
-          let () = decr offset in
+          Bytes.set buffer !off conv.[abs digit];
+          decr off;
           loop n'
-      in
-      let () = loop x in
+        end in
+      loop x;
       (* add prefix -- in reverse order *)
-      let () =
-        for i = prefixlen - 1 downto 0 do
-          let () = Bytes.set buffer !offset (String.get prefix i) in
-          decr offset
-        done
-      in
-      let () = if x < I.zero then let () = Bytes.set buffer !offset '-' in decr offset else () in
-      Bytes.sub_string buffer (!offset + 1) (maxlen - !offset - 1)
+      for i = prefixlen - 1 downto 0 do
+        Bytes.set buffer !off (String.get prefix i);
+        decr off
+      done;
+      if x < I.zero then begin
+        Bytes.set buffer !off '-';
+        decr off
+      end;
+      Bytes.sub_string buffer (!off + 1) (maxlen - !off - 1)
     end
 
   let to_string = to_string_base 10 ""
@@ -136,4 +134,3 @@ module Make (I : IntSig) : S with type t = I.t = struct
   let printer_oct = print_with to_string_oct
   let printer_hex = print_with to_string_hex
 end
-
