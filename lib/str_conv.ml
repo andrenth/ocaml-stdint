@@ -74,15 +74,15 @@ module Make (I : IntSig) : S with type t = I.t = struct
         n
       else begin
         let c = s.[off] in
-        if c <> '_' then
+        if c <> '_' then begin
+          if n > thresh then fail ();
           let d = I.of_int (digit_of_char c) in
           (* shift the existing number, join the new digit *)
           let res = join (I.mul n base) d in
           (* did we just have an overflow though? *)
-          if res > thresh then fail ();
           if cmp res d then fail ();
           loop (off + 1) res
-        else
+        end else
           loop (off + 1) n
       end
     in
