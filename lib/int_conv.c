@@ -30,56 +30,56 @@ CAMLprim value
 int_of_int8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int8_val(v)));
+  CAMLreturn (Val_long((long)Int8_val(v)));
 }
 
 CAMLprim value
 int_of_int16(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int16_val(v)));
+  CAMLreturn (Val_long((long)Int16_val(v)));
 }
 
 CAMLprim value
 int_of_int24(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int24_val(v)));
+  CAMLreturn (Val_long((long)Int24_val(v)));
 }
 
 CAMLprim value
 int_of_int32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int32_val(v)));
+  CAMLreturn (Val_long((long)Int32_val(v)));
 }
 
 CAMLprim value
 int_of_int40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int40_val(v)));
+  CAMLreturn (Val_long((long)Int40_val(v)));
 }
 
 CAMLprim value
 int_of_int48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int48_val(v)));
+  CAMLreturn (Val_long((long)Int48_val(v)));
 }
 
 CAMLprim value
 int_of_int56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int56_val(v)));
+  CAMLreturn (Val_long((long)Int56_val(v)));
 }
 
 CAMLprim value
 int_of_int64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Int64_val(v)));
+  CAMLreturn (Val_long((long)Int64_val(v)));
 }
 
 CAMLprim value
@@ -87,7 +87,7 @@ int_of_int128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  CAMLreturn (Val_int((long)Int128_val(v)));
+  CAMLreturn (Val_long((long)Int128_val(v)));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);
@@ -98,56 +98,56 @@ CAMLprim value
 int_of_uint8(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint8_val(v)));
+  CAMLreturn (Val_long((long)Uint8_val(v)));
 }
 
 CAMLprim value
 int_of_uint16(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint16_val(v)));
+  CAMLreturn (Val_long((long)Uint16_val(v)));
 }
 
 CAMLprim value
 int_of_uint24(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint24_val(v)));
+  CAMLreturn (Val_long((long)Uint24_val(v)));
 }
 
 CAMLprim value
 int_of_uint32(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint32_val(v)));
+  CAMLreturn (Val_long((long)Uint32_val(v)));
 }
 
 CAMLprim value
 int_of_uint40(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint40_val(v)));
+  CAMLreturn (Val_long((long)Uint40_val(v)));
 }
 
 CAMLprim value
 int_of_uint48(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint48_val(v)));
+  CAMLreturn (Val_long((long)Uint48_val(v)));
 }
 
 CAMLprim value
 int_of_uint56(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint56_val(v)));
+  CAMLreturn (Val_long((long)Uint56_val(v)));
 }
 
 CAMLprim value
 int_of_uint64(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int((long)Uint64_val(v)));
+  CAMLreturn (Val_long((long)Uint64_val(v)));
 }
 
 CAMLprim value
@@ -155,7 +155,7 @@ int_of_uint128(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_UINT128
-  CAMLreturn (Val_int((long)Uint128_val(v)));
+  CAMLreturn (Val_long((long)Uint128_val(v)));
 #else
   failwith("unimplemented");
   CAMLreturn(Val_unit);
