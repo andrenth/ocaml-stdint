@@ -48,7 +48,19 @@ let _ =
   print_endline (Uint8.to_string x)
 ```
 
-The 128 bit integer types are currently only available on 64 bit platforms; the compatibility layer for 32 bit platforms is not yet fully implemented and will raise `Failure` for several functions. 
+The 128 bit integer types are currently only available on 64 bit platforms; the compatibility layer for 32 bit platforms is not yet fully implemented and will raise `Failure` for several functions.
+
+## Implementation
+
+The representation of integers depends on their size:
+* Signed integers smaller than the standard integer type are stored in a standard ```int```. They are left-aligned so that most arithmetic operations are just the same as the ones on normal integers. The standard OCaml integer type is 31 bit on 32 bit machines and 63 bit on 64 bit machines. Operations like addition and division require an extra shift; others like xor require an additional mask to keep the unused bits (at the right) at ```0```.
+* Unsigned integers smaller than the standard integer types are stored in the standard ```int```, too. They are right-aligned making most arithmetic operations compatible to standard integer operations. Operations like addition require an additional mask operation to keep the unused bits (at the left) at ```0```.
+* ```uint32``` and ```uint64``` have their custom in-memory representation implemented in C
+* Signed integers larger than the standard integer but smaller than ```int64``` are stored in the latter. The requirements are otherwise identical to small signed integers store in the standard integer.
+* Unsigned integers larger than the standard integer but smaller then ```uint64``` are stored in the latter. The requirements are otherwise identical to small unsigned integers store in the standard integer.
+* 128 Bit integers have a custom in-memory representation implemented in C. On 64 Bit platforms they use the specialized arithmetic operations provided by the C compiler that are much faster than manual operations, to which a fallback solution exists on 32 Bit platforms.
+
+## Copyright
 
 The stdint library is written by Andre Nathan, Jeff Shaw, [Markus Weissmann](http://www.mweissmann.de) and Florian Pichlmeier.
 It is based on the [ocaml-uint](https://github.com/andrenth/ocaml-uint/) library.
