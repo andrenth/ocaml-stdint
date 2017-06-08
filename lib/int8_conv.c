@@ -32,7 +32,7 @@ CAMLprim value
 int8_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_int8((int8_t)Int_val(v)));
+  CAMLreturn (Val_int8((int8_t)Long_val(v)));
 }
 
 CAMLprim value

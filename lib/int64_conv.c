@@ -30,7 +30,7 @@ CAMLprim value
 int64_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_int64((int64_t)Int_val(v)));
+  CAMLreturn (copy_int64((int64_t)Long_val(v)));
 }
 
 CAMLprim value
