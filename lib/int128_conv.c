@@ -31,9 +31,9 @@ int128_of_int(value v)
 {
   CAMLparam1(v);
 #ifdef HAVE_INT128
-  CAMLreturn (copy_int128((__int128_t)Int_val(v)));
+  CAMLreturn (copy_int128((__int128_t)Long_val(v)));
 #else
-  int128 x = { .high = 0, .low = Int_val(v) };
+  int128 x = { .high = 0, .low = Long_val(v) };
   CAMLreturn(copy_int128(x));
 #endif
 }
