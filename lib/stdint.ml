@@ -676,7 +676,7 @@ module Int128 = struct
     type t = int128
     let bits = 128
     let fmt = "LL"
-    let name = "Int1128"
+    let name = "Int128"
 
     external add : int128 -> int128 -> int128 = "uint128_add"
     external sub : int128 -> int128 -> int128 = "uint128_sub"
