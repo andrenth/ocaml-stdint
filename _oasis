@@ -68,7 +68,7 @@ Test spec
   TestTools:        ospec
   WorkingDirectory: _build/lib
   PreCommand:       cp -r ../../spec .
-  Command:          ospec spec/uint*.ml
+  Command:          ospec spec/*int*.ml
   PostCommand:      rm -rf spec
 
 Document stdint

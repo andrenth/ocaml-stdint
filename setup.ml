@@ -6809,7 +6809,7 @@ let setup_t =
             CustomPlugin.Test.main
               {
                  CustomPlugin.cmd_main =
-                   [(OASISExpr.EBool true, ("ospec", ["spec/uint*.ml"]))];
+                   [(OASISExpr.EBool true, ("ospec", ["spec/*int*.ml"]))];
                  cmd_clean = [(OASISExpr.EBool true, None)];
                  cmd_distclean = [(OASISExpr.EBool true, None)]
               })
@@ -6829,7 +6829,7 @@ let setup_t =
             CustomPlugin.Test.clean
               {
                  CustomPlugin.cmd_main =
-                   [(OASISExpr.EBool true, ("ospec", ["spec/uint*.ml"]))];
+                   [(OASISExpr.EBool true, ("ospec", ["spec/*int*.ml"]))];
                  cmd_clean = [(OASISExpr.EBool true, None)];
                  cmd_distclean = [(OASISExpr.EBool true, None)]
               })
@@ -6847,7 +6847,7 @@ let setup_t =
             CustomPlugin.Test.distclean
               {
                  CustomPlugin.cmd_main =
-                   [(OASISExpr.EBool true, ("ospec", ["spec/uint*.ml"]))];
+                   [(OASISExpr.EBool true, ("ospec", ["spec/*int*.ml"]))];
                  cmd_clean = [(OASISExpr.EBool true, None)];
                  cmd_distclean = [(OASISExpr.EBool true, None)]
               })
@@ -7021,7 +7021,7 @@ let setup_t =
                    {
                       test_type = (`Test, "custom", Some "0.4");
                       test_command =
-                        [(OASISExpr.EBool true, ("ospec", ["spec/uint*.ml"]))
+                        [(OASISExpr.EBool true, ("ospec", ["spec/*int*.ml"]))
                         ];
                       test_custom =
                         {
