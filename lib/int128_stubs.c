@@ -108,6 +108,24 @@ copy_int128(int128 i)
 }
 
 CAMLprim value
+int128_add(value v1, value v2)
+{
+  return suint128_add(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
+int128_sub(value v1, value v2)
+{
+  return suint128_sub(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
+int128_mul(value v1, value v2)
+{
+  return suint128_mul(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
 int128_div(value v1, value v2)
 {
   CAMLparam2(v1, v2);
@@ -154,6 +172,30 @@ int128_mod(value v1, value v2)
 
   CAMLreturn(copy_int128(remainder));
 #endif
+}
+
+CAMLprim value
+int128_and(value v1, value v2)
+{
+  return suint128_and(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
+int128_or(value v1, value v2)
+{
+  return suint128_or(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
+int128_xor(value v1, value v2)
+{
+  return suint128_xor(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
+}
+
+CAMLprim value
+int128_shift_left(value v1, value v2)
+{
+  return suint128_shift_left(v1, v2, (CAMLprim value (*)(uint128))copy_int128);
 }
 
 CAMLprim value
