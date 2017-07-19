@@ -5,6 +5,9 @@ all:
 configure:
 	ocaml setup.ml -configure
 
+configure-dev:
+	ocaml setup.ml -configure --enable-tests --enable-debug
+
 install:
 	ocaml setup.ml -install
 
@@ -13,3 +16,6 @@ clean:
 
 doc:
 	ocaml setup.ml -doc
+
+check:
+	ocaml setup.ml -test
