@@ -132,7 +132,7 @@ uint128_deserialize(void *dst)
 }
 
 struct custom_operations uint128_ops = {
-  "stdint.int128",
+  "stdint.uint128",
   custom_finalize_default,
   uint128_cmp,
   custom_hash_default,
