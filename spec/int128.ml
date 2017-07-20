@@ -5,10 +5,15 @@ open Stdint.Int128;;
 
 describe "A signed 128-bit integer" do
   it "should be converted from strings correctly" do
-    forall (char_in_range '0' '2') d .
-      forall (string_of ~length:(fun () -> 38) digit) s .
-        let str = Str.replace_first (Str.regexp "^0+") "" s in
-        (to_string (of_string str)) should = str;
-        (fun () -> (to_string (of_string ("2" ^ s)))) should raise_an_exception
-  done
+    (* Note: this would fail if the string was only 0s *)
+    forall (string_of ~length:(fun () -> 38) digit) s .
+      let str = Str.replace_first (Str.regexp "^0+") "" s in
+      (to_string (of_string str)) should = str;
+      (fun () -> (to_string (of_string ("2" ^ s)))) should raise_an_exception
+  done;
+  it "...even for negative values" do
+    forall (string_of ~length:(fun () -> 38) digit) s .
+      let str = "-" ^ Str.replace_first (Str.regexp "^0+") "" s in
+      (to_string (of_string str)) should = str;
+  done;
 done
