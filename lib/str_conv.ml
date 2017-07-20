@@ -64,23 +64,26 @@ module Make (I : IntSig) : S with type t = I.t = struct
         10, off in
     let base = I.of_int base in
     (* operators that are different for parsing negative and positive numbers *)
-    let thresh, join, cmp =
+    let (thresh, rem), join, cmp_safe =
       if negative then
-        (fst (I.divmod I.min_int base), I.sub, (>))
+        (I.divmod I.min_int base, I.sub, 1)
       else
-        (fst (I.divmod I.max_int base), I.add, (<)) in
+        (I.divmod I.max_int base, I.add, -1) in
     let rec loop off (n : I.t) =
       if off = len then
         n
       else begin
         let c = s.[off] in
         if c <> '_' then begin
-          if n > thresh then fail ();
           let d = I.of_int (digit_of_char c) in
+          (* will we overflow? *)
+          (match compare n thresh with
+          | 0 ->
+            let r = compare d rem in
+            if r <> cmp_safe && r <> 0 then fail ()
+          | r -> if r <> cmp_safe then fail ());
           (* shift the existing number, join the new digit *)
           let res = join (I.mul n base) d in
-          (* did we just have an overflow though? *)
-          if cmp res d then fail ();
           loop (off + 1) res
         end else
           loop (off + 1) n
