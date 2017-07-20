@@ -132,7 +132,7 @@ uint128_deserialize(void *dst)
 }
 
 struct custom_operations uint128_ops = {
-  "stdint.int128",
+  "stdint.uint128",
   custom_finalize_default,
   uint128_cmp,
   custom_hash_default,
@@ -150,11 +150,11 @@ copy_uint128(uint128 i)
 }
 
 CAMLprim value
-uint128_add(value v1, value v2)
+suint128_add(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn(copy_uint128(Uint128_val(v1) + Uint128_val(v2)));
+  CAMLreturn(copy(Uint128_val(v1) + Uint128_val(v2)));
 #else
   uint128 x, y;
 
@@ -163,16 +163,22 @@ uint128_add(value v1, value v2)
 
   add(&x, &y);
 
-  CAMLreturn(copy_uint128(x));
+  CAMLreturn(copy(x));
 #endif
 }
 
 CAMLprim value
-uint128_sub(value v1, value v2)
+uint128_add(value v1, value v2)
+{
+  return suint128_add(v1, v2, copy_uint128);
+}
+
+CAMLprim value
+suint128_sub(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) - Uint128_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) - Uint128_val(v2)));
 #else
   uint128 x, y;
 
@@ -181,16 +187,22 @@ uint128_sub(value v1, value v2)
 
   sub(&x, &y);
 
-  CAMLreturn (copy_uint128(x));
+  CAMLreturn (copy(x));
 #endif
 }
 
 CAMLprim value
-uint128_mul(value v1, value v2)
+uint128_sub(value v1, value v2)
+{
+  return suint128_sub(v1, v2, copy_uint128);
+}
+
+CAMLprim value
+suint128_mul(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) * Uint128_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) * Uint128_val(v2)));
 #else
   uint128 x, y, z;
   uint64_t p0, p1, p2, p3;
@@ -216,8 +228,14 @@ uint128_mul(value v1, value v2)
   }
   z.high += x.low * y.high + x.high * y.low;
 
-  CAMLreturn(copy_uint128(z));
+  CAMLreturn(copy(z));
 #endif
+}
+
+CAMLprim value
+uint128_mul(value v1, value v2)
+{
+  return suint128_mul(v1, v2, copy_uint128);
 }
 
 CAMLprim value
@@ -264,11 +282,11 @@ uint128_mod(value v1, value v2)
 }
 
 CAMLprim value
-uint128_and(value v1, value v2)
+suint128_and(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) & Uint128_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) & Uint128_val(v2)));
 #else
   uint128 x, y;
 
@@ -276,16 +294,22 @@ uint128_and(value v1, value v2)
   y = Uint128_val(v2);
   x.high &= y.high;
   x.low &= y.low;
-  CAMLreturn (copy_uint128(x));
+  CAMLreturn (copy(x));
 #endif
 }
 
 CAMLprim value
-uint128_or(value v1, value v2)
+uint128_and(value v1, value v2)
+{
+  return suint128_and(v1, v2, copy_uint128);
+}
+
+CAMLprim value
+suint128_or(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) | Uint128_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) | Uint128_val(v2)));
 #else
   uint128 x, y;
 
@@ -293,16 +317,22 @@ uint128_or(value v1, value v2)
   y = Uint128_val(v2);
   x.high |= y.high;
   x.low |= y.low;
-  CAMLreturn (copy_uint128(x));
+  CAMLreturn (copy(x));
 #endif
 }
 
 CAMLprim value
-uint128_xor(value v1, value v2)
+uint128_or(value v1, value v2)
+{
+  return suint128_or(v1, v2, copy_uint128);
+}
+
+CAMLprim value
+suint128_xor(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) ^ Uint128_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) ^ Uint128_val(v2)));
 #else
   uint128 x, y;
 
@@ -310,16 +340,22 @@ uint128_xor(value v1, value v2)
   y = Uint128_val(v2);
   x.high ^= y.high;
   x.low ^= y.low;
-  CAMLreturn (copy_uint128(x));
+  CAMLreturn (copy(x));
 #endif
 }
 
 CAMLprim value
-uint128_shift_left(value v1, value v2)
+uint128_xor(value v1, value v2)
+{
+  return suint128_xor(v1, v2, copy_uint128);
+}
+
+CAMLprim value
+suint128_shift_left(value v1, value v2, CAMLprim value (*copy)(uint128))
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_UINT128 
-  CAMLreturn (copy_uint128(Uint128_val(v1) << Int_val(v2)));
+  CAMLreturn (copy(Uint128_val(v1) << Int_val(v2)));
 #else
   uint128 x;
   int s;
@@ -329,8 +365,14 @@ uint128_shift_left(value v1, value v2)
 
   shift_left(&x, s);
 
-  CAMLreturn (copy_uint128(x));
+  CAMLreturn (copy(x));
 #endif
+}
+
+CAMLprim value
+uint128_shift_left(value v1, value v2)
+{
+  return suint128_shift_left(v1, v2, copy_uint128);
 }
 
 CAMLprim value
