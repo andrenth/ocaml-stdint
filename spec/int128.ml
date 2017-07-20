@@ -9,7 +9,8 @@ describe "A signed 128-bit integer" do
     forall (string_of ~length:(fun () -> 38) digit) s .
       let str = Str.replace_first (Str.regexp "^0+") "" s in
       (to_string (of_string str)) should = str;
-      (fun () -> (to_string (of_string ("2" ^ s)))) should raise_an_exception
+      (fun () -> (of_string ("2" ^ s))) should raise_an_exception
+  done;
   it "...even when sign is present" do
     forall (string_of ~length:(fun () -> 38) digit) s .
       let str = Str.replace_first (Str.regexp "^0+") "" s in
