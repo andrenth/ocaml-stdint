@@ -46,6 +46,8 @@ module Make (I : IntSig) : S with type t = I.t = struct
       if len = 0 then fail ();
       if s.[0] = '-' then
         true, 1
+      else if s.[0] = '+' then
+        false, 1
       else
         false, 0 in
     (* does the string have a base-prefix and what base is it? *)
