@@ -121,13 +121,34 @@ uint128_cmp(value v1, value v2)
 static void
 uint128_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
 {
-  caml_failwith("unimplemented");
+#ifdef HAVE_INT128
+  __uint128_t i = Uint128_val(v);
+  uint64_t hi = i >> 64U;
+  uint64_t lo = i;
+#else
+  uint128 i = Uint128_val(v1);
+  uint64_t hi = i.high;
+  uint64_t lo = i.low;
+#endif
+  /* Serializing in big-endian order as other integer values */
+  caml_serialize_int_8(hi);
+  caml_serialize_int_8(lo);
+  *wsize_32 = *wsize_64 = 16;
 }
 
 static uintnat
 uint128_deserialize(void *dst)
 {
-  caml_failwith("unimplemented");
+  uint64_t hi = caml_deserialize_uint_8();
+  uint64_t lo = caml_deserialize_uint_8();
+#ifdef HAVE_INT128
+  __uint128_t v = ((__uint128_t)hi << 64U) | lo;
+#else
+  uint128 v;
+  v.high = hi;
+  v.low = lo;
+#endif
+  memcpy(dst, &v, sizeof(v));
   return 16;
 }
 
