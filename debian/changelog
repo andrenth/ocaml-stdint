@@ -1,53 +1,5 @@
-ocaml-uint (1.2.0-0digirati1) trusty; urgency=low
+ocaml-stdint (0.4.0-0hostnet1) xenial; urgency=low
 
-  * Version 1.2.0
+  * Version 0.4.0
 
- -- Andre Nathan <andre@digirati.com.br>  Mon, 27 Apr 2015 14:32:32 -0300
-
-ocaml-uint (1.1.5-0digirati1) trusty; urgency=low
-
-  * Version 1.1.5
-
- -- Andre Nathan <andre@digirati.com.br>  Wed, 12 Nov 2014 12:50:31 -0200
-
-ocaml-uint (1.1.4-0digirati1) trusty; urgency=low
-
-  * Version 1.1.4
-
- -- Andre Nathan <andre@digirati.com.br>  Tue, 11 Nov 2014 18:01:22 -0200
-
-ocaml-uint (1.1.3-0digirati1) trusty; urgency=low
-
-  * Version 1.1.3
-
- -- Andre Nathan <andre@digirati.com.br>  Tue, 11 Nov 2014 17:19:33 -0200
-
-ocaml-uint (1.1.2-0digirati1) trusty; urgency=low
-
-  * Version 1.1.2
-
- -- Andre Nathan <andre@digirati.com.br>  Tue, 11 Nov 2014 15:01:27 -0200
-
-ocaml-uint (1.1.1-0digirati1) precise; urgency=low
-
-  * Version 1.1.1
-
- -- Andre Nathan <andre@digirati.com.br>  Tue, 19 Feb 2014 09:42:17 -0300
-
-ocaml-uint (1.1.0-0digirati1) precise; urgency=low
-
-  * Version 1.1.0
-
- -- Andre Nathan <andre@digirati.com.br>  Wed, 09 Jan 2013 14:47:23 -0200
-
-ocaml-uint (1.0.3-0digirati1) precise; urgency=low
-
-  * Rebuild for 1.0.3
-
- -- Andre Nathan <andre@digirati.com.br>  Wed, 27 Aug 2012 11:25:53 -0300
-
-ocaml-uint (1.0.2-0digirati1) precise; urgency=low
-
-  * First build
-
- -- Andre Nathan <andre@digirati.com.br>  Wed, 21 Mar 2012 16:59:59 -0300
+ -- Andre Nathan <andre@hostnet.com.br>  Tue, 25 Jul 2017 09:18:46 -0300
