@@ -36,7 +36,7 @@ describe "An unsigned integer" do
       (to_int32 (shift_left (of_int32 x) y)) should = (Int32.shift_left x y)
   done;
 
-  it "shoult perform right-shifts correctly" do
+  it "should perform right-shifts correctly" do
     forall int x . forall (int_in_range 0 31) y .
       (to_int (shift_right (of_int x) y)) should = (x asr y)
   done;
