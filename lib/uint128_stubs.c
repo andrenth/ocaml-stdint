@@ -126,7 +126,7 @@ uint128_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
   uint64_t hi = i >> 64U;
   uint64_t lo = i;
 #else
-  uint128 i = Uint128_val(v1);
+  uint128 i = Uint128_val(v);
   uint64_t hi = i.high;
   uint64_t lo = i.low;
 #endif
