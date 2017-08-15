@@ -1,16 +1,29 @@
 opam-version: "1.2"
-maintainer: "Andre Nathan <andre@hostnet.com.br>"
+name: stdint
+version: 0.4.2
+maintainer: "Markus W. Weissmann <markus.weissmann@in.tum.de>"
 authors: [
-  "Andre Nathan" "Jeff Shaw" "Florian Pichlmeier" "Markus W. Weissmann"
+  "Andre Nathan <andre@digirati.com.br>"
+  "Jeff Shaw <shawjef3@msu.edu>"
+  "Markus W. Weissmann <markus.weissmann@in.tum.de>"
+  "Florian Pichlmeier <florian.pichlmeier@mytum.de>"
 ]
-homepage: "https://github.com/andrenth/ocaml-stdint"
-bug-reports: "https://github.com/andrenth/ocaml-stdint/issues"
 license: "MIT"
+homepage: "https://github.com/andrenth/ocaml-stdint"
+doc: "http://stdint.forge.ocamlcore.org/doc/"
 dev-repo: "https://github.com/andrenth/ocaml-stdint.git"
+bug-reports: "https://github.com/andrenth/ocaml-stdint/issues"
 build: [
   ["ocaml" "setup.ml" "-configure" "--prefix" prefix]
-  [make]
+  ["ocaml" "setup.ml" "-build"]
 ]
-install: [make "install"]
-remove: ["ocamlfind" "remove" "stdint"]
-depends: "ocamlfind"
+install: ["ocaml" "setup.ml" "-install"]
+remove: [
+  ["ocamlfind" "remove" "stdint"]
+]
+build-doc: [ "ocaml" "setup.ml" "-doc" ]
+depends: [
+  "base-bytes"
+  "ocamlfind" {>= "1.5"}
+  "ocamlbuild" {build}
+]
