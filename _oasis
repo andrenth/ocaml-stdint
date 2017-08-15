@@ -62,7 +62,18 @@ Library stdint
                    uint128.h ($prefix/include/ocaml_stdint),
                    int8.h ($prefix/include/ocaml_stdint),
                    int16.h ($prefix/include/ocaml_stdint),
-                   int128.h ($prefix/include/ocaml_stdint)
+                   int128.h ($prefix/include/ocaml_stdint),
+                   # For backwards compatibility
+                   uint8.h ($libdir/stdint),
+                   uint16.h ($libdir/stdint),
+                   uint24.h ($libdir/stdint),
+                   uint32.h ($libdir/stdint),
+                   uint56.h ($libdir/stdint),
+                   uint64.h ($libdir/stdint),
+                   uint128.h ($libdir/stdint),
+                   int8.h ($libdir/stdint),
+                   int16.h ($libdir/stdint),
+                   int128.h ($libdir/stdint)
 
 Test spec
   TestTools:        ospec
