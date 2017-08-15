@@ -2,7 +2,7 @@ OASISFormat: 0.4
 Plugins: META (0.4)
 
 Name:        stdint
-Version:     0.4.1
+Version:     0.4.2
 Synopsis:    Standard integer types for OCaml
 Authors:     Andre Nathan, Jeff Shaw, Florian Pichlmeier, Markus W. Weissmann
 LicenseFile: LICENSE
