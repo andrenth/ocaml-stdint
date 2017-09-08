@@ -76,6 +76,25 @@ int128_cmp(value v1, value v2)
 #endif
 }
 
+static intnat
+int128_hash(value v)
+{
+#ifdef HAVE_INT128
+  __int128_t x = Int128_val(v);
+  uint32_t b0 = (uint32_t) x,
+           b1 = (uint32_t) (x >> 32U),
+           b2 = (uint32_t) (x >> 64U),
+           b3 = (uint32_t) (x >> 96U);
+#else
+  int128 x = Int128_val(v);
+  uint32_t b0 = (uint32_t) x.low,
+           b1 = (uint32_t) (x.low >> 32U),
+           b2 = (uint32_t) x.high,
+           b3 = (uint32_t) (x.high >> 32U);
+#endif
+  return b0 ^ b1 ^ b2 ^ b3;
+}
+
 static void
 int128_serialize(value v, uintnat *wsize_32, uintnat *wsize_64)
 {
@@ -114,7 +133,7 @@ struct custom_operations int128_ops = {
   "stdint.int128",
   custom_finalize_default,
   int128_cmp,
-  custom_hash_default,
+  int128_hash,
   int128_serialize,
   int128_deserialize
 };
