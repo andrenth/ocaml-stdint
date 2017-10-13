@@ -1,3 +1,9 @@
+ocaml-stdint (0.5.0-0hostnet1) xenial; urgency=low
+
+  * Version 0.5.0
+
+ -- Andre Nathan <andre@hostnet.com.br>  Tue, 13 Oct 2017 16:01:10 -0300
+
 ocaml-stdint (0.4.2-0hostnet1) xenial; urgency=low
 
   * Version 0.4.2
