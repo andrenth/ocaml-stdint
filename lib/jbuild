@@ -1,0 +1,40 @@
+(jbuild_version 1)
+
+(library
+ ((name stdint)
+  (public_name stdint)
+  (synopsis "Standard integer types for OCaml")
+  (install_c_headers
+   (int8 int16 int24 int40 int48 int56 int128
+    uint8 uint16 uint24 uint32 uint40 uint48 uint56 uint64 uint128))
+  (c_names
+   (int8_conv
+    int16_conv
+    int24_conv
+    int32_conv
+    int40_conv
+    int48_conv
+    int56_conv
+    int64_conv
+    int128_conv
+    int40_stubs
+    int48_stubs
+    int56_stubs
+    int128_stubs
+    uint8_conv
+    uint16_conv
+    uint24_conv
+    uint32_conv
+    uint40_conv
+    uint48_conv
+    uint56_conv
+    uint64_conv
+    uint128_conv
+    uint32_stubs
+    uint40_stubs
+    uint48_stubs
+    uint56_stubs
+    uint64_stubs
+    uint128_stubs
+    int_conv))
+  (libraries (bytes))))
