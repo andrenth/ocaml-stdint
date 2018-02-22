@@ -26,7 +26,7 @@ CAMLprim value
 int56_shift_right(value v1, value v2)
 {
   CAMLparam2(v1, v2);
-  CAMLreturn (copy_int56((Int64_val(v1) >> Int_val(v2)) & mask));
+  CAMLreturn (copy_int56((Int64_val(v1) >> Long_val(v2)) & mask));
 }
 
 CAMLprim value

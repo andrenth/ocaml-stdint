@@ -123,14 +123,14 @@ CAMLprim value
 uint32_shift_left(value v1, value v2)
 {
     CAMLparam2(v1, v2);
-    CAMLreturn (copy_uint32(Uint32_val(v1) << Int_val(v2)));
+    CAMLreturn (copy_uint32(Uint32_val(v1) << Long_val(v2)));
 }
 
 CAMLprim value
 uint32_shift_right(value v1, value v2)
 {
     CAMLparam2(v1, v2);
-    CAMLreturn (copy_uint32(Uint32_val(v1) >> Int_val(v2)));
+    CAMLreturn (copy_uint32(Uint32_val(v1) >> Long_val(v2)));
 }
 
 CAMLprim value
