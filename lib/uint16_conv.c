@@ -30,7 +30,7 @@ CAMLprim value
 uint16_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_uint16((uint16_t)Int_val(v)));
+  CAMLreturn (Val_uint16((uint16_t)Long_val(v)));
 }
 
 CAMLprim value

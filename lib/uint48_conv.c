@@ -30,7 +30,7 @@ CAMLprim value
 uint48_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (copy_uint64(((uint64_t)Int_val(v)) << 16));
+  CAMLreturn (copy_uint64(((uint64_t)Long_val(v)) << 16));
 }
 
 CAMLprim value

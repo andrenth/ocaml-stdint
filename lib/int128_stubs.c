@@ -243,10 +243,10 @@ int128_shift_right(value v1, value v2)
 {
   CAMLparam2(v1, v2);
 #ifdef HAVE_INT128
-  CAMLreturn (copy_int128(Int128_val(v1) >> Int_val(v2)));
+  CAMLreturn (copy_int128(Int128_val(v1) >> Long_val(v2)));
 #else
   int128 x = Int128_val(v1);
-  int s = Int_val(v2);
+  long s = Long_val(v2);
 
   if (0 == s) {
     // nothing

@@ -30,7 +30,7 @@ CAMLprim value
 uint24_of_int(value v)
 {
   CAMLparam1(v);
-  CAMLreturn (Val_uint24(((uint32_t)Int_val(v)) << 8));
+  CAMLreturn (Val_uint24(((uint32_t)Long_val(v)) << 8));
 }
 
 CAMLprim value
