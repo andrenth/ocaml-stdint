@@ -36,5 +36,7 @@
     uint56_stubs
     uint64_stubs
     uint128_stubs
+    nativeint_conv
+    float_conv
     int_conv))
   (libraries (bytes))))

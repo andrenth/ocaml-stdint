@@ -1,0 +1,11 @@
+(jbuild_version 1)
+
+(executable
+ ((name gh28)
+  (modules (gh28))
+  (libraries (stdint))))
+
+(alias
+ ((name runtest)
+  (deps (gh28.exe))
+  (action (run ${<}))))
