@@ -1,6 +1,4 @@
-.gitignore
 _build/
-setup.data
-setup.log
-*.install
 .merlin
+*.install
+*.sw*
