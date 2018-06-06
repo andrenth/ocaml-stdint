@@ -58,7 +58,7 @@ module Make (I : IntSig) = struct
     let rec loop buffer i n =
       if i = (I.bits / 8) then ()
       else
-        let b = Char.chr (I.to_int (I.logand (I.of_int 0xFF) n)) in
+        let b = Char.unsafe_chr (I.to_int (I.logand (I.of_int 0xFF) n)) in
         let () = Bytes.set buffer (offset + i) b in
         let n' = I.shift_right_logical n 8 in
         loop buffer (i + 1) n'
