@@ -1,12 +1,12 @@
 (** Standard integer types *)
 
-type int8
+type int8 = private int
 (** Signed 8-bit integer *)
 
-type int16
+type int16 = private int
 (** Signed 16-bit integer *)
 
-type int24
+type int24 = private int
 (** Signed 24-bit integer *)
 
 type int32 = Int32.t
@@ -27,13 +27,13 @@ type int64 = Int64.t
 type int128
 (** Signed 128-bit integer *)
 
-type uint8
+type uint8 = private int
 (** Unsigned 8-bit integer *)
 
-type uint16
+type uint16 = private int
 (** Unsigned 16-bit integer *)
 
-type uint24
+type uint24 = private int
 (** Unsigned 24-bit integer *)
 
 type uint32
