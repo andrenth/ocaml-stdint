@@ -12,10 +12,10 @@ doc: "http://stdint.forge.ocamlcore.org/doc/"
 dev-repo: "https://github.com/andrenth/ocaml-stdint.git"
 bug-reports: "https://github.com/andrenth/ocaml-stdint/issues"
 build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs]
 ]
-build-test: [["jbuilder" "runtest" "-p" name "-j" jobs]]
+build-test: [["dune" "runtest" "-p" name "-j" jobs]]
 depends: [
   "base-bytes"
-  "jbuilder" {build}
+  "dune" {build}
 ]
