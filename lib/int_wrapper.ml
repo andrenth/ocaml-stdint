@@ -64,7 +64,7 @@ module Make_signed (I : Size) = struct
   let min_int = of_int ((-1) * (1 lsl (I.bits - 1)))
 
   let lognot = logxor minus_one
-  let compare = Pervasives.compare
+  let compare = Stdlib.compare
   let divmod  = (fun x y -> div x y, rem x y)
 end
 
@@ -98,7 +98,7 @@ module Make_unsigned (I : Size) = struct
   let max_int = of_int ((1 lsl I.bits) - 1)
   let min_int = zero
   let lognot = logxor max_int
-  let compare = Pervasives.compare
+  let compare = Stdlib.compare
   let divmod  = (fun x y -> div x y, rem x y)
 end
 
