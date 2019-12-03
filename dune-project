@@ -11,10 +11,11 @@
   "Markus W. Weissmann <markus.weissmann@in.tum.de>"
   "Florian Pichlmeier <florian.pichlmeier@mytum.de>")
 (source (github andrenth/ocaml-stdint))
+(documentation "https://andrenth.github.io/ocaml-stdint/")
 
 (package
  (name stdint)
- (synopsis "Signed and unsigned integer types having specified widths.")
+ (synopsis "Signed and unsigned integer types having specified widths")
  (description "\
 The stdint library provides signed and unsigned integer types of various fixed
 widths: 8, 16, 24, 32, 40, 48, 56, 64 and 128 bit.
