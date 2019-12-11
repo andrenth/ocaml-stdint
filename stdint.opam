@@ -23,8 +23,8 @@ homepage: "https://github.com/andrenth/ocaml-stdint"
 doc: "https://andrenth.github.io/ocaml-stdint/"
 bug-reports: "https://github.com/andrenth/ocaml-stdint/issues"
 depends: [
-  "ocaml" {>= "4.07"}
-  "dune" {>= "1.11"}
+  "ocaml" {>= "4.03"}
+  "dune" {>= "1.4"}
 ]
 build: [
   ["dune" "subst"] {pinned}

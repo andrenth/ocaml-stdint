@@ -38,3 +38,13 @@
   uint64_conv
   uint64_stubs
   uint8_conv))
+
+(rule
+  (targets Stdint_stdlib_.ml)
+  (enabled_if (< %{ocaml_version} 4.07))
+  (action (with-stdout-to %{targets} (echo "include Pervasives"))))
+
+(rule
+  (targets Stdint_stdlib_.ml)
+  (enabled_if (>= %{ocaml_version} 4.07))
+  (action (with-stdout-to %{targets} (echo "include Stdlib"))))

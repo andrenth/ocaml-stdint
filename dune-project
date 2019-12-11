@@ -1,4 +1,4 @@
-(lang dune 1.11)
+(lang dune 1.10)
 (name stdint)
 
 (generate_opam_files true)
@@ -27,5 +27,5 @@ other integer type (including int, float and nativeint), parsing from and
 conversion to readable strings (binary, octal, decimal, hexademical), conversion
 to and from buffers in both big endian and little endian byte order.")
  (depends
-  (ocaml (>= 4.07))
-  (dune (>= 1.11))))
+  (ocaml (>= 4.03))
+  (dune (>= 1.10))))
