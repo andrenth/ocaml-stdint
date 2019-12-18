@@ -487,7 +487,7 @@ module Int40 = struct
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -571,7 +571,7 @@ module Int48 = struct
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -655,7 +655,7 @@ module Int56 = struct
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -746,7 +746,7 @@ module Int128 = struct
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
 
     external init_custom_ops : unit -> unit = "int128_init_custom_ops"
@@ -1019,7 +1019,7 @@ module Uint32 = struct
     let max_int = max_int_fun ()
     let min_int = zero
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
 
     external init_custom_ops : unit -> unit = "uint32_init_custom_ops"
@@ -1112,7 +1112,7 @@ module Uint64 = struct
     let max_int = max_int_fun ()
     let min_int = zero
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
 
     external init_custom_ops : unit -> unit = "uint64_init_custom_ops"
@@ -1197,7 +1197,7 @@ module Uint40 = struct
     let one = of_int 1
     let max_int = max_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -1279,7 +1279,7 @@ module Uint48 = struct
     let one = of_int 1
     let max_int = max_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -1361,7 +1361,7 @@ module Uint56 = struct
     let one = of_int 1
     let max_int = max_int_fun ()
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
 
@@ -1450,7 +1450,7 @@ module Uint128 = struct
     let max_int = max_int_fun ()
     let min_int = zero
     let lognot = logxor max_int
-    let compare = Stdlib.compare
+    let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
 
     let neg x = add (sub max_int x) one
