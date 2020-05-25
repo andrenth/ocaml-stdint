@@ -94,16 +94,20 @@ struct
   let max_str = I.(to_string max_int)
   let max_str_len = String.length max_str
 
-  let str_gen =
+  let integer_str_gen =
     QCheck.(string_gen_of_size (Gen.return max_str_len) Gen.numeral |>
               map_same_type (fun s ->
                 if s <= max_str then s else String.sub s 1 (max_str_len - 1)))
+
+  let str_gen =
+    QCheck.pair integer_str_gen (
+    QCheck.(string_gen_of_size (Gen.return 1) (Gen.oneofl ['k';'!'])))
 
   open I
 
   let tests = [
     test "An integer should be converted from strings correctly"
-      str_gen (fun s ->
+      integer_str_gen (fun s ->
         let str = Str.(replace_first (regexp "^0+") "" s) in
         to_string (of_string str) = str &&
         (try
@@ -112,15 +116,22 @@ struct
         with e -> true)) ;
 
     test "An integer should be converted from signed (+) strings correctly"
-      str_gen (fun s ->
+      integer_str_gen (fun s ->
         let str = Str.(replace_first (regexp "^0+") "" s) in
         to_string (of_string ("+" ^ str)) = str) ;
 
     test "An integer should be converted from signed (-) strings correctly"
-      str_gen (fun s ->
+      integer_str_gen (fun s ->
         let str = "-" ^ Str.(replace_first (regexp "^0+") "" s) in
         min_int = zero ||
         to_string (of_string str) = str) ;
+
+    test "An integer should be converted from strings with right offset correctly"
+      str_gen (fun (i, s) ->
+        let i_str = Str.(replace_first (regexp "^0+") "" i) in
+        let str = i_str ^ s in
+        let s, o = of_substring str 0 in
+        to_string s = i_str && o = String.length i_str) ;
   ]
 end
 

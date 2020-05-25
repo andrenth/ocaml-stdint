@@ -279,6 +279,15 @@ module type Int = sig
   (** Convert an integer of type [t] to an integer of type [uint128]. *)
 (** {6 String conversion functions} *)
 
+  val of_substring : string -> int -> (t * int)
+  (** Convert the given substring starting at the given offset
+      to an integer of type [t] and return the offset.
+      The string is read in decimal (by default) or in hexadecimal, octal
+      or binary if the string begins with [0x], [0o] or [0b] respectively.
+      Raise [Failure "*_of_substring"] if the given string is not a valid
+      representation of an integer, or if the integer represented exceeds
+      the range of integers representable in type [t]. *)
+
   val of_string : string -> t
   (** Convert the given string to an integer of type [t].
       The string is read in decimal (by default) or in hexadecimal, octal
