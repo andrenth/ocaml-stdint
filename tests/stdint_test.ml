@@ -130,7 +130,7 @@ struct
       str_gen (fun (i, s) ->
         let i_str = Str.(replace_first (regexp "^0+") "" i) in
         let str = i_str ^ s in
-        let s, o = of_substring str 0 in
+        let s, o = of_substring ~pos:0 str in
         to_string s = i_str && o = String.length i_str) ;
   ]
 end

@@ -16,7 +16,7 @@ end
 
 module type S = sig
   type t
-  val of_substring : string -> int -> (t * int)
+  val of_substring : pos:int -> string -> (t * int)
   val of_string : string -> t
   val to_string : t -> string
   val to_string_bin : t -> string
@@ -35,7 +35,7 @@ module Make (I : IntSig) : S with type t = I.t = struct
 
   (** Base function for *of_string* and *of_substring*
     * functions *)
-  let _of_substring s start_off func_name =
+  let _of_substring start_off s func_name =
     let fail () = invalid_arg (I.name ^ func_name) in
     let len = String.length s - start_off in
     (* is this supposed to be a negative number? *)
@@ -98,15 +98,15 @@ module Make (I : IntSig) : S with type t = I.t = struct
     in
     loop off I.zero
 
-  let of_substring s o =
+  let of_substring ~pos s =
     try
-      _of_substring s o ".of_substring"
+      _of_substring pos s ".of_substring"
     with
       | NotDigit (n, off) -> n, off
 
   let of_string s =
     try
-      let n, _ = _of_substring s 0 ".of_string" in n
+      let n, _ = _of_substring 0 s ".of_string" in n
     with
       | NotDigit _ -> invalid_arg (I.name ^ ".of_string")
 
