@@ -16,7 +16,7 @@ end
 
 module type S = sig
   type t
-  val of_substring : pos:int -> string -> (t * int)
+  val of_substring : string -> pos:int -> (t * int)
   val of_string : string -> t
   val to_string : t -> string
   val to_string_bin : t -> string
@@ -98,7 +98,7 @@ module Make (I : IntSig) : S with type t = I.t = struct
     in
     loop off I.zero
 
-  let of_substring ~pos s =
+  let of_substring s ~pos =
     try
       _of_substring pos s ".of_substring"
     with
