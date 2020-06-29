@@ -16,6 +16,7 @@ end
 
 module type S = sig
   type t
+  val of_substring : string -> pos:int -> (t * int)
   val of_string : string -> t
   val to_string : t -> string
   val to_string_bin : t -> string
@@ -30,26 +31,22 @@ end
 module Make (I : IntSig) : S with type t = I.t = struct
   type t = I.t
 
-  let digit_of_char c =
-    let disp =
-      if c >= '0' && c <= '9' then 48
-      else if c >= 'A' && c <= 'F' then 55
-      else if c >= 'a' && c <= 'f' then 87
-      else failwith (I.name ^ ".of_string") in
-    int_of_char c - disp
+  exception NotDigit of I.t * int
 
-  let of_string s =
-    let fail () = invalid_arg (I.name ^ ".of_string") in
-    let len = String.length s in
+  (** Base function for *of_string* and *of_substring*
+    * functions *)
+  let _of_substring start_off s func_name =
+    let fail () = invalid_arg (I.name ^ func_name) in
+    let len = String.length s - start_off in
     (* is this supposed to be a negative number? *)
     let negative, off =
-      if len = 0 then fail ();
-      if s.[0] = '-' then
-        true, 1
-      else if s.[0] = '+' then
-        false, 1
+      if len <= 0 then fail ();
+      if s.[start_off] = '-' then
+        true, 1+start_off
+      else if s.[start_off] = '+' then
+        false, 1+start_off
       else
-        false, 0 in
+        false, start_off in
     (* does the string have a base-prefix and what base is it? *)
     let base, off =
       if len - off < 3 then (* no space for a prefix in there *)
@@ -73,11 +70,19 @@ module Make (I : IntSig) : S with type t = I.t = struct
         (I.divmod I.max_int base, I.add, -1) in
     let rec loop off (n : I.t) =
       if off = len then
-        n
+        n, off
       else begin
         let c = s.[off] in
         if c <> '_' then begin
-          let d = I.of_int (digit_of_char c) in
+          let disp =
+            if c >= '0' && c <= '9' then 48
+            else if c >= 'A' && c <= 'F' then 55
+            else if c >= 'a' && c <= 'f' then 87
+            else raise (NotDigit (n, off)) in
+          let disp = int_of_char c - disp in
+          let d = I.of_int disp in
+          (* do not accept digit larger than the base *)
+          if d >= base then fail () ;
           (* will we overflow? *)
           (match compare n thresh with
           | 0 ->
@@ -92,6 +97,18 @@ module Make (I : IntSig) : S with type t = I.t = struct
       end
     in
     loop off I.zero
+
+  let of_substring s ~pos =
+    try
+      _of_substring pos s ".of_substring"
+    with
+      | NotDigit (n, off) -> n, off
+
+  let of_string s =
+    try
+      let n, _ = _of_substring 0 s ".of_string" in n
+    with
+      | NotDigit _ -> invalid_arg (I.name ^ ".of_string")
 
   let to_string_base base prefix x =
     let prefixlen = String.length prefix in

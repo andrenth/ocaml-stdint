@@ -93,6 +93,7 @@ module type Int = sig
   val of_uint128 : uint128 -> t
   val to_uint128 : t -> uint128
 
+  val of_substring : string -> pos:int -> (t * int)
   val of_string : string -> t
   val to_string : t -> string
 
