@@ -432,7 +432,7 @@ module Int40 = struct
     let fmt = "ll"
     let name = "Int40"
 
-    external mul : int40 -> int40 -> int40 = "uint40_mul"
+    external mul : int40 -> int40 -> int40 = "int40_mul"
     external div : int40 -> int40 -> int40 = "int40_div"
     external logxor : int40 -> int40 -> int40 = "uint40_xor"
     external shift_right : int40 -> int -> int40 = "uint40_shift_right"
@@ -516,7 +516,7 @@ module Int48 = struct
     let fmt = "ll"
     let name = "Int48"
 
-    external mul : int48 -> int48 -> int48 = "uint48_mul"
+    external mul : int48 -> int48 -> int48 = "int48_mul"
     external div : int48 -> int48 -> int48 = "int48_div"
     external logxor : int48 -> int48 -> int48 = "uint48_xor"
     external shift_right : int48 -> int -> int48 = "uint48_shift_right"
@@ -600,7 +600,7 @@ module Int56 = struct
     let fmt = "ll"
     let name = "Int56"
 
-    external mul : int56 -> int56 -> int56 = "uint56_mul"
+    external mul : int56 -> int56 -> int56 = "int56_mul"
     external div : int56 -> int56 -> int56 = "int56_div"
     external logxor : int56 -> int56 -> int56 = "uint56_xor"
     external shift_right : int56 -> int -> int56 = "uint56_shift_right"
