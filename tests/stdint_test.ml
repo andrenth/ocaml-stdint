@@ -45,19 +45,19 @@ struct
     test "An integer should not modify strings when converted"
       in_range (fun x -> to_string (of_int x) = string_of_int x) ;
 
-    test "An integer should perform logical and correctly"
+    test "An integer should perform logical-and correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logand (of_int x) (of_int y)) = x land y) ;
 
-    test "An integer should perform logical or correctly"
+    test "An integer should perform logical-or correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logor (of_int x) (of_int y)) = x lor y) ;
 
-    test "An integer should perform logical xor correctly"
+    test "An integer should perform logical-xor correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logxor (of_int x) (of_int y)) = x lxor y) ;
 
-    test "An integer should perform logical not correctly"
+    test "An integer should perform logical-not correctly"
       pos_int (fun x -> lognot (of_int x) = of_int (lnot x)) ;
 
     test "An integer should perform left-shifts correctly"
