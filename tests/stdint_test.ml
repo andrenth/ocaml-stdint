@@ -6,7 +6,7 @@ end
 let skip name = QCheck.Test.make ~count:0 ~name
 let test name = QCheck.Test.make ~count:10 ~name
 
-module Tester (I : Stdint.Int) : TESTER =
+module IntBounds (I : Stdint.Int) =
 struct
   let mini, maxi =
     if I.(to_int max_int) = -1 then
@@ -25,6 +25,11 @@ struct
   let pos_int = QCheck.map_same_type abs in_range
   let in_range_float =
     QCheck.float_range (float_of_int mini) (float_of_int maxi)
+end
+
+module Tester (I : Stdint.Int) : TESTER =
+struct
+  include IntBounds (I)
 
   open I
 
@@ -38,22 +43,22 @@ struct
     test "An integer should not modify strings when converted"
       in_range (fun x -> to_string (of_int x) = string_of_int x) ;
 
-    test "An unsigned integer should perform logical and correctly"
+    test "An integer should perform logical and correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logand (of_int x) (of_int y)) = x land y) ;
 
-    test "An unsigned integer should perform logical or correctly"
+    test "An integer should perform logical or correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logor (of_int x) (of_int y)) = x lor y) ;
 
-    test "An unsigned integer should perform logical xor correctly"
+    test "An integer should perform logical xor correctly"
       (QCheck.pair pos_int pos_int) (fun (x, y) ->
         to_int (logxor (of_int x) (of_int y)) = x lxor y) ;
 
-    test "An unsigned integer should perform logical not correctly"
+    test "An integer should perform logical not correctly"
       pos_int (fun x -> lognot (of_int x) = of_int (lnot x)) ;
 
-    test "An unsigned integer should perform left-shifts correctly"
+    test "An integer should perform left-shifts correctly"
       QCheck.(pair in_range (int_bound 31)) (fun (x, y) ->
         shift_left (of_int x) y = of_int (x lsl y)) ;
 
@@ -132,6 +137,24 @@ struct
         let str = i_str ^ s in
         let s, o = of_substring ~pos:0 str in
         to_string s = i_str && o = String.length i_str) ;
+  ]
+end
+
+module SignTester (I : Stdint.Int) =
+struct
+  include IntBounds (I)
+
+  open I
+
+  let tests = [
+    test "A signed integer should perform negation correctly"
+      pos_int (fun x -> neg (of_int x) = of_int (~- x)) ;
+
+    test "Neg is like multiply by minus one"
+      in_range (fun x -> neg (of_int x) = mul (neg one) (of_int x)) ;
+
+    test "One can print after neg"
+      in_range (fun x -> mul (neg one) (of_int x) |> to_string = string_of_int ~-x) ;
   ]
 end
 
@@ -242,12 +265,30 @@ let () =
     "Int8 strings", (module OfStringTester (Stdint.Int8) : TESTER) ;
     "Uint16 strings", (module OfStringTester (Stdint.Uint16) : TESTER) ;
     "Int16 strings", (module OfStringTester (Stdint.Int16) : TESTER) ;
-    "Int32 strings", (module OfStringTester (Stdint.Int32) : TESTER) ;
+    "Uint24 strings", (module OfStringTester (Stdint.Uint24) : TESTER) ;
+    "Int24 strings", (module OfStringTester (Stdint.Int24) : TESTER) ;
     "Uint32 strings", (module OfStringTester (Stdint.Uint32) : TESTER) ;
-    "Int64 strings", (module OfStringTester (Stdint.Int64) : TESTER) ;
+    "Int32 strings", (module OfStringTester (Stdint.Int32) : TESTER) ;
+    "Uint40 strings", (module OfStringTester (Stdint.Uint40) : TESTER) ;
+    "Int40 strings", (module OfStringTester (Stdint.Int40) : TESTER) ;
+    "Uint48 strings", (module OfStringTester (Stdint.Uint48) : TESTER) ;
+    "Int48 strings", (module OfStringTester (Stdint.Int48) : TESTER) ;
+    "Uint56 strings", (module OfStringTester (Stdint.Uint56) : TESTER) ;
+    "Int56 strings", (module OfStringTester (Stdint.Int56) : TESTER) ;
     "Uint64 strings", (module OfStringTester (Stdint.Uint64) : TESTER) ;
-    "Int128 strings", (module OfStringTester (Stdint.Int128) : TESTER) ;
+    "Int64 strings", (module OfStringTester (Stdint.Int64) : TESTER) ;
     "Uint128 strings", (module OfStringTester (Stdint.Uint128) : TESTER) ;
+    "Int128 strings", (module OfStringTester (Stdint.Int128) : TESTER) ;
+
+    "Int8 sign ops", (module SignTester (Stdint.Int8) : TESTER) ;
+    "Int16 sign ops", (module SignTester (Stdint.Int16) : TESTER) ;
+    "Int24 sign ops", (module SignTester (Stdint.Int24) : TESTER) ;
+    "Int32 sign ops", (module SignTester (Stdint.Int32) : TESTER) ;
+    "Int40 sign ops", (module SignTester (Stdint.Int40) : TESTER) ;
+    "Int48 sign ops", (module SignTester (Stdint.Int48) : TESTER) ;
+    "Int56 sign ops", (module SignTester (Stdint.Int56) : TESTER) ;
+    "Int64 sign ops", (module SignTester (Stdint.Int64) : TESTER) ;
+    "Int128 sign ops", (module SignTester (Stdint.Int128) : TESTER) ;
   ] in
 
   List.iter (fun (n, m) ->
