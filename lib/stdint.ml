@@ -435,8 +435,8 @@ module Int40 = struct
     external mul : int40 -> int40 -> int40 = "int40_mul"
     external div : int40 -> int40 -> int40 = "int40_div"
     external logxor : int40 -> int40 -> int40 = "uint40_xor"
-    external shift_right : int40 -> int -> int40 = "uint40_shift_right"
-    external shift_right_logical : int40 -> int -> int40 = "int40_shift_right"
+    external shift_right : int40 -> int -> int40 = "int40_shift_right"
+    external shift_right_logical : int40 -> int -> int40 = "uint40_shift_right"
 
     external of_int       :       int ->     int40 = "int40_of_int"
     external of_nativeint : nativeint ->     int40 = "int40_of_nativeint"
@@ -519,8 +519,8 @@ module Int48 = struct
     external mul : int48 -> int48 -> int48 = "int48_mul"
     external div : int48 -> int48 -> int48 = "int48_div"
     external logxor : int48 -> int48 -> int48 = "uint48_xor"
-    external shift_right : int48 -> int -> int48 = "uint48_shift_right"
-    external shift_right_logical : int48 -> int -> int48 = "int48_shift_right"
+    external shift_right : int48 -> int -> int48 = "int48_shift_right"
+    external shift_right_logical : int48 -> int -> int48 = "uint48_shift_right"
 
     external of_int       :       int ->     int48 = "int48_of_int"
     external of_nativeint : nativeint ->     int48 = "int48_of_nativeint"
@@ -603,8 +603,8 @@ module Int56 = struct
     external mul : int56 -> int56 -> int56 = "int56_mul"
     external div : int56 -> int56 -> int56 = "int56_div"
     external logxor : int56 -> int56 -> int56 = "uint56_xor"
-    external shift_right : int56 -> int -> int56 = "uint56_shift_right"
-    external shift_right_logical : int56 -> int -> int56 = "int56_shift_right"
+    external shift_right : int56 -> int -> int56 = "int56_shift_right"
+    external shift_right_logical : int56 -> int -> int56 = "uint56_shift_right"
 
     external of_int       :       int ->     int56 = "int56_of_int"
     external of_nativeint : nativeint ->     int56 = "int56_of_nativeint"
