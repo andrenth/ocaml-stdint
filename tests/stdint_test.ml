@@ -31,6 +31,8 @@ module Tester (I : Stdint.Int) : TESTER =
 struct
   include IntBounds (I)
 
+  let ( *** ) = ( * )  (* Preserve int mul for later use *)
+
   open I
 
   let tests = [
@@ -65,6 +67,16 @@ struct
     test "An integer should perform right-shifts correctly"
       QCheck.(pair in_range (int_bound 31)) (fun (x, y) ->
         shift_right (of_int x) y = of_int (x asr y)) ;
+
+    test "Arithmetic shifts must sign-extend"
+      QCheck.(int_range 0 200) (fun i ->
+        let v = shift_right min_int i in
+        (compare min_int zero) *** (compare v zero) >= 0) ;
+
+    test "Logical shifts must not sign-extend"
+      QCheck.(int_range 0 200) (fun i ->
+        let v = shift_right_logical min_int i in
+        compare v zero >= 0) ;
 
     test "An integer should perform float conversions correctly"
       in_range_float (fun x ->
