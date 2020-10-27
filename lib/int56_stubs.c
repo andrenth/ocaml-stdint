@@ -13,6 +13,13 @@
 static const int64_t mask = 0xFFFFFFFFFFFFFF00LL;
 
 CAMLprim value
+int56_mul(value v1, value v2)
+{
+  CAMLparam2(v1, v2);
+  CAMLreturn (copy_int56(Int56_val(v1) * Int64_val(v2)));
+}
+
+CAMLprim value
 int56_div(value v1, value v2)
 {
   CAMLparam2(v1, v2);
