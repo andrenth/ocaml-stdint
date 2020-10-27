@@ -246,7 +246,7 @@ int128_shift_right(value v1, value v2)
   CAMLreturn (copy_int128(Int128_val(v1) >> Long_val(v2)));
 #else
   int128 x = Int128_val(v1);
-  long s = Long_val(v2);
+  intnat s = Long_val(v2);
 
   if (0 == s) {
     // nothing
