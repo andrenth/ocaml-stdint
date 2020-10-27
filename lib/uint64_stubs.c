@@ -8,6 +8,7 @@
 #include <caml/intext.h>
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
+#include <caml/version.h>
 
 #include "uint64.h"
 
@@ -39,13 +40,21 @@ uint64_deserialize(void *dst)
     return 8;
 }
 
+#if OCAML_VERSION_MAJOR > 4 || OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR >= 8
+static const struct custom_fixed_length uint64_length = { 8, 8 };
+#endif
+
 struct custom_operations uint64_ops = {
     "uint.uint64",
     custom_finalize_default,
     uint64_cmp,
     uint64_hash,
     uint64_serialize,
-    uint64_deserialize
+    uint64_deserialize,
+    custom_compare_ext_default
+#if OCAML_VERSION_MAJOR > 4 || OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR >= 8
+  , &uint64_length
+#endif
 };
 
 CAMLprim value

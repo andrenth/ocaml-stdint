@@ -6,7 +6,8 @@
 * Fix conversion from all ints to uint24 and int24 (#41, @rixed)
 * Fix int24 failing to recover from casts (#43, @rixed)
 * Fix sign extensions (#49, @rixed)
-* `Longval` returns `intnat`, previously `long` was used (#53, @dra27)
+* `Long_val` returns `intnat`, previously `long` was used (#53, @dra27)
+* Reduce size of marshalled custom values on 4.08+ (#54, @dra27)
 
 ## New features:
 
