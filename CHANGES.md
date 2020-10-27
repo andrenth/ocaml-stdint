@@ -8,6 +8,7 @@
 * Fix sign extensions (#49, @rixed)
 * `Long_val` returns `intnat`, previously `long` was used (#53, @dra27)
 * Reduce size of marshalled custom values on 4.08+ (#54, @dra27)
+* Store 128-bit ints as structs to prevent unaligned access (#55, @dra27)
 
 ## New features:
 
