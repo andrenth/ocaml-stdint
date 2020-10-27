@@ -138,6 +138,26 @@ struct custom_operations int128_ops = {
   int128_deserialize
 };
 
+#ifdef HAVE_INT128
+CAMLprim value
+copy_int128(__int128_t i)
+{
+  CAMLparam0();
+  value res = caml_alloc_custom(&int128_ops, 40, 0, 1);
+  uint64_t *v = (uint64_t *)Data_custom_val(res);
+  /* Write both an aligned and unaligned version */
+  if ((uintptr_t)v & 0x8) {
+    *(int64_t *)v = (uint64_t)i;
+    v[1] = (int64_t)(i >> 64);
+    *(__int128_t *)(v + 3) = i;
+  } else {
+    *(__int128_t *)v = i;
+    *(int64_t *)(v + 3) = (uint64_t)i;
+    v[4] = (int64_t)(i >> 64);
+  }
+  CAMLreturn (res);
+}
+#else
 CAMLprim value
 copy_int128(int128 i)
 {
@@ -146,6 +166,7 @@ copy_int128(int128 i)
   Int128_val(res) = i;
   CAMLreturn (res);
 }
+#endif
 
 CAMLprim value
 int128_add(value v1, value v2)
