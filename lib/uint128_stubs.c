@@ -184,7 +184,9 @@ CAMLprim value
 copy_uint128(uint128 i)
 {
   CAMLparam0();
-  value res = caml_alloc_custom(&uint128_ops, 16, 0, 1);
+  /* the value need to be 16bytes aligned whereas caml_alloc_custom:
+   * guarantees only 8bytes alignment: */
+  value res = caml_alloc_custom(&uint128_ops, 16+8, 0, 1);
   Uint128_val(res) = i;
   CAMLreturn (res);
 }
