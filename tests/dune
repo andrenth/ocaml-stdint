@@ -1,0 +1,3 @@
+(test
+ (name stdint_test)
+ (libraries str stdint qcheck))
