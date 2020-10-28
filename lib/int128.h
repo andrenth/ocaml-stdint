@@ -5,7 +5,7 @@
 
 #define HAVE_INT128
 typedef __int128_t int128;
-typedef struct { int64_t high; uint64_t low; } int128_ocaml;
+typedef struct { uint64_t low; int64_t high; } int128_ocaml;
 
 inline __int128_t get_int128(value v)
 {
