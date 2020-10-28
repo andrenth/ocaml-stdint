@@ -398,7 +398,7 @@ suint128_shift_left(value v1, value v2, CAMLprim value (*copy)(uint128))
   CAMLreturn (copy(Uint128_val(v1) << Long_val(v2)));
 #else
   uint128 x;
-  long s;
+  intnat s;
 
   x = Uint128_val(v1);
   s = Long_val(v2);
@@ -423,7 +423,7 @@ uint128_shift_right(value v1, value v2)
   CAMLreturn (copy_uint128(Uint128_val(v1) >> Long_val(v2)));
 #else
   uint128 x;
-  long s;
+  intnat s;
 
   x = Uint128_val(v1);
   s = Long_val(v2);
