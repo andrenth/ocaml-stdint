@@ -10,6 +10,7 @@
 #include <caml/intext.h>
 #include <caml/memory.h>
 #include <caml/mlvalues.h>
+#include <caml/version.h>
 
 #include "uint128.h"
 #include "int128.h"
@@ -129,13 +130,21 @@ int128_deserialize(void *dst)
   return 16;
 }
 
+#if OCAML_VERSION_MAJOR > 4 || OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR >= 8
+static const struct custom_fixed_length int128_length = { 16, 16 };
+#endif
+
 struct custom_operations int128_ops = {
   "stdint.int128",
   custom_finalize_default,
   int128_cmp,
   int128_hash,
   int128_serialize,
-  int128_deserialize
+  int128_deserialize,
+  custom_compare_ext_default
+#if OCAML_VERSION_MAJOR > 4 || OCAML_VERSION_MAJOR == 4 && OCAML_VERSION_MINOR >= 8
+  , &int128_length
+#endif
 };
 
 CAMLprim value
