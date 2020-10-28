@@ -130,7 +130,7 @@ struct
         (try
           ignore (of_string ("9" ^ s)) ;
           false
-        with e -> true)) ;
+        with _ -> true)) ;
 
     test "An integer should be converted from signed (+) strings correctly"
       integer_str_gen (fun s ->
