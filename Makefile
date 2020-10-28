@@ -3,14 +3,14 @@
 all: build
 
 build:
-	dune build -p stdint
+	dune build
 
-LIB=_build/install/default/lib/stdint/stdint.cmxa
+check:
+	dune runtest
 
-$(LIB): build
-
-check: tests/stdint_test
-	tests/stdint_test
-
-tests/stdint_test: $(LIB) tests/stdint_test.ml
-	ocamlfind ocamlopt -I $(dir $<) -package str,qcheck $^ -linkpkg -o $@
+opam-release:
+	dune-release distrib --skip-build --skip-lint --skip-tests
+# See https://github.com/ocamllabs/dune-release/issues/206
+	DUNE_RELEASE_DELEGATE=github-dune-release-delegate dune-release publish distrib --verbose
+	dune-release opam pkg
+	dune-release opam submit
