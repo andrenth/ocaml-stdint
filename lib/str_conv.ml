@@ -31,36 +31,41 @@ end
 module Make (I : IntSig) : S with type t = I.t = struct
   type t = I.t
 
-  exception NotDigit of I.t * int
+  exception EndOfNumber of I.t * int
 
   (** Base function for *of_string* and *of_substring*
     * functions *)
   let _of_substring start_off s func_name =
     let fail () = invalid_arg (I.name ^ func_name) in
-    let len = String.length s - start_off in
+    if start_off >= String.length s then fail ();
     (* is this supposed to be a negative number? *)
     let negative, off =
-      if len <= 0 then fail ();
       if s.[start_off] = '-' then
         true, 1+start_off
       else if s.[start_off] = '+' then
         false, 1+start_off
       else
         false, start_off in
+    let len = String.length s in
+    if len <= off then fail ();
     (* does the string have a base-prefix and what base is it? *)
     let base, off =
+      let is_digit ~base c =
+        if base <= 10 then (
+          Char.(code c - code '0') < base
+        ) else (
+          (c >= '0' && c <= '9') ||
+          (10 + Char.(code (lowercase_ascii c) - code 'a') < base)
+        ) in
       if len - off < 3 then (* no space for a prefix in there *)
         10, off
-      else if s.[off] = '0' && (s.[off + 1] < '0' || s.[off + 1] > '9') then
-        let base =
-          match s.[off + 1] with
-          | 'b' | 'B' -> 2
-          | 'o' | 'O' -> 8
-          | 'x' | 'X' -> 16
-          | _ -> fail () in
-        base, (off + 2)
-      else
-        10, off in
+      else if s.[off] = '0' then
+        match Char.lowercase_ascii s.[off + 1] with
+        | 'b' when is_digit ~base:2 s.[off+2] -> 2, off + 2
+        | 'o' when is_digit ~base:8 s.[off+2] ->  8, off + 2
+        | 'x' when is_digit ~base:16 s.[off+2] -> 16, off + 2
+        | _ -> 10, off
+      else 10, off in
     let base = I.of_int base in
     (* operators that are different for parsing negative and positive numbers *)
     let (thresh, rem), join, cmp_safe =
@@ -78,17 +83,18 @@ module Make (I : IntSig) : S with type t = I.t = struct
             if c >= '0' && c <= '9' then 48
             else if c >= 'A' && c <= 'F' then 55
             else if c >= 'a' && c <= 'f' then 87
-            else raise (NotDigit (n, off)) in
+            else raise (EndOfNumber (n, off)) in
           let disp = int_of_char c - disp in
           let d = I.of_int disp in
           (* do not accept digit larger than the base *)
-          if d >= base then fail () ;
+          if d >= base then raise (EndOfNumber (n, off));
           (* will we overflow? *)
           (match compare n thresh with
           | 0 ->
             let r = compare d rem in
-            if r <> cmp_safe && r <> 0 then fail ()
-          | r -> if r <> cmp_safe then fail ());
+            if r <> cmp_safe && r <> 0 then raise (EndOfNumber (n, off));
+          | r ->
+            if r <> cmp_safe then raise (EndOfNumber (n, off)));
           (* shift the existing number, join the new digit *)
           let res = join (I.mul n base) d in
           loop (off + 1) res
@@ -102,13 +108,13 @@ module Make (I : IntSig) : S with type t = I.t = struct
     try
       _of_substring pos s ".of_substring"
     with
-      | NotDigit (n, off) -> n, off
+      | EndOfNumber (n, off) -> n, off
 
   let of_string s =
     try
       let n, _ = _of_substring 0 s ".of_string" in n
     with
-      | NotDigit _ -> invalid_arg (I.name ^ ".of_string")
+      | EndOfNumber _ -> invalid_arg (I.name ^ ".of_string")
 
   let to_string_base base prefix x =
     let prefixlen = String.length prefix in

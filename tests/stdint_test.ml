@@ -6,6 +6,11 @@ end
 let skip name = QCheck.Test.make ~count:0 ~name
 let test name = QCheck.Test.make ~count:10 ~name
 
+let rec binary_string_of_int n =
+  if n = 0 then "0" else
+  binary_string_of_int (n asr 1) ^
+  (if n land 1 = 0 then "0" else "1")
+
 module IntBounds (I : Stdint.Int) =
 struct
   let mini, maxi =
@@ -149,6 +154,50 @@ struct
         let str = i_str ^ s in
         let s, o = of_substring ~pos:0 str in
         to_string s = i_str && o = String.length i_str) ;
+
+    test "An integer should be converted from substrings correctly"
+      QCheck.(triple small_nat small_nat small_nat) (fun (pos, n, tail) ->
+        let str = String.make pos ' ' ^ string_of_int n in
+        let exp_len = String.length str in
+        let str = str ^ String.make tail ' ' in
+        of_substring ~pos str = (of_int n, exp_len)) ;
+
+    test "An integer should be converted from signed (+) substrings correctly"
+      QCheck.(triple small_nat small_nat small_nat) (fun (pos, n, tail) ->
+        let str = String.make pos ' ' ^ "+" ^ string_of_int n in
+        let exp_len = String.length str in
+        let str = str ^ String.make tail ' ' in
+        of_substring ~pos str = (of_int n, exp_len)) ;
+
+    test "An integer should be converted from signed (-) substrings correctly"
+      QCheck.(triple small_nat small_nat small_nat) (fun (pos, n, tail) ->
+        min_int = zero ||
+        let str = String.make pos ' ' ^ "-" ^ string_of_int n in
+        let exp_len = String.length str in
+        let str = str ^ String.make tail ' ' in
+        of_substring ~pos str = (of_int ~-n, exp_len)) ;
+
+    test "All your binary bases do not belong to us"
+      QCheck.small_nat (fun n ->
+        let bits = "0b" ^ binary_string_of_int n in
+        let str = "XX" ^ bits in
+        let exp_len = String.length str in
+        let str = str ^ "2345" in
+        of_substring ~pos:2 str = (of_int n, exp_len)) ;
+
+    test "All your decimal bases do not belong to us"
+      QCheck.small_nat (fun n ->
+        let str = Printf.sprintf "XX%d" n in
+        let exp_len = String.length str in
+        let str = str ^ "abcd" in
+        of_substring ~pos:2 str = (of_int n, exp_len)) ;
+
+    test "All your hexadecimal bases do not belong to us"
+      QCheck.small_nat (fun n ->
+        let str = Printf.sprintf "XX0x%x" n in
+        let exp_len = String.length str in
+        let str = str ^ "ghij" in
+        of_substring ~pos:2 str = (of_int n, exp_len))
   ]
 end
 
