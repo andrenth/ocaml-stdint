@@ -434,7 +434,7 @@ module Int40 = struct
 
     external mul : int40 -> int40 -> int40 = "int40_mul"
     external div : int40 -> int40 -> int40 = "int40_div"
-    external logxor : int40 -> int40 -> int40 = "uint40_xor"
+    external logxor : int40 -> int40 -> int40 = "int40_xor"
     external shift_right : int40 -> int -> int40 = "int40_shift_right"
     external shift_right_logical : int40 -> int -> int40 = "uint40_shift_right"
 
@@ -485,9 +485,10 @@ module Int40 = struct
     external max_int_fun : unit -> int40 = "int40_max_int"
     external min_int_fun : unit -> int40 = "int40_min_int"
     let one = of_int 1
+    let minus_one = of_int (-1)
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
-    let lognot = logxor max_int
+    let lognot = logxor minus_one
     let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
@@ -518,7 +519,7 @@ module Int48 = struct
 
     external mul : int48 -> int48 -> int48 = "int48_mul"
     external div : int48 -> int48 -> int48 = "int48_div"
-    external logxor : int48 -> int48 -> int48 = "uint48_xor"
+    external logxor : int48 -> int48 -> int48 = "int48_xor"
     external shift_right : int48 -> int -> int48 = "int48_shift_right"
     external shift_right_logical : int48 -> int -> int48 = "uint48_shift_right"
 
@@ -569,9 +570,10 @@ module Int48 = struct
     external max_int_fun : unit -> int48 = "int48_max_int"
     external min_int_fun : unit -> int48 = "int48_min_int"
     let one = of_int 1
+    let minus_one = of_int (-1)
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
-    let lognot = logxor max_int
+    let lognot = logxor minus_one
     let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
@@ -602,7 +604,7 @@ module Int56 = struct
 
     external mul : int56 -> int56 -> int56 = "int56_mul"
     external div : int56 -> int56 -> int56 = "int56_div"
-    external logxor : int56 -> int56 -> int56 = "uint56_xor"
+    external logxor : int56 -> int56 -> int56 = "int56_xor"
     external shift_right : int56 -> int -> int56 = "int56_shift_right"
     external shift_right_logical : int56 -> int -> int56 = "uint56_shift_right"
 
@@ -653,9 +655,10 @@ module Int56 = struct
     external max_int_fun : unit -> int56 = "int56_max_int"
     external min_int_fun : unit -> int56 = "int56_min_int"
     let one = of_int 1
+    let minus_one = of_int (-1)
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
-    let lognot = logxor max_int
+    let lognot = logxor minus_one
     let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
   end
@@ -742,11 +745,12 @@ module Int128 = struct
 
     let zero = of_int 0
     let one = of_int 1
+    let minus_one = of_int (-1)
     let succ = add one
     let pred x = sub x one
     let max_int = max_int_fun ()
     let min_int = min_int_fun ()
-    let lognot = logxor max_int
+    let lognot = logxor minus_one
     let compare = Stdint_stdlib_.compare
     let divmod  = (fun x y -> div x y, rem x y)
 
