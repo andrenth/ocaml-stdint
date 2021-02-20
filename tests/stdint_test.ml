@@ -27,7 +27,7 @@ struct
   let () = assert (mini < maxi)
 
   let in_range = QCheck.int_range mini maxi
-  let pos_int = QCheck.map_same_type abs in_range
+  let pos_int = QCheck.int_range 0 maxi
   let in_range_float =
     QCheck.float_range (float_of_int mini) (float_of_int maxi)
 end
