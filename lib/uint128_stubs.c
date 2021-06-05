@@ -21,7 +21,10 @@
 #include "uint64.h"
 #include "uint128.h"
 
-#ifndef HAVE_UINT128
+#ifdef HAVE_UINT128
+extern inline __uint128_t get_uint128(value);
+#else
+
 static inline int compare(uint128 *x, uint128 *y) {
   assert(x);
   assert(y);
