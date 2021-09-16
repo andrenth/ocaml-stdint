@@ -15,7 +15,10 @@
 #include "uint128.h"
 #include "int128.h"
 
-#ifndef HAVE_INT128
+#ifdef HAVE_INT128
+extern inline __int128_t get_int128(value);
+#else
+
 void divmod128(int128 *d, int128 *modulus, int128 *quotient, int128 *rem);
 
 static inline int32_t compare(int128 *x, int128 *y) {

@@ -1,3 +1,9 @@
+# Unreleased
+
+## Fixes:
+
+* Fix undefined reference to `get_uint128` (#62)
+
 # 0.7.0 (28/10/2020)
 
 ## Fixes:
