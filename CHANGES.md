@@ -1,8 +1,10 @@
-# Unreleased
+# 0.7.1 (14/10/2022)
 
 ## Fixes:
 
 * Fix undefined reference to `get_uint128` (#62)
+* Add `[@@noalloc]` where possible (#64)
+* Fix compatibility with 5.0 (#68)
 
 # 0.7.0 (28/10/2020)
 
