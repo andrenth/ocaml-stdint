@@ -89,7 +89,7 @@ float_of_int128(value v)
 #ifdef HAVE_INT128 
   CAMLreturn (caml_copy_double((double)Int128_val(v)));
 #else
-  caml_failwith("unimplemented");
+  caml_failwith(__func__);
   CAMLreturn(Val_unit);
 #endif
 }
@@ -157,7 +157,7 @@ float_of_uint128(value v)
 #ifdef HAVE_INT128 
   CAMLreturn (caml_copy_double((double)Uint128_val(v)));
 #else
-  caml_failwith("unimplemented");
+  caml_failwith(__func__);
   CAMLreturn(Val_unit);
 #endif
 }

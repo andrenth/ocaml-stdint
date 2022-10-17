@@ -57,7 +57,7 @@ int128_of_float(value v)
 #ifdef HAVE_INT128
   CAMLreturn (copy_int128((__int128_t)Double_val(v)));
 #else
-  caml_failwith("unimplemented");
+  caml_failwith(__func__);
   CAMLreturn(Val_unit);
 #endif
 }
