@@ -89,7 +89,7 @@ nativeint_of_int128(value v)
 #ifdef HAVE_INT128
   CAMLreturn (caml_copy_nativeint((intnat)Int128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }
@@ -157,7 +157,7 @@ nativeint_of_uint128(value v)
 #ifdef HAVE_UINT128
   CAMLreturn (caml_copy_nativeint((intnat)Uint128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }
