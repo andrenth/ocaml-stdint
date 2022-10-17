@@ -220,6 +220,7 @@ struct
 end
 
 let () =
+  Printexc.record_backtrace true;
   let ok = ref 0 and ko = ref 0 in
 
   let test_mods = Stdint.[
@@ -353,7 +354,7 @@ let () =
   ] in
 
   List.iter (fun (n, m) ->
-    Printf.printf "\n== Testing %s ==\n" n ;
+    Printf.printf "\n== Testing %s ==\n%!" n ;
     let module T = (val m : TESTER) in
 
     List.iter (fun t ->
@@ -361,7 +362,8 @@ let () =
         QCheck.Test.check_exn t ;
         incr ok
       with e ->
-        print_string (Printexc.to_string e ^ "\n") ;
+        print_endline (Printexc.to_string e) ;
+        Printexc.print_backtrace stdout ;
         incr ko
     ) T.tests
   ) test_mods ;
