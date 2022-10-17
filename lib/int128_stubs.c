@@ -300,7 +300,7 @@ int128_bits_of_float(value v)
   u.d = Double_val(v);
   CAMLreturn (copy_int128(u.i));
 #else
-  caml_failwith("unimplemented");
+  caml_failwith(__func__);
   CAMLreturn(Val_unit);
 #endif
 }
@@ -314,7 +314,7 @@ int128_float_of_bits(value v)
   u.i = Int128_val(v);
   CAMLreturn(caml_copy_double(u.d));
 #else
-  caml_failwith("unimplemented");
+  caml_failwith(__func__);
   CAMLreturn(Val_unit);
 #endif
 }
