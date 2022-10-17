@@ -1,3 +1,4 @@
 (test
  (name stdint_test)
- (libraries str stdint qcheck))
+ (libraries str stdint qcheck)
+ (flags (:standard -w -32)))

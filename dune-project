@@ -1,6 +1,7 @@
-(lang dune 1.10)
+(lang dune 3.0)
 (name stdint)
 
+(formatting disabled)
 (generate_opam_files true)
 
 (license MIT)
@@ -28,5 +29,4 @@ conversion to readable strings (binary, octal, decimal, hexademical), conversion
 to and from buffers in both big endian and little endian byte order.")
  (depends
   (ocaml (>= 4.03))
-  (qcheck :test)
-  (dune (>= 1.10))))
+  (qcheck :with-test)))

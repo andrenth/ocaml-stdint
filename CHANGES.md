@@ -1,3 +1,7 @@
+# Unreleased
+
+- Fix build system and opam file (#69, @MisterDA)
+
 # 0.7.1 (14/10/2022)
 
 ## Fixes:
