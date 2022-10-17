@@ -223,7 +223,36 @@ let () =
   Printexc.record_backtrace true;
   let ok = ref 0 and ko = ref 0 in
 
-  let test_mods = Stdint.[
+  let have_128 = try Stdint.(Int8.of_int128 (Int128.zero) = Int8.zero) with Failure _ -> false in
+  let test_128bits_mods =
+    if have_128 then
+    Stdint.[
+        "Int128", (module Tester (Int128) : TESTER) ;
+        "Uint128", (module Tester (Uint128) : TESTER) ;
+        "Uint128 x Uint8", (module Tester2 (Uint128) (Uint8) (struct let of_i2 = Uint128.of_uint8 end): TESTER) ;
+        "Int128 x Uint8", (module Tester2 (Int128) (Uint8) (struct let of_i2 = Int128.of_uint8 end): TESTER) ;
+        "Uint128 x Uint16", (module Tester2 (Uint128) (Uint16) (struct let of_i2 = Uint128.of_uint16 end): TESTER) ;
+        "Int128 x Uint16", (module Tester2 (Int128) (Uint16) (struct let of_i2 = Int128.of_uint16 end): TESTER) ;
+        "Uint128 x Uint24", (module Tester2 (Uint128) (Uint24) (struct let of_i2 = Uint128.of_uint24 end): TESTER) ;
+        "Int128 x Uint24", (module Tester2 (Int128) (Uint24) (struct let of_i2 = Int128.of_uint24 end): TESTER) ;
+        "Uint128 x Uint32", (module Tester2 (Uint128) (Uint32) (struct let of_i2 = Uint128.of_uint32 end): TESTER) ;
+        "Int128 x Uint32", (module Tester2 (Int128) (Uint32) (struct let of_i2 = Int128.of_uint32 end): TESTER) ;
+        "Uint128 x Uint40", (module Tester2 (Uint128) (Uint40) (struct let of_i2 = Uint128.of_uint40 end): TESTER) ;
+        "Int128 x Uint40", (module Tester2 (Int128) (Uint40) (struct let of_i2 = Int128.of_uint40 end): TESTER) ;
+        "Uint128 x Uint48", (module Tester2 (Uint128) (Uint48) (struct let of_i2 = Uint128.of_uint48 end): TESTER) ;
+        "Int128 x Uint48", (module Tester2 (Int128) (Uint48) (struct let of_i2 = Int128.of_uint48 end): TESTER) ;
+        "Uint128 x Uint56", (module Tester2 (Uint128) (Uint56) (struct let of_i2 = Uint128.of_uint56 end): TESTER) ;
+        "Int128 x Uint56", (module Tester2 (Int128) (Uint56) (struct let of_i2 = Int128.of_uint56 end): TESTER) ;
+        "Uint128 x Uint64", (module Tester2 (Uint128) (Uint64) (struct let of_i2 = Uint128.of_uint64 end): TESTER) ;
+        "Int128 x Uint64", (module Tester2 (Int128) (Uint64) (struct let of_i2 = Int128.of_uint64 end): TESTER) ;
+
+        "Uint128 strings", (module OfStringTester (Stdint.Uint128) : TESTER) ;
+        "Int128 strings", (module OfStringTester (Stdint.Int128) : TESTER) ;
+        "Int128 sign ops", (module SignTester (Stdint.Int128) : TESTER) ;
+    ] else []
+  in
+
+  let test_mods = test_128bits_mods @ Stdint.[
     "Int8", (module Tester (Int8) : TESTER) ;
     "Int16", (module Tester (Int16) : TESTER) ;
     "Int24", (module Tester (Int24) : TESTER) ;
@@ -232,7 +261,6 @@ let () =
     "Int48", (module Tester (Int48) : TESTER) ;
     "Int56", (module Tester (Int56) : TESTER) ;
     "Int64", (module Tester (Int64) : TESTER) ;
-    "Int128", (module Tester (Int128) : TESTER) ;
     "Uint8", (module Tester (Uint8) : TESTER) ;
     "Uint16", (module Tester (Uint16) : TESTER) ;
     "Uint24", (module Tester (Uint24) : TESTER) ;
@@ -241,7 +269,6 @@ let () =
     "Uint48", (module Tester (Uint48) : TESTER) ;
     "Uint56", (module Tester (Uint56) : TESTER) ;
     "Uint64", (module Tester (Uint64) : TESTER) ;
-    "Uint128", (module Tester (Uint128) : TESTER) ;
 
     "Uint16 x Uint8", (module Tester2 (Uint16) (Uint8) (struct let of_i2 = Uint16.of_uint8 end): TESTER) ;
     "Uint24 x Uint8", (module Tester2 (Uint24) (Uint8) (struct let of_i2 = Uint24.of_uint8 end): TESTER) ;
@@ -250,7 +277,6 @@ let () =
     "Uint48 x Uint8", (module Tester2 (Uint48) (Uint8) (struct let of_i2 = Uint48.of_uint8 end): TESTER) ;
     "Uint56 x Uint8", (module Tester2 (Uint56) (Uint8) (struct let of_i2 = Uint56.of_uint8 end): TESTER) ;
     "Uint64 x Uint8", (module Tester2 (Uint64) (Uint8) (struct let of_i2 = Uint64.of_uint8 end): TESTER) ;
-    "Uint128 x Uint8", (module Tester2 (Uint128) (Uint8) (struct let of_i2 = Uint128.of_uint8 end): TESTER) ;
     "Int16 x Uint8", (module Tester2 (Int16) (Uint8) (struct let of_i2 = Int16.of_uint8 end): TESTER) ;
     "Int24 x Uint8", (module Tester2 (Int24) (Uint8) (struct let of_i2 = Int24.of_uint8 end): TESTER) ;
     "Int32 x Uint8", (module Tester2 (Int32) (Uint8) (struct let of_i2 = Int32.of_uint8 end): TESTER) ;
@@ -258,7 +284,6 @@ let () =
     "Int48 x Uint8", (module Tester2 (Int48) (Uint8) (struct let of_i2 = Int48.of_uint8 end): TESTER) ;
     "Int56 x Uint8", (module Tester2 (Int56) (Uint8) (struct let of_i2 = Int56.of_uint8 end): TESTER) ;
     "Int64 x Uint8", (module Tester2 (Int64) (Uint8) (struct let of_i2 = Int64.of_uint8 end): TESTER) ;
-    "Int128 x Uint8", (module Tester2 (Int128) (Uint8) (struct let of_i2 = Int128.of_uint8 end): TESTER) ;
 
     "Uint24 x Uint16", (module Tester2 (Uint24) (Uint16) (struct let of_i2 = Uint24.of_uint16 end): TESTER) ;
     "Uint32 x Uint16", (module Tester2 (Uint32) (Uint16) (struct let of_i2 = Uint32.of_uint16 end): TESTER) ;
@@ -266,62 +291,47 @@ let () =
     "Uint48 x Uint16", (module Tester2 (Uint48) (Uint16) (struct let of_i2 = Uint48.of_uint16 end): TESTER) ;
     "Uint56 x Uint16", (module Tester2 (Uint56) (Uint16) (struct let of_i2 = Uint56.of_uint16 end): TESTER) ;
     "Uint64 x Uint16", (module Tester2 (Uint64) (Uint16) (struct let of_i2 = Uint64.of_uint16 end): TESTER) ;
-    "Uint128 x Uint16", (module Tester2 (Uint128) (Uint16) (struct let of_i2 = Uint128.of_uint16 end): TESTER) ;
     "Int24 x Uint16", (module Tester2 (Int24) (Uint16) (struct let of_i2 = Int24.of_uint16 end): TESTER) ;
     "Int32 x Uint16", (module Tester2 (Int32) (Uint16) (struct let of_i2 = Int32.of_uint16 end): TESTER) ;
     "Int40 x Uint16", (module Tester2 (Int40) (Uint16) (struct let of_i2 = Int40.of_uint16 end): TESTER) ;
     "Int48 x Uint16", (module Tester2 (Int48) (Uint16) (struct let of_i2 = Int48.of_uint16 end): TESTER) ;
     "Int56 x Uint16", (module Tester2 (Int56) (Uint16) (struct let of_i2 = Int56.of_uint16 end): TESTER) ;
     "Int64 x Uint16", (module Tester2 (Int64) (Uint16) (struct let of_i2 = Int64.of_uint16 end): TESTER) ;
-    "Int128 x Uint16", (module Tester2 (Int128) (Uint16) (struct let of_i2 = Int128.of_uint16 end): TESTER) ;
 
     "Uint32 x Uint24", (module Tester2 (Uint32) (Uint24) (struct let of_i2 = Uint32.of_uint24 end): TESTER) ;
     "Uint40 x Uint24", (module Tester2 (Uint40) (Uint24) (struct let of_i2 = Uint40.of_uint24 end): TESTER) ;
     "Uint48 x Uint24", (module Tester2 (Uint48) (Uint24) (struct let of_i2 = Uint48.of_uint24 end): TESTER) ;
     "Uint56 x Uint24", (module Tester2 (Uint56) (Uint24) (struct let of_i2 = Uint56.of_uint24 end): TESTER) ;
     "Uint64 x Uint24", (module Tester2 (Uint64) (Uint24) (struct let of_i2 = Uint64.of_uint24 end): TESTER) ;
-    "Uint128 x Uint24", (module Tester2 (Uint128) (Uint24) (struct let of_i2 = Uint128.of_uint24 end): TESTER) ;
     "Int32 x Uint24", (module Tester2 (Int32) (Uint24) (struct let of_i2 = Int32.of_uint24 end): TESTER) ;
     "Int40 x Uint24", (module Tester2 (Int40) (Uint24) (struct let of_i2 = Int40.of_uint24 end): TESTER) ;
     "Int48 x Uint24", (module Tester2 (Int48) (Uint24) (struct let of_i2 = Int48.of_uint24 end): TESTER) ;
     "Int56 x Uint24", (module Tester2 (Int56) (Uint24) (struct let of_i2 = Int56.of_uint24 end): TESTER) ;
     "Int64 x Uint24", (module Tester2 (Int64) (Uint24) (struct let of_i2 = Int64.of_uint24 end): TESTER) ;
-    "Int128 x Uint24", (module Tester2 (Int128) (Uint24) (struct let of_i2 = Int128.of_uint24 end): TESTER) ;
 
     "Uint40 x Uint32", (module Tester2 (Uint40) (Uint32) (struct let of_i2 = Uint40.of_uint32 end): TESTER) ;
     "Uint48 x Uint32", (module Tester2 (Uint48) (Uint32) (struct let of_i2 = Uint48.of_uint32 end): TESTER) ;
     "Uint56 x Uint32", (module Tester2 (Uint56) (Uint32) (struct let of_i2 = Uint56.of_uint32 end): TESTER) ;
     "Uint64 x Uint32", (module Tester2 (Uint64) (Uint32) (struct let of_i2 = Uint64.of_uint32 end): TESTER) ;
-    "Uint128 x Uint32", (module Tester2 (Uint128) (Uint32) (struct let of_i2 = Uint128.of_uint32 end): TESTER) ;
     "Int40 x Uint32", (module Tester2 (Int40) (Uint32) (struct let of_i2 = Int40.of_uint32 end): TESTER) ;
     "Int48 x Uint32", (module Tester2 (Int48) (Uint32) (struct let of_i2 = Int48.of_uint32 end): TESTER) ;
     "Int56 x Uint32", (module Tester2 (Int56) (Uint32) (struct let of_i2 = Int56.of_uint32 end): TESTER) ;
     "Int64 x Uint32", (module Tester2 (Int64) (Uint32) (struct let of_i2 = Int64.of_uint32 end): TESTER) ;
-    "Int128 x Uint32", (module Tester2 (Int128) (Uint32) (struct let of_i2 = Int128.of_uint32 end): TESTER) ;
 
     "Uint48 x Uint40", (module Tester2 (Uint48) (Uint40) (struct let of_i2 = Uint48.of_uint40 end): TESTER) ;
     "Uint56 x Uint40", (module Tester2 (Uint56) (Uint40) (struct let of_i2 = Uint56.of_uint40 end): TESTER) ;
     "Uint64 x Uint40", (module Tester2 (Uint64) (Uint40) (struct let of_i2 = Uint64.of_uint40 end): TESTER) ;
-    "Uint128 x Uint40", (module Tester2 (Uint128) (Uint40) (struct let of_i2 = Uint128.of_uint40 end): TESTER) ;
     "Int48 x Uint40", (module Tester2 (Int48) (Uint40) (struct let of_i2 = Int48.of_uint40 end): TESTER) ;
     "Int56 x Uint40", (module Tester2 (Int56) (Uint40) (struct let of_i2 = Int56.of_uint40 end): TESTER) ;
     "Int64 x Uint40", (module Tester2 (Int64) (Uint40) (struct let of_i2 = Int64.of_uint40 end): TESTER) ;
-    "Int128 x Uint40", (module Tester2 (Int128) (Uint40) (struct let of_i2 = Int128.of_uint40 end): TESTER) ;
 
     "Uint56 x Uint48", (module Tester2 (Uint56) (Uint48) (struct let of_i2 = Uint56.of_uint48 end): TESTER) ;
     "Uint64 x Uint48", (module Tester2 (Uint64) (Uint48) (struct let of_i2 = Uint64.of_uint48 end): TESTER) ;
-    "Uint128 x Uint48", (module Tester2 (Uint128) (Uint48) (struct let of_i2 = Uint128.of_uint48 end): TESTER) ;
     "Int56 x Uint48", (module Tester2 (Int56) (Uint48) (struct let of_i2 = Int56.of_uint48 end): TESTER) ;
     "Int64 x Uint48", (module Tester2 (Int64) (Uint48) (struct let of_i2 = Int64.of_uint48 end): TESTER) ;
-    "Int128 x Uint48", (module Tester2 (Int128) (Uint48) (struct let of_i2 = Int128.of_uint48 end): TESTER) ;
 
     "Uint64 x Uint56", (module Tester2 (Uint64) (Uint56) (struct let of_i2 = Uint64.of_uint56 end): TESTER) ;
-    "Uint128 x Uint56", (module Tester2 (Uint128) (Uint56) (struct let of_i2 = Uint128.of_uint56 end): TESTER) ;
     "Int64 x Uint56", (module Tester2 (Int64) (Uint56) (struct let of_i2 = Int64.of_uint56 end): TESTER) ;
-    "Int128 x Uint56", (module Tester2 (Int128) (Uint56) (struct let of_i2 = Int128.of_uint56 end): TESTER) ;
-
-    "Uint128 x Uint64", (module Tester2 (Uint128) (Uint64) (struct let of_i2 = Uint128.of_uint64 end): TESTER) ;
-    "Int128 x Uint64", (module Tester2 (Int128) (Uint64) (struct let of_i2 = Int128.of_uint64 end): TESTER) ;
 
     "Uint8 strings", (module OfStringTester (Stdint.Uint8) : TESTER) ;
     "Int8 strings", (module OfStringTester (Stdint.Int8) : TESTER) ;
@@ -339,8 +349,6 @@ let () =
     "Int56 strings", (module OfStringTester (Stdint.Int56) : TESTER) ;
     "Uint64 strings", (module OfStringTester (Stdint.Uint64) : TESTER) ;
     "Int64 strings", (module OfStringTester (Stdint.Int64) : TESTER) ;
-    "Uint128 strings", (module OfStringTester (Stdint.Uint128) : TESTER) ;
-    "Int128 strings", (module OfStringTester (Stdint.Int128) : TESTER) ;
 
     "Int8 sign ops", (module SignTester (Stdint.Int8) : TESTER) ;
     "Int16 sign ops", (module SignTester (Stdint.Int16) : TESTER) ;
@@ -350,7 +358,6 @@ let () =
     "Int48 sign ops", (module SignTester (Stdint.Int48) : TESTER) ;
     "Int56 sign ops", (module SignTester (Stdint.Int56) : TESTER) ;
     "Int64 sign ops", (module SignTester (Stdint.Int64) : TESTER) ;
-    "Int128 sign ops", (module SignTester (Stdint.Int128) : TESTER) ;
   ] in
 
   List.iter (fun (n, m) ->
