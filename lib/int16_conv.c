@@ -103,7 +103,7 @@ int16_of_int128(value v)
 #ifdef HAVE_INT128
   CAMLreturn (Val_int16((int16_t)Int128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }
@@ -171,7 +171,7 @@ int16_of_uint128(value v)
 #ifdef HAVE_UINT128
   CAMLreturn (Val_int16((int16_t)Uint128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }

@@ -1,5 +1,6 @@
 # Unreleased
 
+- Fix compatibility with OCaml 5.0 on 32-bits systems (#69, @MisterDA)
 - Fix build system, opam file, and documentation (#69, @MisterDA)
 
 # 0.7.1 (14/10/2022)
@@ -8,7 +9,7 @@
 
 * Fix undefined reference to `get_uint128` (#62)
 * Add `[@@noalloc]` where possible (#64)
-* Fix compatibility with 5.0 (#68)
+* Fix compatibility with OCaml 5.0 (#68)
 
 # 0.7.0 (28/10/2020)
 

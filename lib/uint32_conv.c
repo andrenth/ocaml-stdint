@@ -110,7 +110,7 @@ uint32_of_int128(value v)
 #ifdef HAVE_UINT128
   CAMLreturn (copy_uint32((uint32_t)Int128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }
@@ -171,7 +171,7 @@ uint32_of_uint128(value v)
 #ifdef HAVE_UINT128
   CAMLreturn (copy_uint32((uint32_t)Uint128_val(v)));
 #else
-  failwith("unimplemented");
+  caml_failwith("unimplemented");
   CAMLreturn(Val_unit);
 #endif
 }
