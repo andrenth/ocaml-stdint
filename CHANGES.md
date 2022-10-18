@@ -1,4 +1,4 @@
-# Unreleased
+# 0.7.2 (18/10/2022)
 
 - Fix compatibility with OCaml 5.0 on 32-bits systems (#69, @MisterDA)
 - Fix build system, opam file, and documentation (#69, @MisterDA)
